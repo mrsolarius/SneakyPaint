@@ -12,9 +12,6 @@ public class XMLExportVisitor implements Visitor {
 
     private String representation = null;
 
-    public XMLExportVisitor() {
-    }
-
     public String export(SimpleShape... args) {
         StringBuilder sb = new StringBuilder();
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + "\n");
@@ -33,35 +30,27 @@ public class XMLExportVisitor implements Visitor {
 
     @Override
     public void visit(Circle circle) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<shape>");
-        sb.append("<type>circle</type>");
-        sb.append("<x>").append(circle.getX()).append("</x>");
-        sb.append("<y>").append(circle.getY()).append("</y>");
-        sb.append("</shape>");
-        this.representation=sb.toString();
+        this.representation=generateBaseShapeXml(circle, "circle");
     }
 
     @Override
     public void visit(Square square) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<shape>");
-        sb.append("<type>square</type>");
-        sb.append("<x>").append(square.getX()).append("</x>");
-        sb.append("<y>").append(square.getY()).append("</y>");
-        sb.append("</shape>");
-        this.representation=sb.toString();
+        this.representation=generateBaseShapeXml(square,"square");
     }
 
     @Override
     public void visit(Triangle triangle) {
+        this.representation=generateBaseShapeXml(triangle, "triangle");
+    }
+
+    public String generateBaseShapeXml(SimpleShape shape, String type) {
         StringBuilder sb = new StringBuilder();
         sb.append("<shape>");
-        sb.append("<type>triangle</type>");
-        sb.append("<x>").append(triangle.getX()).append("</x>");
-        sb.append("<y>").append(triangle.getY()).append("</y>");
+        sb.append("<type>").append(type).append("</type>");
+        sb.append("<x>").append(shape.getX()).append("</x>");
+        sb.append("<y>").append(shape.getY()).append("</y>");
         sb.append("</shape>");
-        this.representation=sb.toString();
+        return sb.toString();
     }
 
     /**

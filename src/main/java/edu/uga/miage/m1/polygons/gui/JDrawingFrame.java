@@ -139,7 +139,7 @@ public class JDrawingFrame extends JFrame
                 String xml = new XMLExportVisitor().export(shapes.toArray(new SimpleShape[0]));
                 this.saveFile(xml,"xml");
             }
-            default -> System.out.println("No export");
+            default -> logger.log(new LogRecord(Level.WARNING,"No export format selected"));
         }
     }
 
@@ -153,7 +153,7 @@ public class JDrawingFrame extends JFrame
             fileWriter.write(content);
             fileWriter.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(new LogRecord(Level.SEVERE, "Error while saving file"));
         }
     }
 
