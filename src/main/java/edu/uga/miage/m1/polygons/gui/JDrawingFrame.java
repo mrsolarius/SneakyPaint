@@ -147,13 +147,20 @@ public class JDrawingFrame extends JFrame
      * save file with content and extention
      */
     private void saveFile(String content, String extention){
+        File file = new File("shapes."+extention);
+        FileWriter fileWriter = null;
         try {
-            File file = new File("shapes."+extention);
-            FileWriter fileWriter = new FileWriter(file);
+            fileWriter = new FileWriter(file);
             fileWriter.write(content);
-            fileWriter.close();
         } catch (Exception e) {
             logger.log(new LogRecord(Level.SEVERE, "Error while saving file"));
+        }
+        if (fileWriter!= null) {
+            try {
+                fileWriter.close();
+            } catch (Exception e) {
+                logger.log(new LogRecord(Level.SEVERE, "Error while closing file"));
+            }
         }
     }
 
