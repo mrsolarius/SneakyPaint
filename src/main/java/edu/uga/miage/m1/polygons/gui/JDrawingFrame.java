@@ -29,16 +29,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.Serial;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javax.swing.*;
 
+import edu.uga.miage.m1.polygons.gui.persistence.JSONExportVisitor;
+import edu.uga.miage.m1.polygons.gui.persistence.XMLExportVisitor;
 import edu.uga.miage.m1.polygons.gui.shapes.Circle;
+import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
 
@@ -62,6 +63,8 @@ public class JDrawingFrame extends JFrame
     private final JPanel panel;
     private final JLabel label;
     private final transient ActionListener reusableActionListener = new ShapeActionListener();
+
+    private final List<SimpleShape> shapes = new ArrayList<>();
     
     /**
      * Tracks buttons to manage the background.
@@ -98,7 +101,14 @@ public class JDrawingFrame extends JFrame
 
         // add export button in the menu
         JButton exportButton = new JButton("Export");
-        exportButton.addActionListener((ActionEvent actionEvent)->System.out.println(this.generateExportMenu()));
+        exportButton.addActionListener((ActionEvent actionEvent)-> {
+            switch (this.generateExportMenu()){
+                case "JSON" -> System.out.println(new JSONExportVisitor().export(shapes.toArray(new SimpleShape[0])));
+                case "XML" -> System.out.println(new XMLExportVisitor().export(shapes.toArray(new SimpleShape[0])));
+                default -> System.out.println("No export");
+            }
+
+        });
         toolbar.add(exportButton);
 
 
@@ -160,9 +170,21 @@ public class JDrawingFrame extends JFrame
         {
         	Graphics2D g2 = (Graphics2D) panel.getGraphics();
             switch (selected) {
-                case CIRCLE -> new Circle(evt.getX(), evt.getY()).draw(g2);
-                case TRIANGLE -> new Triangle(evt.getX(), evt.getY()).draw(g2);
-                case SQUARE -> new Square(evt.getX(), evt.getY()).draw(g2);
+                case CIRCLE -> {
+                    Circle c = new Circle(evt.getX(), evt.getY());
+                    c.draw(g2);
+                    this.shapes.add(c);
+                }
+                case TRIANGLE -> {
+                    Triangle t = new Triangle(evt.getX(), evt.getY());
+                    t.draw(g2);
+                    this.shapes.add(t);
+                }
+                case SQUARE -> {
+                    Square s = new Square(evt.getX(), evt.getY());
+                    s.draw(g2);
+                    this.shapes.add(s);
+                }
                 default -> logger.log(new LogRecord(Level.WARNING, "No shape named " + selected));
             }
         }
