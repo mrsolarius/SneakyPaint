@@ -28,9 +28,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.Serial;
 import java.util.EnumMap;
-import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -52,24 +53,25 @@ import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
 public class JDrawingFrame extends JFrame
     implements MouseListener, MouseMotionListener
 {
-    private static Logger logger = Logger.getLogger(JDrawingFrame.class.getName());
+    private static final Logger logger = Logger.getLogger(JDrawingFrame.class.getName());
 	private enum Shapes {SQUARE, TRIANGLE, CIRCLE}
+    @Serial
     private static final long serialVersionUID = 1L;
-    private JToolBar toolbar;
+    private final JToolBar toolbar;
     private Shapes selected;
-    private JPanel panel;
-    private JLabel label;
-    private transient ActionListener reusableActionListener = new ShapeActionListener();
+    private final JPanel panel;
+    private final JLabel label;
+    private final transient ActionListener reusableActionListener = new ShapeActionListener();
     
     /**
      * Tracks buttons to manage the background.
      */
-    private Map<Shapes, JButton> buttons = new EnumMap<>(Shapes.class);
+    private final Map<Shapes, JButton> buttons = new EnumMap<>(Shapes.class);
 
     /**
      * Default constructor that populates the main window.
-     * @param frameName 
-    **/
+     * @param frameName The name of the frame.
+     */
     public JDrawingFrame(String frameName)
     {
         super(frameName);
@@ -90,15 +92,39 @@ public class JDrawingFrame extends JFrame
         add(label, BorderLayout.SOUTH);
         
         // Add shapes in the menu
-        addShape(Shapes.SQUARE, new ImageIcon(getClass().getResource("images/square.png")));
-        addShape(Shapes.TRIANGLE, new ImageIcon(getClass().getResource("images/triangle.png")));
-        addShape(Shapes.CIRCLE, new ImageIcon(getClass().getResource("images/circle.png")));
+        addShape(Shapes.SQUARE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/square.png"))));
+        addShape(Shapes.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
+        addShape(Shapes.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
+
+        // add export button in the menu
+        JButton exportButton = new JButton("Export");
+        exportButton.addActionListener((ActionEvent actionEvent)->System.out.println(this.generateExportMenu()));
+        toolbar.add(exportButton);
+
 
         setPreferredSize(new Dimension(400, 400));
     }
 
 
-	/**
+    /**
+     * Generates popuo menu to select export format
+     * @return selected format {JSON,XML,NONE}
+     */
+    private String generateExportMenu(){
+        //popup a dialog to ask if we export in json or xml
+        String[] choices = { "JSON", "XML" };
+        return (String) JOptionPane.showInputDialog(
+                null,
+                "Export to ...",
+                "Export",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                choices, // Array of choices
+                choices[0] // Initial choice
+        );
+    }
+
+    /**
      * Injects an available <tt>SimpleShape</tt> into the drawing frame.
      * @param shape The name of the injected <tt>SimpleShape</tt>.
      * @param icon The icon associated with the injected <tt>SimpleShape</tt>.
@@ -133,17 +159,12 @@ public class JDrawingFrame extends JFrame
         if (panel.contains(evt.getX(), evt.getY()))
         {
         	Graphics2D g2 = (Graphics2D) panel.getGraphics();
-        	switch(selected)
-        	{
-		    	case CIRCLE: 		new Circle(evt.getX(), evt.getY()).draw(g2);
-									break;
-	    		case TRIANGLE: 		new Triangle(evt.getX(), evt.getY()).draw(g2);
-									break;
-        		case SQUARE: 		new Square(evt.getX(), evt.getY()).draw(g2);
-        							break;
-        		default: 			logger.log(new LogRecord(Level.WARNING,"No shape named " + selected));
- 
-        	}
+            switch (selected) {
+                case CIRCLE -> new Circle(evt.getX(), evt.getY()).draw(g2);
+                case TRIANGLE -> new Triangle(evt.getX(), evt.getY()).draw(g2);
+                case SQUARE -> new Square(evt.getX(), evt.getY()).draw(g2);
+                default -> logger.log(new LogRecord(Level.WARNING, "No shape named " + selected));
+            }
         }
     }
 
@@ -217,18 +238,16 @@ public class JDrawingFrame extends JFrame
         public void actionPerformed(ActionEvent evt)
         {
         	// Itère sur tous les boutons
-        	Iterator<Shapes> keys = buttons.keySet().iterator();
-        	while (keys.hasNext()) {
-        		Shapes shape = keys.next();
-				JButton btn = buttons.get(shape);
-				if (evt.getActionCommand().equals(shape.toString())) {
-					btn.setBorderPainted(true);
-					selected = shape;
-		        } else {
-					btn.setBorderPainted(false);
-				}
-				btn.repaint();
-			}
+            for (Shapes shape : buttons.keySet()) {
+                JButton btn = buttons.get(shape);
+                if (evt.getActionCommand().equals(shape.toString())) {
+                    btn.setBorderPainted(true);
+                    selected = shape;
+                } else {
+                    btn.setBorderPainted(false);
+                }
+                btn.repaint();
+            }
         }
     }
 }
