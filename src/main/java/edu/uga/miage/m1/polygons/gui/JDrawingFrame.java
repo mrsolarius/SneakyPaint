@@ -28,6 +28,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.Serial;
 import java.util.*;
 import java.util.logging.Level;
@@ -101,14 +103,7 @@ public class JDrawingFrame extends JFrame
 
         // add export button in the menu
         JButton exportButton = new JButton("Export");
-        exportButton.addActionListener((ActionEvent actionEvent)-> {
-            switch (this.generateExportMenu()){
-                case "JSON" -> System.out.println(new JSONExportVisitor().export(shapes.toArray(new SimpleShape[0])));
-                case "XML" -> System.out.println(new XMLExportVisitor().export(shapes.toArray(new SimpleShape[0])));
-                default -> System.out.println("No export");
-            }
-
-        });
+        exportButton.addActionListener((ActionEvent actionEvent)->this.exportToFileShapes(this.generateExportMenu()));
         toolbar.add(exportButton);
 
 
@@ -133,6 +128,37 @@ public class JDrawingFrame extends JFrame
                 choices[0] // Initial choice
         );
     }
+
+    private void exportToFileShapes(String type){
+        switch (type){
+            case "JSON" -> {
+                String json = new JSONExportVisitor().export(shapes.toArray(new SimpleShape[0]));
+                this.saveFile(json,"json");
+            }
+            case "XML" -> {
+                String xml = new XMLExportVisitor().export(shapes.toArray(new SimpleShape[0]));
+                this.saveFile(xml,"xml");
+            }
+            default -> System.out.println("No export");
+        }
+    }
+
+    /**
+     * save file with content and extention
+     */
+    private void saveFile(String content, String extention){
+        try {
+            File file = new File("shapes."+extention);
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(content);
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     /**
      * Injects an available <tt>SimpleShape</tt> into the drawing frame.
