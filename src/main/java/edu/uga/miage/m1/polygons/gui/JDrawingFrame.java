@@ -295,7 +295,7 @@ public class JDrawingFrame extends JFrame
         	// Itère sur tous les boutons
             for (Map.Entry<Shapes, JButton> shape : buttons.entrySet()) {
                 JButton btn = buttons.get(shape.getKey());
-                if (evt.getActionCommand().equals(shape.toString())) {
+                if (evt.getActionCommand().equals(shape.getKey().toString())) {
                     btn.setBorderPainted(true);
                     selected = shape.getKey();
                 } else {
