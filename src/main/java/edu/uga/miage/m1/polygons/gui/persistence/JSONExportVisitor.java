@@ -12,9 +12,6 @@ public class JSONExportVisitor implements Visitor {
 
     private String representation = null;
 
-    public JSONExportVisitor() {
-    }
-
     public String export(SimpleShape ... args) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
@@ -35,44 +32,30 @@ public class JSONExportVisitor implements Visitor {
 
     @Override
     public void visit(Circle circle) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"shape\":");
-        sb.append("{");
-        sb.append("\"type\":\"circle\",");
-        sb.append("\"x\":").append(circle.getX()).append(",");
-        sb.append("\"y\":").append(circle.getY());
-        sb.append("}");
-        sb.append("}");
-        this.representation = sb.toString();
+        this.representation = generateBaseShapeJson(circle, "circle");
     }
 
     @Override
     public void visit(Square square) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"shape\":");
-        sb.append("{");
-        sb.append("\"type\":\"square\",");
-        sb.append("\"x\":").append(square.getX()).append(",");
-        sb.append("\"y\":").append(square.getY());
-        sb.append("}");
-        sb.append("}");
-        this.representation = sb.toString();
+        this.representation = generateBaseShapeJson(square,"square");
     }
 
     @Override
     public void visit(Triangle triangle) {
+        this.representation = generateBaseShapeJson(triangle, "triangle");
+    }
+
+    public String generateBaseShapeJson(SimpleShape shape, String type) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         sb.append("\"shape\":");
         sb.append("{");
-        sb.append("\"type\":\"triangle\",");
-        sb.append("\"x\":").append(triangle.getX()).append(",");
-        sb.append("\"y\":").append(triangle.getY());
+        sb.append("\"type\":\"").append(type).append("\",");
+        sb.append("\"x\":").append(shape.getX()).append(",");
+        sb.append("\"y\":").append(shape.getY());
         sb.append("}");
         sb.append("}");
-        this.representation = sb.toString();
+        return sb.toString();
     }
 
     /**
