@@ -286,11 +286,11 @@ public class JDrawingFrame extends JFrame
         public void actionPerformed(ActionEvent evt)
         {
         	// Itère sur tous les boutons
-            for (Shapes shape : buttons.keySet()) {
-                JButton btn = buttons.get(shape);
+            for (Map.Entry<Shapes, JButton> shape : buttons.entrySet()) {
+                JButton btn = buttons.get(shape.getKey());
                 if (evt.getActionCommand().equals(shape.toString())) {
                     btn.setBorderPainted(true);
-                    selected = shape;
+                    selected = shape.getKey();
                 } else {
                     btn.setBorderPainted(false);
                 }
