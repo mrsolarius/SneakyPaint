@@ -14,16 +14,16 @@ public class XMLExportVisitor implements Visitor {
 
     public String export(SimpleShape... args) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + "\n");
-        sb.append("<root>" + "\n");
-        sb.append("<shapes>" + "\n");
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+        sb.append("<root>");
+        sb.append("<shapes>");
         for (SimpleShape shape : args) {
             shape.accept(this);
-            sb.append(this.getRepresentation()).append("\n");
+            sb.append(this.getRepresentation());
             this.representation = null;
         }
-        sb.append("</shapes>" + "\n");
-        sb.append("</root>" + "\n");
+        sb.append("</shapes>");
+        sb.append("</root>");
         return sb.toString();
     }
 
