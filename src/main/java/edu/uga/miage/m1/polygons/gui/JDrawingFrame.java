@@ -29,6 +29,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.Serial;
 import java.util.*;
@@ -38,12 +39,14 @@ import java.util.logging.Logger;
 
 import javax.swing.*;
 
+import edu.uga.miage.m1.polygons.gui.dto.AttributesDTO;
+import edu.uga.miage.m1.polygons.gui.dto.ShapeDTO;
+import edu.uga.miage.m1.polygons.gui.dto.ShapesDTO;
 import edu.uga.miage.m1.polygons.gui.persistence.JSONExportVisitor;
 import edu.uga.miage.m1.polygons.gui.persistence.XMLExportVisitor;
-import edu.uga.miage.m1.polygons.gui.shapes.Circle;
-import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
-import edu.uga.miage.m1.polygons.gui.shapes.Square;
-import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
+import edu.uga.miage.m1.polygons.gui.deserialization.Format;
+import edu.uga.miage.m1.polygons.gui.deserialization.ShapeParser;
+import edu.uga.miage.m1.polygons.gui.shapes.*;
 
 
 /**
@@ -97,14 +100,19 @@ public class JDrawingFrame extends JFrame
         add(label, BorderLayout.SOUTH);
         
         // Add shapes in the menu
-        addShape(Shapes.SQUARE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/square.png"))));
-        addShape(Shapes.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
-        addShape(Shapes.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
+        addShape(JDrawingFrame.Shapes.SQUARE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/square.png"))));
+        addShape(JDrawingFrame.Shapes.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
+        addShape(JDrawingFrame.Shapes.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
 
         // add export button in the menu
         JButton exportButton = new JButton("Export");
         exportButton.addActionListener((ActionEvent actionEvent)->this.exportToFileShapes(this.generateExportMenu()));
         toolbar.add(exportButton);
+
+        // add import button in the menu
+        JButton importButton = new JButton("Import");
+        importButton.addActionListener((ActionEvent actionEvent)->this.importFileShapes(this.generateImportMenu()));
+        toolbar.add(importButton);
 
 
         setPreferredSize(new Dimension(400, 400));
@@ -129,6 +137,18 @@ public class JDrawingFrame extends JFrame
         );
     }
 
+    private String generateImportMenu(){
+        //popup to select file to import
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            return selectedFile.getAbsolutePath();
+        }
+        return null;
+    }
+
     private void exportToFileShapes(String type){
         switch (type){
             case "JSON" -> {
@@ -140,6 +160,49 @@ public class JDrawingFrame extends JFrame
                 this.saveFile(xml,"xml");
             }
             default -> logger.log(new LogRecord(Level.WARNING,"No export format selected"));
+        }
+    }
+
+    private void importFileShapes(String path){
+        try (FileInputStream fstream = new FileInputStream(path)) {
+            String fileContent = new String(fstream.readAllBytes());
+            if (path.endsWith(".json")){
+                ShapesDTO shapes = ShapeParser.deserialize(fileContent, Format.JSON);
+                this.drawDTOShapes(shapes);
+            }
+            else if (path.endsWith(".xml")){
+                ShapesDTO shapes = ShapeParser.deserialize(fileContent, Format.XML);
+                this.drawDTOShapes(shapes);
+            }
+            else{
+                logger.log(new LogRecord(Level.WARNING,"No import format selected"));
+            }
+        } catch (Exception e) {
+            logger.log(new LogRecord(Level.WARNING,"Error while loading file"));
+        }
+    }
+
+    private void drawDTOShapes(ShapesDTO shapes){
+        Graphics2D g2 = (Graphics2D) panel.getGraphics();
+        for(ShapeDTO shapeDTO : shapes.getShapes()){
+            AttributesDTO s = shapeDTO.getShape();
+            switch (s.getType()){
+                case "circle" -> {
+                    Circle circle = new Circle(s.getX(),s.getY());
+                    circle.draw(g2);
+                    this.shapes.add(circle);
+                }
+                case "square" -> {
+                    Square square = new Square(s.getX(),s.getY());
+                    square.draw(g2);
+                    this.shapes.add(square);
+                }
+                case "triangle" -> {
+                    Triangle triangle = new Triangle(s.getX(),s.getY());
+                    triangle.draw(g2);
+                    this.shapes.add(triangle);
+                }
+            }
         }
     }
 
@@ -293,7 +356,7 @@ public class JDrawingFrame extends JFrame
         public void actionPerformed(ActionEvent evt)
         {
         	// Itère sur tous les boutons
-            for (Map.Entry<Shapes, JButton> shape : buttons.entrySet()) {
+            for (Map.Entry<JDrawingFrame.Shapes, JButton> shape : buttons.entrySet()) {
                 JButton btn = buttons.get(shape.getKey());
                 if (evt.getActionCommand().equals(shape.getKey().toString())) {
                     btn.setBorderPainted(true);
