@@ -201,6 +201,7 @@ public class JDrawingFrame extends JFrame
                     triangle.draw(g2);
                     this.shapes.add(triangle);
                 }
+                default -> logger.log(new LogRecord(Level.WARNING,"Unknown shape type"));
             }
         }
     }
