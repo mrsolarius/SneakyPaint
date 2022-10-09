@@ -39,7 +39,6 @@ import java.util.logging.Logger;
 
 import javax.swing.*;
 
-import edu.uga.miage.m1.polygons.gui.dto.AttributesDTO;
 import edu.uga.miage.m1.polygons.gui.dto.ShapeDTO;
 import edu.uga.miage.m1.polygons.gui.dto.ShapesDTO;
 import edu.uga.miage.m1.polygons.gui.persistence.JSONExportVisitor;
@@ -184,8 +183,7 @@ public class JDrawingFrame extends JFrame
 
     private void drawDTOShapes(ShapesDTO shapes){
         Graphics2D g2 = (Graphics2D) panel.getGraphics();
-        for(ShapeDTO shapeDTO : shapes.getShapes()){
-            AttributesDTO s = shapeDTO.getShape();
+        for(ShapeDTO s : shapes.getShapes()){
             switch (s.getType()){
                 case "circle" -> {
                     Circle circle = new Circle(s.getX(),s.getY());

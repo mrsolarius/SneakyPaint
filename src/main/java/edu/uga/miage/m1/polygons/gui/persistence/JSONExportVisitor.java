@@ -48,12 +48,9 @@ public class JSONExportVisitor implements Visitor {
     public String generateBaseShapeJson(SimpleShape shape, String type) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        sb.append("\"shape\":");
-        sb.append("{");
         sb.append("\"type\":\"").append(type).append("\",");
         sb.append("\"x\":").append(shape.getX()).append(",");
         sb.append("\"y\":").append(shape.getY());
-        sb.append("}");
         sb.append("}");
         return sb.toString();
     }
