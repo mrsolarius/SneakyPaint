@@ -9,6 +9,7 @@ import java.io.UncheckedIOException;
 
 
 public class ShapeDeserialization {
+
     private ShapeDeserialization() {
         throw new IllegalStateException("Utility class");
     }
