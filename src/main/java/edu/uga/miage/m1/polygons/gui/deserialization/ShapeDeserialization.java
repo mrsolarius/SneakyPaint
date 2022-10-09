@@ -8,7 +8,10 @@ import edu.uga.miage.m1.polygons.gui.dto.ShapesDTO;
 import java.io.UncheckedIOException;
 
 
-public class ShapeParser {
+public class ShapeDeserialization {
+    private ShapeDeserialization() {
+        throw new IllegalStateException("Utility class");
+    }
     private static final ObjectMapper XML_MAPPER = new XmlMapper();
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 

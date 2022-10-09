@@ -44,7 +44,7 @@ import edu.uga.miage.m1.polygons.gui.dto.ShapesDTO;
 import edu.uga.miage.m1.polygons.gui.persistence.JSONExportVisitor;
 import edu.uga.miage.m1.polygons.gui.persistence.XMLExportVisitor;
 import edu.uga.miage.m1.polygons.gui.deserialization.Format;
-import edu.uga.miage.m1.polygons.gui.deserialization.ShapeParser;
+import edu.uga.miage.m1.polygons.gui.deserialization.ShapeDeserialization;
 import edu.uga.miage.m1.polygons.gui.shapes.*;
 
 
@@ -167,11 +167,11 @@ public class JDrawingFrame extends JFrame
             String fileContent = new String(fstream.readAllBytes());
             ShapesDTO shapes = null;
             if (path.endsWith(".json")){
-                shapes = ShapeParser.deserialize(fileContent, Format.JSON);
+                shapes = ShapeDeserialization.deserialize(fileContent, Format.JSON);
                 this.drawDTOShapes(shapes);
             }
             else if (path.endsWith(".xml")){
-                shapes = ShapeParser.deserialize(fileContent, Format.XML);
+                shapes = ShapeDeserialization.deserialize(fileContent, Format.XML);
                 this.drawDTOShapes(shapes);
             }
             else{
