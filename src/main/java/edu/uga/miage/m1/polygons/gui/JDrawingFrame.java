@@ -104,9 +104,10 @@ public class JDrawingFrame extends JFrame
         addShape(JDrawingFrame.Shapes.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
 
         // add export button in the menu
+        String[] choices = { "JSON", "XML" };
         JButton exportButton = new JButton("Export");
         exportButton.addActionListener(
-                (ActionEvent actionEvent)->this.exportToFileShapes(this.generateExportMenu())
+                (ActionEvent actionEvent)->this.exportToFileShapes(GUIHelper.generateQuestionMenu(choices,"Export","Export to ..."))
         );
         toolbar.add(exportButton);
 
@@ -119,25 +120,6 @@ public class JDrawingFrame extends JFrame
 
 
         setPreferredSize(new Dimension(400, 400));
-    }
-
-
-    /**
-     * Generates popuo menu to select export format
-     * @return selected format {JSON,XML,NONE}
-     */
-    private String generateExportMenu(){
-        //popup a dialog to ask if we export in json or xml
-        String[] choices = { "JSON", "XML" };
-        return (String) JOptionPane.showInputDialog(
-                null,
-                "Export to ...",
-                "Export",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                choices, // Array of choices
-                choices[0] // Initial choice
-        );
     }
 
     private void exportToFileShapes(String type){
