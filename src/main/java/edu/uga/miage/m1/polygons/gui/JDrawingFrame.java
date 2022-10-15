@@ -105,12 +105,16 @@ public class JDrawingFrame extends JFrame
 
         // add export button in the menu
         JButton exportButton = new JButton("Export");
-        exportButton.addActionListener((ActionEvent actionEvent)->this.exportToFileShapes(this.generateExportMenu()));
+        exportButton.addActionListener(
+                (ActionEvent actionEvent)->this.exportToFileShapes(this.generateExportMenu())
+        );
         toolbar.add(exportButton);
 
         // add import button in the menu
         JButton importButton = new JButton("Import");
-        importButton.addActionListener((ActionEvent actionEvent)->this.importFileShapes(GUIHelper.generateImportMenu(this)));
+        importButton.addActionListener(
+                (ActionEvent actionEvent)->this.importFileShapes(GUIHelper.generateImportMenu(this))
+        );
         toolbar.add(importButton);
 
 
