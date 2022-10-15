@@ -19,15 +19,11 @@ public class ShapeDTO {
     private int y;
 
     public SimpleShape toEntity() {
-        switch (type) {
-            case "circle":
-                return new Circle(x, y);
-            case "square":
-                return new Square(x, y);
-            case "triangle":
-                return new Triangle(x, y);
-            default:
-                throw new IllegalArgumentException("Unknown type: " + type);
-        }
+        return switch (type) {
+            case "circle" -> new Circle(x, y);
+            case "square" -> new Square(x, y);
+            case "triangle" -> new Triangle(x, y);
+            default -> throw new IllegalArgumentException("Unknown type: " + type);
+        };
     }
 }
