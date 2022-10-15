@@ -16,8 +16,8 @@ public class TestShapeDTO {
         SimpleShape shape = shapeDTO.toEntity();
         assertNotNull (shape);
         assertInstanceOf(Circle.class, shape);
-        assertEquals (shape.getX(),10);
-        assertEquals (shape.getY(),10);
+        assertEquals (10,shape.getX());
+        assertEquals (10,shape.getY());
     }
 
     @Test
@@ -26,8 +26,8 @@ public class TestShapeDTO {
         SimpleShape shape = shapeDTO.toEntity();
         assertNotNull (shape);
         assertInstanceOf(Square.class, shape);
-        assertEquals (shape.getX(),20);
-        assertEquals (shape.getY(),20);
+        assertEquals (20,shape.getX());
+        assertEquals (20,shape.getY());
     }
 
     @Test
@@ -36,8 +36,8 @@ public class TestShapeDTO {
         SimpleShape shape = shapeDTO.toEntity();
         assertNotNull (shape );
         assertInstanceOf(Triangle.class, shape);
-        assertEquals (shape.getX(),30);
-        assertEquals (shape.getY(),30);
+        assertEquals (30,shape.getX());
+        assertEquals (30,shape.getY());
     }
 
     @Test

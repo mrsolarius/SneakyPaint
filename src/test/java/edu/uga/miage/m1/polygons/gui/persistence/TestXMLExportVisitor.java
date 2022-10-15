@@ -17,7 +17,7 @@ class TestXMLExportVisitor {
     void testExport() {
         String xml = xmlExportVisitor.export(generateShapes().toArray(new SimpleShape[0]));
         assertNotNull (xml );
-        assertEquals(xml,"<?xml version=\"1.0\" encoding=\"UTF-8\" ?><root><shapes><shape><type>circle</type><x>10</x><y>10</y></shape><shape><type>square</type><x>20</x><y>20</y></shape><shape><type>triangle</type><x>30</x><y>30</y></shape></shapes></root>");
+        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><root><shapes><shape><type>circle</type><x>10</x><y>10</y></shape><shape><type>square</type><x>20</x><y>20</y></shape><shape><type>triangle</type><x>30</x><y>30</y></shape></shapes></root>",xml);
     }
 
     private ArrayList<SimpleShape> generateShapes(){

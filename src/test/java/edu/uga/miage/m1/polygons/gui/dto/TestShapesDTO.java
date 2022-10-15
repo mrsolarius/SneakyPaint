@@ -16,15 +16,15 @@ public class TestShapesDTO {
         ShapeDTO shapeDTO3 = new ShapeDTO("triangle", 30, 30);
         ShapesDTO shapesDTO = new ShapesDTO(List.of(shapeDTO, shapeDTO2, shapeDTO3));
         assertNotNull (shapesDTO.getShapes());
-        assertEquals (shapesDTO.getShapes().size(),3);
-        assertEquals (shapesDTO.getShapes().get(0).getType(),"circle");
-        assertEquals (shapesDTO.getShapes().get(0).getX(),10);
-        assertEquals (shapesDTO.getShapes().get(0).getY(),10);
-        assertEquals (shapesDTO.getShapes().get(1).getType(),"square");
-        assertEquals (shapesDTO.getShapes().get(1).getX(),20);
-        assertEquals (shapesDTO.getShapes().get(1).getY(),20);
-        assertEquals (shapesDTO.getShapes().get(2).getType(),"triangle");
-        assertEquals (shapesDTO.getShapes().get(2).getX(),30);
-        assertEquals (shapesDTO.getShapes().get(2).getY(),30);
+        assertEquals (3,shapesDTO.getShapes().size());
+        assertEquals ("circle",shapesDTO.getShapes().get(0).getType());
+        assertEquals (10,shapesDTO.getShapes().get(0).getX());
+        assertEquals (10,shapesDTO.getShapes().get(0).getY());
+        assertEquals ("square",shapesDTO.getShapes().get(1).getType());
+        assertEquals (20,shapesDTO.getShapes().get(1).getX());
+        assertEquals (20,shapesDTO.getShapes().get(1).getY());
+        assertEquals ("triangle",shapesDTO.getShapes().get(2).getType());
+        assertEquals (30,shapesDTO.getShapes().get(2).getX());
+        assertEquals (30,shapesDTO.getShapes().get(2).getY());
     }
 }

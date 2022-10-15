@@ -8,7 +8,7 @@ class TestCircle {
     @Test
     void testCircle() {
         Circle c = new Circle(10, 10);
-        assertEquals(c.getX(),10);
-        assertEquals(c.getY(), 10);
+        assertEquals(10,c.getX());
+        assertEquals( 10,c.getY());
     }
 }

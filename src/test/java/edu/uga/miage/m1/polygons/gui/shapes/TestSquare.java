@@ -8,7 +8,7 @@ class TestSquare {
     @Test
     void testSquare() {
         Square s = new Square(10, 10);
-        assertEquals(s.getX(),10);
-        assertEquals(s.getY(),10);
+        assertEquals(10,s.getX());
+        assertEquals(10,s.getY());
     }
 }

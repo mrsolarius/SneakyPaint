@@ -8,7 +8,7 @@ class TestTriangle {
     @Test
     void testTriangle() {
         Triangle t = new Triangle(10, 10);
-        assertEquals(t.getX(),10);
-        assertEquals(t.getY(), 10);
+        assertEquals(10,t.getX());
+        assertEquals(10,t.getY());
     }
 }

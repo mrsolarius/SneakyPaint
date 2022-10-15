@@ -19,7 +19,7 @@ class TestJSONExportVisitor {
     void testExport() {
         String json = jsonExportVisitor.export(generateShapes().toArray(new SimpleShape[0]));
         assertNotNull(json);
-        assertEquals(json,"{\"shapes\":[{\"type\":\"circle\",\"x\":10,\"y\":10},{\"type\":\"square\",\"x\":20,\"y\":20},{\"type\":\"triangle\",\"x\":30,\"y\":30}]}");
+        assertEquals("{\"shapes\":[{\"type\":\"circle\",\"x\":10,\"y\":10},{\"type\":\"square\",\"x\":20,\"y\":20},{\"type\":\"triangle\",\"x\":30,\"y\":30}]}",json);
     }
 
     private ArrayList<SimpleShape> generateShapes(){
