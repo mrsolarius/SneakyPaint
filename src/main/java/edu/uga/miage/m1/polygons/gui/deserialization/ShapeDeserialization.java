@@ -10,9 +10,7 @@ import java.io.UncheckedIOException;
 
 public class ShapeDeserialization {
 
-    private ShapeDeserialization() {
-        throw new IllegalStateException("Utility class");
-    }
+    private ShapeDeserialization() {}
     private static final ObjectMapper XML_MAPPER = new XmlMapper();
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 
