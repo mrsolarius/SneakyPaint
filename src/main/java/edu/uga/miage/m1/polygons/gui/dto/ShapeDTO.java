@@ -6,9 +6,7 @@ import edu.uga.miage.m1.polygons.gui.shapes.Circle;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
-import lombok.Getter;
 
-@Getter
 public class ShapeDTO {
     @JsonIgnoreProperties
     @JsonProperty
