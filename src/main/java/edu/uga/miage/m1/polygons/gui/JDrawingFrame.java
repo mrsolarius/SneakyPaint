@@ -115,11 +115,11 @@ public class JDrawingFrame extends JFrame
         setJMenuBar(menuBar);
         
         // add callbacks to menu items
-        saveAsXML.addActionListener((e)-> saveAsXML());
-        saveAsJSON.addActionListener((e) -> saveAsJSON());
-        load.addActionListener((e) -> loadFile());
-        exit.addActionListener((e) -> System.exit(0));
-        clear.addActionListener((e) -> clearShapes());
+        saveAsXML.addActionListener(e-> saveAsXML());
+        saveAsJSON.addActionListener(e -> saveAsJSON());
+        load.addActionListener(e -> loadFile());
+        exit.addActionListener(e -> System.exit(0));
+        clear.addActionListener(e -> clearShapes());
 
         
         // Fills the panel
