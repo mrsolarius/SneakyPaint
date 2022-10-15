@@ -102,6 +102,7 @@ public class JDrawingFrame extends JFrame
         JMenuItem saveAsJSON = new JMenuItem("Save as JSON");
         JMenuItem load = new JMenuItem("Load");
         JMenuItem exit = new JMenuItem("Exit");
+        JMenuItem clear = new JMenuItem("Clear");
         JMenuItem undo = new JMenuItem("Undo");
         JMenuItem redo = new JMenuItem("Redo");
         fileMenu.add(saveAsXML);
@@ -110,6 +111,7 @@ public class JDrawingFrame extends JFrame
         fileMenu.add(exit);
         editMenu.add(undo);
         editMenu.add(redo);
+        editMenu.add(clear);
         setJMenuBar(menuBar);
         
         // add callbacks to menu items
@@ -117,6 +119,7 @@ public class JDrawingFrame extends JFrame
         saveAsJSON.addActionListener((e) -> saveAsJSON());
         load.addActionListener((e) -> loadFile());
         exit.addActionListener((e) -> System.exit(0));
+        clear.addActionListener((e) -> clearShapes());
 
         
         // Fills the panel
@@ -132,6 +135,11 @@ public class JDrawingFrame extends JFrame
 
 
         setPreferredSize(new Dimension(400, 400));
+    }
+
+    private void clearShapes() {
+        shapes.clear();
+        panel.repaint();
     }
 
     private void loadFile() {
