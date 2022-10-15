@@ -159,14 +159,14 @@ public class JDrawingFrame extends JFrame
     private void importFileShapes(String path){
         try (FileInputStream fstream = new FileInputStream(path)) {
             String fileContent = new String(fstream.readAllBytes());
-            ShapesDTO shapes = null;
+            ShapesDTO shapesDTO = null;
             if (path.endsWith(".json")){
-                shapes = ShapeDeserialization.deserialize(fileContent, Format.JSON);
-                this.drawDTOShapes(shapes);
+                shapesDTO = ShapeDeserialization.deserialize(fileContent, Format.JSON);
+                this.drawDTOShapes(shapesDTO);
             }
             else if (path.endsWith(".xml")){
-                shapes = ShapeDeserialization.deserialize(fileContent, Format.XML);
-                this.drawDTOShapes(shapes);
+                shapesDTO = ShapeDeserialization.deserialize(fileContent, Format.XML);
+                this.drawDTOShapes(shapesDTO);
             }
             else{
                 logger.log(new LogRecord(Level.WARNING,"No import format selected"));

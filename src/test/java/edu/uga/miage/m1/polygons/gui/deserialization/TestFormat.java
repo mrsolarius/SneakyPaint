@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestFormat {
+class TestFormat {
     @Test
     void testExists(){
         Format format = Format.JSON;

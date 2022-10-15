@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestShapeDTO {
+class TestShapeDTO {
 
     @Test
     void testToEntityCircle() {

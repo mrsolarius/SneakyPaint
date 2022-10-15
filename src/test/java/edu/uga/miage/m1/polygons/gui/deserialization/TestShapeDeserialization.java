@@ -8,7 +8,7 @@ import java.io.UncheckedIOException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestShapeDeserialization {
+class TestShapeDeserialization {
 
     @Test
     void testDeserializationJson() {
