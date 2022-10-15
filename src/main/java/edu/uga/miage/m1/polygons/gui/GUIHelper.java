@@ -36,21 +36,4 @@ public class GUIHelper {
 		}
 		return null;
 	}
-
-	/**
-	 * Generates popup menu to select export format
-	 */
-	public static String generateQuestionMenu(String[] choices, String title,String message){
-		//popup a dialog to ask if we export in json or xml
-		return (String) JOptionPane.showInputDialog(
-				null,
-				message,
-				title,
-				JOptionPane.QUESTION_MESSAGE,
-				null,
-				choices, // Array of choices
-				choices[0] // Initial choice
-		);
-	}
-
 }

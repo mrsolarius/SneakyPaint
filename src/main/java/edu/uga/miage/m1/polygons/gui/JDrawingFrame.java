@@ -91,6 +91,33 @@ public class JDrawingFrame extends JFrame
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
         label = new JLabel(" ", SwingConstants.LEFT);
+
+        // add top bar menu items file and edit
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        JMenu editMenu = new JMenu("Edit");
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        JMenuItem saveAsXML = new JMenuItem("Save as XML");
+        JMenuItem saveAsJSON = new JMenuItem("Save as JSON");
+        JMenuItem load = new JMenuItem("Load");
+        JMenuItem exit = new JMenuItem("Exit");
+        JMenuItem undo = new JMenuItem("Undo");
+        JMenuItem redo = new JMenuItem("Redo");
+        fileMenu.add(saveAsXML);
+        fileMenu.add(saveAsJSON);
+        fileMenu.add(load);
+        fileMenu.add(exit);
+        editMenu.add(undo);
+        editMenu.add(redo);
+        setJMenuBar(menuBar);
+        
+        // add callbacks to menu items
+        saveAsXML.addActionListener((e)-> saveAsXML());
+        saveAsJSON.addActionListener((e) -> saveAsJSON());
+        load.addActionListener((e) -> loadFile());
+        exit.addActionListener((e) -> System.exit(0));
+
         
         // Fills the panel
         setLayout(new BorderLayout());
@@ -103,37 +130,22 @@ public class JDrawingFrame extends JFrame
         addShape(JDrawingFrame.Shapes.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
         addShape(JDrawingFrame.Shapes.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
 
-        // add export button in the menu
-        String[] choices = { "JSON", "XML" };
-        JButton exportButton = new JButton("Export");
-        exportButton.addActionListener(
-                (ActionEvent actionEvent)->this.exportToFileShapes(GUIHelper.generateQuestionMenu(choices,"Export","Export to ..."))
-        );
-        toolbar.add(exportButton);
-
-        // add import button in the menu
-        JButton importButton = new JButton("Import");
-        importButton.addActionListener(
-                (ActionEvent actionEvent)->this.importFileShapes(GUIHelper.generateImportMenu(this))
-        );
-        toolbar.add(importButton);
-
 
         setPreferredSize(new Dimension(400, 400));
     }
 
-    private void exportToFileShapes(String type){
-        switch (type){
-            case "JSON" -> {
-                String json = new JSONExportVisitor().export(shapes.toArray(new SimpleShape[0]));
-                this.saveFile(json,"json");
-            }
-            case "XML" -> {
-                String xml = new XMLExportVisitor().export(shapes.toArray(new SimpleShape[0]));
-                this.saveFile(xml,"xml");
-            }
-            default -> logger.log(new LogRecord(Level.WARNING,"No export format selected"));
-        }
+    private void loadFile() {
+        this.importFileShapes(GUIHelper.generateImportMenu(this));
+    }
+
+    private void saveAsXML() {
+        String xml = new XMLExportVisitor().export(shapes.toArray(new SimpleShape[0]));
+        this.saveFile(xml,"xml");
+    }
+
+    private void saveAsJSON() {
+        String json = new JSONExportVisitor().export(shapes.toArray(new SimpleShape[0]));
+        this.saveFile(json,"json");
     }
 
     private void importFileShapes(String path){
