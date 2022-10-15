@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 class TestJSONExportVisitor {
 
     private final JSONExportVisitor jsonExportVisitor = new JSONExportVisitor();
@@ -15,8 +18,8 @@ class TestJSONExportVisitor {
     @Test
     void testExport() {
         String json = jsonExportVisitor.export(generateShapes().toArray(new SimpleShape[0]));
-        assert (json != null);
-        assert (json.equals("{\"shapes\":[{\"type\":\"circle\",\"x\":10,\"y\":10},{\"type\":\"square\",\"x\":20,\"y\":20},{\"type\":\"triangle\",\"x\":30,\"y\":30}]}"));
+        assertNotNull(json);
+        assertEquals(json,"{\"shapes\":[{\"type\":\"circle\",\"x\":10,\"y\":10},{\"type\":\"square\",\"x\":20,\"y\":20},{\"type\":\"triangle\",\"x\":30,\"y\":30}]}");
     }
 
     private ArrayList<SimpleShape> generateShapes(){

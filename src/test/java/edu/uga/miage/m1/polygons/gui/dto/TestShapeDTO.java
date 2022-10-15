@@ -2,9 +2,11 @@ package edu.uga.miage.m1.polygons.gui.dto;
 
 import edu.uga.miage.m1.polygons.gui.shapes.Circle;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
+import edu.uga.miage.m1.polygons.gui.shapes.Square;
+import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestShapeDTO {
 
@@ -12,28 +14,30 @@ public class TestShapeDTO {
     void testToEntityCircle() {
         ShapeDTO shapeDTO = new ShapeDTO("circle", 10, 10);
         SimpleShape shape = shapeDTO.toEntity();
-        assert (shape != null);
-        assert (shape instanceof Circle);
-        assert (shape.getX() == 10);
-        assert (shape.getY() == 10);
+        assertNotNull (shape);
+        assertInstanceOf(Circle.class, shape);
+        assertEquals (shape.getX(),10);
+        assertEquals (shape.getY(),10);
     }
 
     @Test
     void testToEntitySquare() {
         ShapeDTO shapeDTO = new ShapeDTO("square", 20, 20);
         SimpleShape shape = shapeDTO.toEntity();
-        assert (shape != null);
-        assert (shape.getX() == 20);
-        assert (shape.getY() == 20);
+        assertNotNull (shape);
+        assertInstanceOf(Square.class, shape);
+        assertEquals (shape.getX(),20);
+        assertEquals (shape.getY(),20);
     }
 
     @Test
     void testToEntityTriangle() {
         ShapeDTO shapeDTO = new ShapeDTO("triangle", 30, 30);
         SimpleShape shape = shapeDTO.toEntity();
-        assert (shape != null);
-        assert (shape.getX() == 30);
-        assert (shape.getY() == 30);
+        assertNotNull (shape );
+        assertInstanceOf(Triangle.class, shape);
+        assertEquals (shape.getX(),30);
+        assertEquals (shape.getY(),30);
     }
 
     @Test
