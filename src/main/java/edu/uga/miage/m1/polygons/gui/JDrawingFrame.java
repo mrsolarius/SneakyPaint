@@ -177,24 +177,9 @@ public class JDrawingFrame extends JFrame
     private void drawDTOShapes(ShapesDTO shapes){
         Graphics2D g2 = (Graphics2D) panel.getGraphics();
         for(ShapeDTO s : shapes.getShapes()){
-            switch (s.getType()){
-                case "circle" -> {
-                    Circle circle = new Circle(s.getX(),s.getY());
-                    circle.draw(g2);
-                    this.shapes.add(circle);
-                }
-                case "square" -> {
-                    Square square = new Square(s.getX(),s.getY());
-                    square.draw(g2);
-                    this.shapes.add(square);
-                }
-                case "triangle" -> {
-                    Triangle triangle = new Triangle(s.getX(),s.getY());
-                    triangle.draw(g2);
-                    this.shapes.add(triangle);
-                }
-                default -> logger.log(new LogRecord(Level.WARNING,"Unknown shape type"));
-            }
+            SimpleShape shape = s.toEntity();
+            shape.draw(g2);
+            this.shapes.add(shape);
         }
     }
 
