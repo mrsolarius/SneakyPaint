@@ -110,7 +110,7 @@ public class JDrawingFrame extends JFrame
 
         // add import button in the menu
         JButton importButton = new JButton("Import");
-        importButton.addActionListener((ActionEvent actionEvent)->this.importFileShapes(this.generateImportMenu()));
+        importButton.addActionListener((ActionEvent actionEvent)->this.importFileShapes(GUIHelper.generateImportMenu(this)));
         toolbar.add(importButton);
 
 
@@ -134,18 +134,6 @@ public class JDrawingFrame extends JFrame
                 choices, // Array of choices
                 choices[0] // Initial choice
         );
-    }
-
-    private String generateImportMenu(){
-        //popup to select file to import
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            return selectedFile.getAbsolutePath();
-        }
-        return null;
     }
 
     private void exportToFileShapes(String type){
