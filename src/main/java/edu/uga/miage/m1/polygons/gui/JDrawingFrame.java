@@ -59,7 +59,7 @@ public class JDrawingFrame extends JFrame
     implements MouseListener, MouseMotionListener
 {
     private static final Logger logger = Logger.getLogger(JDrawingFrame.class.getName());
-	private enum Shapes {SQUARE, TRIANGLE, CIRCLE}
+	private enum Shapes {SQUARE, TRIANGLE, CIRCLE,OUT}
     @Serial
     private static final long serialVersionUID = 1L;
     private final JToolBar toolbar;
@@ -68,7 +68,7 @@ public class JDrawingFrame extends JFrame
     private final JLabel label;
     private final transient ActionListener reusableActionListener = new ShapeActionListener();
 
-    private final List<SimpleShape> shapes = new ArrayList<>();
+    private final List<AbstractShape> shapes = new ArrayList<>();
     
     /**
      * Tracks buttons to manage the background.
@@ -133,6 +133,7 @@ public class JDrawingFrame extends JFrame
         addShape(JDrawingFrame.Shapes.SQUARE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/square.png"))));
         addShape(JDrawingFrame.Shapes.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
         addShape(JDrawingFrame.Shapes.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
+        addShape(JDrawingFrame.Shapes.OUT, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
 
 
         setPreferredSize(new Dimension(400, 400));
@@ -180,8 +181,8 @@ public class JDrawingFrame extends JFrame
     private void drawDTOShapes(ShapesDTO shapes){
         Graphics2D g2 = (Graphics2D) panel.getGraphics();
         for(ShapeDTO s : shapes.getShapes()){
-            SimpleShape shape = s.toEntity();
-            shape.draw(g2);
+            AbstractShape shape = s.toEntity(g2);
+            shape.draw();
             this.shapes.add(shape);
         }
     }
@@ -241,28 +242,43 @@ public class JDrawingFrame extends JFrame
     **/
     public void mouseClicked(MouseEvent evt)
     {
-
-        if (panel.contains(evt.getX(), evt.getY()))
+        if (panel.contains(evt.getX(), evt.getY()) && evt.getClickCount() == 1)
         {
+            unselectAllShapes();
         	Graphics2D g2 = (Graphics2D) panel.getGraphics();
             switch (selected) {
                 case CIRCLE -> {
-                    Circle c = new Circle(evt.getX(), evt.getY());
-                    c.draw(g2);
+                    Circle c = new Circle(g2,evt.getX(), evt.getY());
+                    c.draw();
                     this.shapes.add(c);
                 }
                 case TRIANGLE -> {
-                    Triangle t = new Triangle(evt.getX(), evt.getY());
-                    t.draw(g2);
+                    Triangle t = new Triangle(g2,evt.getX(), evt.getY());
+                    t.draw();
                     this.shapes.add(t);
                 }
                 case SQUARE -> {
-                    Square s = new Square(evt.getX(), evt.getY());
-                    s.draw(g2);
+                    Square s = new Square(g2,evt.getX(), evt.getY());
+                    s.draw();
                     this.shapes.add(s);
                 }
                 default -> logger.log(new LogRecord(Level.WARNING, "No shape named " + selected));
             }
+        }
+    }
+
+    private AbstractShape filterByCoordinate(int x, int y){
+        for(AbstractShape s : shapes){
+            if(s.contains(x,y)){
+                return s;
+            }
+        }
+        return null;
+    }
+
+    private void unselectAllShapes(){
+        for(AbstractShape s : shapes){
+            s.clickUnselect();
         }
     }
 
@@ -272,7 +288,7 @@ public class JDrawingFrame extends JFrame
     **/
     public void mouseEntered(MouseEvent evt)
     {
-    	
+
     }
 
     /**
@@ -292,6 +308,18 @@ public class JDrawingFrame extends JFrame
     **/
     public void mousePressed(MouseEvent evt)
     {
+        if (evt.getClickCount() == 2)
+        {
+            AbstractShape shape = filterByCoordinate(evt.getX(), evt.getY());
+            if (shape != null)
+            {
+                unselectAllShapes();
+                shape.clickSelect();
+                shape.draw();
+            }else {
+                unselectAllShapes();
+            }
+        }
     }
 
     /**

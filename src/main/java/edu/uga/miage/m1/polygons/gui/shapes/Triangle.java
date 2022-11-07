@@ -18,14 +18,10 @@
  */
 package edu.uga.miage.m1.polygons.gui.shapes;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.GeneralPath;
-import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
 
 /**
  * This inner class implements the triangle <tt>SimpleShape</tt> service.
@@ -33,23 +29,16 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
  *
  * @author <a href="mailto:christophe.saint-marcel@univ-grenoble-alpes.fr">Christophe</a>
  */
-public class Triangle implements SimpleShape, Visitable {
-
-    int x;
-
-    int y;
-
-    public Triangle(int x, int y) {
-        this.x = x;
-        this.y = y;
+public class Triangle extends AbstractShape {
+    public Triangle(Graphics2D g2, int x, int y) {
+        super(g2, x, y);
     }
 
     /**
      * Implements the <tt>SimpleShape.draw()</tt> method for painting
      * the shape.
-     * @param g2 The graphics object used for painting.
      */
-    public void draw(Graphics2D g2) {
+    public void draw() {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         GradientPaint gradient = new GradientPaint(x, y, Color.GREEN, x + 50, y, Color.WHITE);
         g2.setPaint(gradient);

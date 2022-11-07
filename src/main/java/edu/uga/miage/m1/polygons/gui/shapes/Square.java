@@ -18,14 +18,10 @@
  */
 package edu.uga.miage.m1.polygons.gui.shapes;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
-import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * This class implements the square <tt>SimpleShape</tt> extension.
@@ -33,45 +29,28 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
  *
  * @author <a href="mailto:christophe.saint-marcel@univ-grenoble-alpes.fr">Christophe</a>
  */
-public class Square implements SimpleShape, Visitable {
+public class Square extends AbstractShape {
 
-    int x;
-
-    int y;
-
-    public Square(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Square(Graphics2D g2, int x, int y) {
+        super(g2, x, y);
     }
 
     /**
      * Implements the <tt>SimpleShape.draw()</tt> method for painting
      * the shape.
-     * @param g2 The graphics object used for painting.
      */
-    public void draw(Graphics2D g2) {
+    public void draw() {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         GradientPaint gradient = new GradientPaint(x, y, Color.BLUE, x + 50, y, Color.WHITE);
         g2.setPaint(gradient);
-        g2.fill(new Rectangle2D.Double(x, y, 50, 50));
+        g2.fill(new Rectangle2D.Double(x, y, width, height));
         BasicStroke wideStroke = new BasicStroke(2.0f);
         g2.setColor(Color.black);
         g2.setStroke(wideStroke);
-        g2.draw(new Rectangle2D.Double(x, y, 50, 50));
+        g2.draw(new Rectangle2D.Double(x, y, width, height));
     }
-
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
-    }
-
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public int getY() {
-        return y;
     }
 }

@@ -18,52 +18,34 @@
  */
 package edu.uga.miage.m1.polygons.gui.shapes;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.Ellipse2D;
-import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
 
-public class Circle implements SimpleShape, Visitable {
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
-    int x;
+public class Circle extends AbstractShape {
 
-    int y;
-
-    public Circle(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Circle(Graphics2D g2, int x, int y) {
+        super(g2, x, y);
     }
 
     /**
      * Implements the <tt>SimpleShape.draw()</tt> method for painting
      * the shape.
-     * @param g2 The graphics object used for painting.
      */
-    public void draw(Graphics2D g2) {
+    public void draw() {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         GradientPaint gradient = new GradientPaint(x, y, Color.RED, x + 50, y, Color.WHITE);
         g2.setPaint(gradient);
-        g2.fill(new Ellipse2D.Double(x, y, 50, 50));
+        g2.fill(new Ellipse2D.Double(x, y, width, height));
         BasicStroke wideStroke = new BasicStroke(2.0f);
         g2.setColor(Color.black);
         g2.setStroke(wideStroke);
-        g2.draw(new Ellipse2D.Double(x, y, 50, 50));
+        g2.draw(new Ellipse2D.Double(x, y, width, height));
     }
 
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 }

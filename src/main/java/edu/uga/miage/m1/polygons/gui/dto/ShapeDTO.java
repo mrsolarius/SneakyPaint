@@ -1,10 +1,9 @@
 package edu.uga.miage.m1.polygons.gui.dto;
 
-import edu.uga.miage.m1.polygons.gui.shapes.Circle;
-import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
-import edu.uga.miage.m1.polygons.gui.shapes.Square;
-import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
+import edu.uga.miage.m1.polygons.gui.shapes.*;
 import lombok.Getter;
+
+import java.awt.*;
 
 @Getter
 public class ShapeDTO {
@@ -21,11 +20,11 @@ public class ShapeDTO {
 
     private int y;
 
-    public SimpleShape toEntity() {
+    public AbstractShape toEntity(Graphics2D g2) {
         return switch (type) {
-            case "circle" -> new Circle(x, y);
-            case "square" -> new Square(x, y);
-            case "triangle" -> new Triangle(x, y);
+            case "circle" -> new Circle(g2,x, y);
+            case "square" -> new Square(g2,x, y);
+            case "triangle" -> new Triangle(g2,x, y);
             default -> throw new IllegalArgumentException("Unknown type: " + type);
         };
     }
