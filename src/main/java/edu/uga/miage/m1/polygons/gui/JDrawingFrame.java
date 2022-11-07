@@ -84,6 +84,7 @@ public class JDrawingFrame extends JFrame
         super(frameName);
         // Instantiates components
         toolbar = new JToolBar("Toolbar");
+        toolbar.setOrientation(JToolBar.VERTICAL);
         panel = new JPanel();
         panel.setBackground(Color.WHITE);
         panel.setLayout(null);
@@ -124,7 +125,7 @@ public class JDrawingFrame extends JFrame
         
         // Fills the panel
         setLayout(new BorderLayout());
-        add(toolbar, BorderLayout.NORTH);
+        add(toolbar, BorderLayout.WEST);
         add(panel, BorderLayout.CENTER);
         add(label, BorderLayout.SOUTH);
         
@@ -159,7 +160,7 @@ public class JDrawingFrame extends JFrame
     private void importFileShapes(String path){
         try (FileInputStream fstream = new FileInputStream(path)) {
             String fileContent = new String(fstream.readAllBytes());
-            ShapesDTO shapesDTO = null;
+            ShapesDTO shapesDTO;
             if (path.endsWith(".json")){
                 shapesDTO = ShapeDeserialization.deserialize(fileContent, Format.JSON);
                 this.drawDTOShapes(shapesDTO);
