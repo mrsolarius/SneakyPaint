@@ -1,7 +1,6 @@
 package edu.uga.miage.m1.polygons.gui.shapes;
 
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
-import edu.uga.miage.m1.polygons.gui.shapes.states.UnselectedState;
 
 import java.awt.*;
 import java.util.ArrayList;
