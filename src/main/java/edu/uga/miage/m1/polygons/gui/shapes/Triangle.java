@@ -55,20 +55,17 @@ public class Triangle extends AbstractShape {
         g2.setColor(Color.black);
         g2.setStroke(wideStroke);
         g2.draw(polygon);
+        if (selected) {
+            drawSelection();
+        }
     }
 
+    /**
+     * Implements the visitor pattern for the shape.
+     * @param visitor the visitor
+     */
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
-    }
-
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public int getY() {
-        return y;
     }
 }

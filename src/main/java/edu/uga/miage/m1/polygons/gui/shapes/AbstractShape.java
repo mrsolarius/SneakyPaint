@@ -6,13 +6,15 @@ import edu.uga.miage.m1.polygons.gui.shapes.states.UnselectedState;
 
 import java.awt.*;
 
-public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Visitable {
+public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Visitable, Comparable<AbstractShape> {
     private static final int SELECTED_BORDER_WIDTH = 3;
     private static final int BORDER_PADDING = 5;
+    private static int elevationCounter;
     protected int x;
     protected int y;
     protected int width;
     protected int height;
+    protected int elevation;
     protected SimpleShapeState state;
     protected boolean selected;
 
@@ -26,16 +28,14 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
         this.width = 50;
         this.selected = false;
         this.g2 = g2;
+        AbstractShape.elevationCounter++;
+        this.elevation = AbstractShape.elevationCounter;
     }
 
-    private void drawSelection() {
+    abstract void draw();
+
+    void drawSelection() {
         g2.setColor(Color.BLACK);
-        g2.setStroke(new BasicStroke(SELECTED_BORDER_WIDTH));
-        g2.drawRect(x - BORDER_PADDING, y - BORDER_PADDING, width + BORDER_PADDING * 2, height + BORDER_PADDING * 2);
-    }
-
-    private void undrawSelection() {
-        g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(SELECTED_BORDER_WIDTH));
         g2.drawRect(x - BORDER_PADDING, y - BORDER_PADDING, width + BORDER_PADDING * 2, height + BORDER_PADDING * 2);
     }
@@ -48,7 +48,7 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
         return y;
     }
 
-    public boolean contains(int x, int y) {
+    public boolean isInside(int x, int y) {
         return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
     }
 
@@ -88,12 +88,31 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
     @Override
     public void select() {
         this.selected = true;
-        this.drawSelection();
     }
 
     @Override
     public void unselect() {
         this.selected = false;
-        this.undrawSelection();
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getElevation() {
+        return elevation;
+    }
+
+    public void setElevation(int elevation) {
+        this.elevation = elevation;
+    }
+
+    @Override
+    public int compareTo(AbstractShape o) {
+        return Integer.compare(this.getElevation(), o.getElevation());
     }
 }

@@ -19,33 +19,20 @@ package edu.uga.miage.m1.polygons.gui;
  */
 
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.Serial;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
+import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.states.AddCircle;
+import edu.uga.miage.m1.polygons.gui.whiteboard.states.AddSquare;
+import edu.uga.miage.m1.polygons.gui.whiteboard.states.AddTriangle;
+import edu.uga.miage.m1.polygons.gui.whiteboard.states.SelectMode;
 
 import javax.swing.*;
-
-import edu.uga.miage.m1.polygons.gui.dto.ShapeDTO;
-import edu.uga.miage.m1.polygons.gui.dto.ShapesDTO;
-import edu.uga.miage.m1.polygons.gui.persistence.JSONExportVisitor;
-import edu.uga.miage.m1.polygons.gui.persistence.XMLExportVisitor;
-import edu.uga.miage.m1.polygons.gui.deserialization.Format;
-import edu.uga.miage.m1.polygons.gui.deserialization.ShapeDeserialization;
-import edu.uga.miage.m1.polygons.gui.shapes.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.Serial;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 
 /**
@@ -55,21 +42,17 @@ import edu.uga.miage.m1.polygons.gui.shapes.*;
  * @author <a href="mailto:christophe.saint-marcel@univ-grenoble-alpes.fr">Christophe</a>
  *
  */
-public class JDrawingFrame extends JFrame
-    implements MouseListener, MouseMotionListener
+public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseListener
 {
     private static final Logger logger = Logger.getLogger(JDrawingFrame.class.getName());
-	private enum Shapes {SQUARE, TRIANGLE, CIRCLE,OUT}
+	private enum Shapes {SQUARE, TRIANGLE, CIRCLE,SELECT}
     @Serial
     private static final long serialVersionUID = 1L;
     private final JToolBar toolbar;
     private Shapes selected;
-    private final JPanel panel;
+    private final transient WhiteBoard whiteBoard;
     private final JLabel label;
     private final transient ActionListener reusableActionListener = new ShapeActionListener();
-
-    private final List<AbstractShape> shapes = new ArrayList<>();
-    
     /**
      * Tracks buttons to manage the background.
      */
@@ -85,12 +68,8 @@ public class JDrawingFrame extends JFrame
         // Instantiates components
         toolbar = new JToolBar("Toolbar");
         toolbar.setOrientation(JToolBar.VERTICAL);
-        panel = new JPanel();
-        panel.setBackground(Color.WHITE);
-        panel.setLayout(null);
-        panel.setMinimumSize(new Dimension(400, 400));
-        panel.addMouseListener(this);
-        panel.addMouseMotionListener(this);
+        whiteBoard = WhiteBoard.getInstance();
+        whiteBoard.addMouseMotionListener(this);
         label = new JLabel(" ", SwingConstants.LEFT);
 
         // add top bar menu items file and edit
@@ -116,34 +95,30 @@ public class JDrawingFrame extends JFrame
         setJMenuBar(menuBar);
         
         // add callbacks to menu items
-        saveAsXML.addActionListener(e-> saveAsXML());
-        saveAsJSON.addActionListener(e -> saveAsJSON());
-        load.addActionListener(e -> loadFile());
+        //saveAsXML.addActionListener(e-> saveAsXML());
+        //saveAsJSON.addActionListener(e -> saveAsJSON());
+        //load.addActionListener(e -> loadFile());
         exit.addActionListener(e -> System.exit(0));
-        clear.addActionListener(e -> clearShapes());
+        clear.addActionListener(e -> whiteBoard.clearShapes());
 
         
         // Fills the panel
         setLayout(new BorderLayout());
         add(toolbar, BorderLayout.WEST);
-        add(panel, BorderLayout.CENTER);
+        add(whiteBoard, BorderLayout.CENTER);
         add(label, BorderLayout.SOUTH);
         
         // Add shapes in the menu
         addShape(JDrawingFrame.Shapes.SQUARE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/square.png"))));
         addShape(JDrawingFrame.Shapes.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
         addShape(JDrawingFrame.Shapes.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
-        addShape(JDrawingFrame.Shapes.OUT, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
+        addShape(JDrawingFrame.Shapes.SELECT, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
 
 
         setPreferredSize(new Dimension(400, 400));
     }
 
-    private void clearShapes() {
-        shapes.clear();
-        panel.repaint();
-    }
-
+    /*
     private void loadFile() {
         this.importFileShapes(GUIHelper.generateImportMenu(this));
     }
@@ -180,17 +155,19 @@ public class JDrawingFrame extends JFrame
     }
 
     private void drawDTOShapes(ShapesDTO shapes){
-        Graphics2D g2 = (Graphics2D) panel.getGraphics();
+        Graphics2D g2 = (Graphics2D) whiteBoard.getGraphics();
         for(ShapeDTO s : shapes.getShapes()){
             AbstractShape shape = s.toEntity(g2);
             shape.draw();
             this.shapes.add(shape);
         }
     }
+     */
 
     /**
      * save file with content and extention
      */
+    /*
     private void saveFile(String content, String extention){
         File file = new File("shapes."+extention);
         FileWriter fileWriter = null;
@@ -207,7 +184,7 @@ public class JDrawingFrame extends JFrame
                 logger.log(new LogRecord(Level.SEVERE, "Error while closing file"));
             }
         }
-    }
+    }*/
 
 
 
@@ -235,39 +212,7 @@ public class JDrawingFrame extends JFrame
         repaint();
     }
 
-    /**
-     * TODO Use the factory to abstract shape creation
-     * Implements method for the <tt>MouseListener</tt> interface to
-     * draw the selected shape into the drawing canvas.
-     * @param evt The associated mouse event.
-    **/
-    public void mouseClicked(MouseEvent evt)
-    {
-        if (panel.contains(evt.getX(), evt.getY()) && evt.getClickCount() == 1)
-        {
-            unselectAllShapes();
-        	Graphics2D g2 = (Graphics2D) panel.getGraphics();
-            switch (selected) {
-                case CIRCLE -> {
-                    Circle c = new Circle(g2,evt.getX(), evt.getY());
-                    c.draw();
-                    this.shapes.add(c);
-                }
-                case TRIANGLE -> {
-                    Triangle t = new Triangle(g2,evt.getX(), evt.getY());
-                    t.draw();
-                    this.shapes.add(t);
-                }
-                case SQUARE -> {
-                    Square s = new Square(g2,evt.getX(), evt.getY());
-                    s.draw();
-                    this.shapes.add(s);
-                }
-                default -> logger.log(new LogRecord(Level.WARNING, "No shape named " + selected));
-            }
-        }
-    }
-
+    /*
     private AbstractShape filterByCoordinate(int x, int y){
         for(AbstractShape s : shapes){
             if(s.contains(x,y)){
@@ -283,23 +228,21 @@ public class JDrawingFrame extends JFrame
         }
     }
 
-    /**
-     * Implements an empty method for the <tt>MouseListener</tt> interface.
-     * @param evt The associated mouse event.
-    **/
-    public void mouseEntered(MouseEvent evt)
-    {
-
-    }
 
     /**
      * Implements an empty method for the <tt>MouseListener</tt> interface.
      * @param evt The associated mouse event.
     **/
+    @Override
     public void mouseExited(MouseEvent evt)
     {
     	label.setText(" ");
     	label.repaint();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
     }
 
     /**
@@ -307,8 +250,10 @@ public class JDrawingFrame extends JFrame
      * shape dragging.
      * @param evt The associated mouse event.
     **/
+    @Override
     public void mousePressed(MouseEvent evt)
     {
+        /*
         if (evt.getClickCount() == 2)
         {
             AbstractShape shape = filterByCoordinate(evt.getX(), evt.getY());
@@ -320,25 +265,22 @@ public class JDrawingFrame extends JFrame
             }else {
                 unselectAllShapes();
             }
-        }
+        }*/
     }
 
-    /**
-     * Implements method for the <tt>MouseListener</tt> interface to complete
-     * shape dragging.
-     * @param evt The associated mouse event.
-    **/
-    public void mouseReleased(MouseEvent evt)
-    {
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
     }
 
-    /**
-     * Implements method for the <tt>MouseMotionListener</tt> interface to
-     * move a dragged shape.
-     * @param evt The associated mouse event.
-    **/
-    public void mouseDragged(MouseEvent evt)
-    {
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
     }
 
     /**
@@ -346,6 +288,7 @@ public class JDrawingFrame extends JFrame
      * interface.
      * @param evt The associated mouse event.
     **/
+    @Override
     public void mouseMoved(MouseEvent evt)
     {
     	modifyLabel(evt);
@@ -370,6 +313,12 @@ public class JDrawingFrame extends JFrame
                 if (evt.getActionCommand().equals(shape.getKey().toString())) {
                     btn.setBorderPainted(true);
                     selected = shape.getKey();
+                    switch (selected) {
+                        case SQUARE -> whiteBoard.setState(AddSquare.getInstance(whiteBoard));
+                        case TRIANGLE -> whiteBoard.setState(AddTriangle.getInstance(whiteBoard));
+                        case CIRCLE -> whiteBoard.setState(AddCircle.getInstance(whiteBoard));
+                        case SELECT -> whiteBoard.setState(SelectMode.getInstance(whiteBoard));
+                    }
                 } else {
                     btn.setBorderPainted(false);
                 }

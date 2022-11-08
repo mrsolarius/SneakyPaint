@@ -11,8 +11,7 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
  */
 public interface SimpleShape extends Visitable
 {
-    void draw();
     int getX();
     int getY();
-    boolean contains(int x, int y);
+    boolean isInside(int x, int y);
 }

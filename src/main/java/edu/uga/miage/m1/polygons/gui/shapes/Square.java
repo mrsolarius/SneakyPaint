@@ -48,7 +48,14 @@ public class Square extends AbstractShape {
         g2.setColor(Color.black);
         g2.setStroke(wideStroke);
         g2.draw(new Rectangle2D.Double(x, y, width, height));
+        if (selected) {
+            drawSelection();
+        }
     }
+    /**
+     * Implements the visitor pattern for the shape.
+     * @param visitor the visitor
+     */
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
