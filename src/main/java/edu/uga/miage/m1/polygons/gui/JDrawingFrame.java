@@ -158,6 +158,7 @@ public class JDrawingFrame extends JFrame
         this.saveFile(json,"json");
     }
 
+    //@Todo: refactor this method it's break cause of group of shapes
     private void importFileShapes(String path){
         try (FileInputStream fstream = new FileInputStream(path)) {
             String fileContent = new String(fstream.readAllBytes());

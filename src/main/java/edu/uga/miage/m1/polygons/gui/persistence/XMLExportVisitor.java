@@ -1,9 +1,6 @@
 package edu.uga.miage.m1.polygons.gui.persistence;
 
-import edu.uga.miage.m1.polygons.gui.shapes.Circle;
-import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
-import edu.uga.miage.m1.polygons.gui.shapes.Square;
-import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
+import edu.uga.miage.m1.polygons.gui.shapes.*;
 
 /**
  * @author <a href="mailto:christophe.saint-marcel@univ-grenoble-alpes.fr">Christophe</a>
@@ -41,6 +38,21 @@ public class XMLExportVisitor implements Visitor {
     @Override
     public void visit(Triangle triangle) {
         this.representation=generateBaseShapeXml(triangle, "triangle");
+    }
+
+    @Override
+    public void visit(Groupe groupe) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<groupe>");
+        sb.append("<shapes>");
+        for (SimpleShape shape : groupe.getShapes()) {
+            shape.accept(this);
+            sb.append(this.getRepresentation());
+            this.representation = null;
+        }
+        sb.append("</shapes>");
+        sb.append("</groupe>");
+        this.representation = sb.toString();
     }
 
     public String generateBaseShapeXml(SimpleShape shape, String type) {
