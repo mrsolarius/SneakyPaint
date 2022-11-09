@@ -9,16 +9,10 @@ public class UnselectedState extends SimpleShapeStateImpl {
 
     @Override
     public void move(int x, int y) {
-        System.out.println("UnselectedState.move");
-        shape.changeState(new SelectedState(shape));
-        shape.select();
-        shape.move(x, y);
     }
 
     @Override
     public void resize(int x, int y) {
-        shape.changeState(new SelectedState(shape));
-        shape.resize(x, y);
     }
 
     @Override

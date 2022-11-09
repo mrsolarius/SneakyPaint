@@ -52,14 +52,15 @@ public class SelectMode extends WhiteBoardStateImpl{
     //---------------------------------------------//
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (this.whiteBoard.collidingChildren(e.getX(), e.getY())) {
-            this.moveMode();
+        if (this.whiteBoard.collidingChildren(e.getX(), e.getY())!=null) {
+            if (this.whiteBoard.collidingChildren(e.getX(),e.getY()).isSelected())
+                this.moveMode();
         }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if (this.whiteBoard.collidingChildren(e.getX(), e.getY())) {
+        if (this.whiteBoard.collidingChildren(e.getX(), e.getY())!=null) {
             this.whiteBoard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         } else {
             this.whiteBoard.setCursor(Cursor.getDefaultCursor());

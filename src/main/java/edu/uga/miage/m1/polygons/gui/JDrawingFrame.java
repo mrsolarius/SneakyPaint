@@ -20,10 +20,6 @@ package edu.uga.miage.m1.polygons.gui;
 
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
-import edu.uga.miage.m1.polygons.gui.whiteboard.states.AddCircle;
-import edu.uga.miage.m1.polygons.gui.whiteboard.states.AddSquare;
-import edu.uga.miage.m1.polygons.gui.whiteboard.states.AddTriangle;
-import edu.uga.miage.m1.polygons.gui.whiteboard.states.SelectMode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -112,7 +108,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         addShape(JDrawingFrame.Shapes.SQUARE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/square.png"))));
         addShape(JDrawingFrame.Shapes.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
         addShape(JDrawingFrame.Shapes.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
-        addShape(JDrawingFrame.Shapes.SELECT, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
+        addShape(JDrawingFrame.Shapes.SELECT, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/mouse.png"))));
 
 
         setPreferredSize(new Dimension(400, 400));
@@ -314,10 +310,10 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
                     btn.setBorderPainted(true);
                     selected = shape.getKey();
                     switch (selected) {
-                        case SQUARE -> whiteBoard.setState(AddSquare.getInstance(whiteBoard));
-                        case TRIANGLE -> whiteBoard.setState(AddTriangle.getInstance(whiteBoard));
-                        case CIRCLE -> whiteBoard.setState(AddCircle.getInstance(whiteBoard));
-                        case SELECT -> whiteBoard.setState(SelectMode.getInstance(whiteBoard));
+                        case SQUARE -> whiteBoard.getState().addSquare();
+                        case TRIANGLE -> whiteBoard.getState().addTriangle();
+                        case CIRCLE -> whiteBoard.getState().addCircle();
+                        case SELECT -> whiteBoard.getState().selectMode();
                     }
                 } else {
                     btn.setBorderPainted(false);

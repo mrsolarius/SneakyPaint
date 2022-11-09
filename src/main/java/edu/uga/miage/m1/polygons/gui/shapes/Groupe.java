@@ -91,23 +91,23 @@ public class Groupe extends AbstractShape{
             }
         }
         if (!found) {
-            unSelectAll();
+            unSelectAllChildren();
         }
     }
 
-    private void unSelectAll() {
+    public void unSelectAllChildren() {
         for (AbstractShape shape : shapes) {
             shape.clickUnselect();
         }
     }
 
-    public boolean collidingChildren(int x, int y) {
+    public AbstractShape collidingChildren(int x, int y) {
         for (AbstractShape shape : shapes) {
             if (shape.isInside(x, y)) {
-                return true;
+                return shape;
             }
         }
-        return false;
+        return null;
     }
 
     public void dragObject(int x, int y) {

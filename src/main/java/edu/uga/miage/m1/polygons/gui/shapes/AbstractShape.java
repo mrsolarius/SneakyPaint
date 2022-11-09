@@ -61,8 +61,6 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
 
 
     public void clickMove(int x, int y) {
-        System.out.println("AbstractShape.clickMove");
-        System.out.println("current state: " + state.getClass().getSimpleName());
         this.state.move(x, y);
     }
 
@@ -120,5 +118,9 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
     @Override
     public int compareTo(AbstractShape o) {
         return Integer.compare(this.getElevation(), o.getElevation());
+    }
+
+    public SimpleShapeState getState() {
+        return state;
     }
 }

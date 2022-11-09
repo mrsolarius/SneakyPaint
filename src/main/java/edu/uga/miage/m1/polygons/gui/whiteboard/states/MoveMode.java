@@ -2,12 +2,11 @@ package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class MoveMode extends WhiteBoardStateImpl{
-    int lastXMoved;
-    int lastYMoved;
+    private int lastXMoved;
+    private int lastYMoved;
     private static MoveMode instance;
     public static WhiteBoardState getInstance(WhiteBoard whiteBoard) {
         if (instance == null) {
@@ -88,6 +87,7 @@ public class MoveMode extends WhiteBoardStateImpl{
 
     @Override
     public void mousePressed(MouseEvent e) {
+        System.out.println("MoveMode.mousePressed");
         this.whiteBoard.setState(SelectMode.getInstance(this.whiteBoard));
         this.whiteBoard.selectShape(e.getX(), e.getY());
         this.lastXMoved = e.getX();
@@ -96,8 +96,7 @@ public class MoveMode extends WhiteBoardStateImpl{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        this.lastYMoved = 0;
-        this.lastXMoved = 0;
+        this.whiteBoard.setState(SelectMode.getInstance(this.whiteBoard));
     }
 
     @Override
@@ -114,6 +113,7 @@ public class MoveMode extends WhiteBoardStateImpl{
     //---------------------------------------------//
     @Override
     public void mouseDragged(MouseEvent e) {
+        System.out.println("MoveMode.mouseDragged");
         if (lastXMoved == 0 && lastYMoved == 0) {
             lastXMoved = e.getX();
             lastYMoved = e.getY();
@@ -127,12 +127,8 @@ public class MoveMode extends WhiteBoardStateImpl{
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        this.whiteBoard.selectShape(e.getX(), e.getY());
-        if (this.whiteBoard.collidingChildren(e.getX(), e.getY())) {
-            this.whiteBoard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        } else {
-            this.whiteBoard.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        }
+        this.lastXMoved = e.getX();
+        this.lastYMoved = e.getY();
     }
 
 }

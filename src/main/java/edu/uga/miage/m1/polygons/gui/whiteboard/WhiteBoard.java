@@ -47,9 +47,11 @@ public class WhiteBoard extends JPanel {
     }
 
     private void repaintAll() {
-        get2DGraphics().clearRect(0, 0, getWidth(), getHeight());
-        //get2DGraphics().dispose();
-        mainGroupe.draw();
+        if (get2DGraphics()!=null) {
+            get2DGraphics().clearRect(0, 0, getWidth(), getHeight());
+            //get2DGraphics().dispose();
+            mainGroupe.draw();
+        }
     }
 
     private void addShape(AbstractShape shape) {
@@ -88,11 +90,18 @@ public class WhiteBoard extends JPanel {
         repaintAll();
     }
 
-    public boolean collidingChildren(int x, int y) {
+    public AbstractShape collidingChildren(int x, int y) {
         return mainGroupe.collidingChildren(x, y);
     }
 
     public WhiteBoardState getState() {
         return this.state;
     }
+
+    public void unSelectAll() {
+        mainGroupe.unSelectAllChildren();
+        repaintAll();
+    }
+
+
 }
