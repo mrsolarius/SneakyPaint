@@ -2,6 +2,8 @@ package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 
+import java.awt.*;
+
 public abstract class WhiteBoardStateImpl implements WhiteBoardState {
     protected WhiteBoard whiteBoard;
 
@@ -30,11 +32,13 @@ public abstract class WhiteBoardStateImpl implements WhiteBoardState {
     @Override
     public void selectMode() {
         whiteBoard.setState(SelectMode.getInstance(whiteBoard));
+        whiteBoard.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
     @Override
     public void moveMode() {
         whiteBoard.setState(MoveMode.getInstance(whiteBoard));
+        whiteBoard.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
     }
 
     @Override

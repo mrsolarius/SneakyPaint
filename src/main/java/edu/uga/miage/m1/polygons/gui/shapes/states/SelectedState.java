@@ -9,6 +9,7 @@ public class SelectedState extends SimpleShapeStateImpl{
 
     @Override
     public void move(int x, int y) {
+        System.out.println("SelectedState.move");
         shape.move(x, y);
     }
 

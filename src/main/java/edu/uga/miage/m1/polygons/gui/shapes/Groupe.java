@@ -100,4 +100,21 @@ public class Groupe extends AbstractShape{
             shape.clickUnselect();
         }
     }
+
+    public boolean collidingChildren(int x, int y) {
+        for (AbstractShape shape : shapes) {
+            if (shape.isInside(x, y)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void dragObject(int x, int y) {
+        for (AbstractShape shape : shapes) {
+            if (shape.isSelected()) {
+                shape.clickMove(x, y);
+            }
+        }
+    }
 }

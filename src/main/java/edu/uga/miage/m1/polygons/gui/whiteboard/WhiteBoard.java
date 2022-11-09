@@ -37,6 +37,7 @@ public class WhiteBoard extends JPanel {
         removeMouseListener(this.state);
         removeMouseMotionListener(this.state);
         this.state = state;
+        System.out.println("State changed to " + state.getClass().getSimpleName());
         addMouseListener(this.state);
         addMouseMotionListener(this.state);
     }
@@ -47,7 +48,7 @@ public class WhiteBoard extends JPanel {
 
     private void repaintAll() {
         get2DGraphics().clearRect(0, 0, getWidth(), getHeight());
-        get2DGraphics().dispose();
+        //get2DGraphics().dispose();
         mainGroupe.draw();
     }
 
@@ -81,4 +82,17 @@ public class WhiteBoard extends JPanel {
         repaintAll();
     }
 
+    public void dragObject(int x, int y) {
+        //System.out.println("dragging {x: " + x + ", y: " + y + "}");
+        mainGroupe.dragObject(x, y);
+        repaintAll();
+    }
+
+    public boolean collidingChildren(int x, int y) {
+        return mainGroupe.collidingChildren(x, y);
+    }
+
+    public WhiteBoardState getState() {
+        return this.state;
+    }
 }

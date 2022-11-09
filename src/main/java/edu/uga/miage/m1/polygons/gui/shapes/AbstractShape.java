@@ -48,6 +48,9 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
         return y;
     }
 
+    public boolean isSelected() {
+        return selected;
+    }
     public boolean isInside(int x, int y) {
         return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
     }
@@ -58,6 +61,8 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
 
 
     public void clickMove(int x, int y) {
+        System.out.println("AbstractShape.clickMove");
+        System.out.println("current state: " + state.getClass().getSimpleName());
         this.state.move(x, y);
     }
 
@@ -75,8 +80,9 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
 
     @Override
     public void move(int x, int y) {
-        this.x = x;
-        this.y = y;
+        System.out.println("Move x: " + x + " y: " + y);
+        this.x += x;
+        this.y += y;
     }
 
     @Override

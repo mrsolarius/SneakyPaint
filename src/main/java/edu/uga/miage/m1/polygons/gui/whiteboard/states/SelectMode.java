@@ -2,6 +2,7 @@ package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class SelectMode extends WhiteBoardStateImpl{
@@ -51,12 +52,18 @@ public class SelectMode extends WhiteBoardStateImpl{
     //---------------------------------------------//
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        if (this.whiteBoard.collidingChildren(e.getX(), e.getY())) {
+            this.moveMode();
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        if (this.whiteBoard.collidingChildren(e.getX(), e.getY())) {
+            this.whiteBoard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        } else {
+            this.whiteBoard.setCursor(Cursor.getDefaultCursor());
+        }
     }
 
 }
