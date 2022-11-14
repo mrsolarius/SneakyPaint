@@ -16,25 +16,25 @@ public abstract class WhiteBoardStateImpl implements WhiteBoardState {
     //-----------------------------------------//
     @Override
     public void addCircle() {
-        whiteBoard.setState(AddCircle.getInstance(whiteBoard));
+        whiteBoard.setState(new AddCircle(whiteBoard));
         whiteBoard.unSelectAll();
     }
 
     @Override
     public void addSquare() {
-        whiteBoard.setState(AddSquare.getInstance(whiteBoard));
+        whiteBoard.setState(new AddSquare(whiteBoard));
         whiteBoard.unSelectAll();
     }
 
     @Override
     public void addTriangle() {
-        whiteBoard.setState(AddTriangle.getInstance(whiteBoard));
+        whiteBoard.setState(new AddTriangle(whiteBoard));
         whiteBoard.unSelectAll();
     }
 
     @Override
     public void selectMode() {
-        whiteBoard.setState(SelectMode.getInstance(whiteBoard));
+        whiteBoard.setState(new SelectMode(whiteBoard));
         whiteBoard.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 

@@ -6,15 +6,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class SelectMode extends WhiteBoardStateImpl{
-    private static SelectMode instance;
-    public static WhiteBoardState getInstance(WhiteBoard whiteBoard) {
-        if (instance == null) {
-            instance = new SelectMode(whiteBoard);
-        }
-        return instance;
-    }
 
-    private SelectMode(WhiteBoard whiteBoard) {
+    SelectMode(WhiteBoard whiteBoard) {
         super(whiteBoard);
     }
 

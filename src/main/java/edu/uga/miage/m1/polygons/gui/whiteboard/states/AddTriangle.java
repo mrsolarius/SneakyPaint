@@ -5,15 +5,8 @@ import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 import java.awt.event.MouseEvent;
 
 public class AddTriangle extends WhiteBoardStateImpl{
-    private static AddTriangle instance;
-    public static WhiteBoardState getInstance(WhiteBoard whiteBoard) {
-        if (instance == null) {
-            instance = new AddTriangle(whiteBoard);
-        }
-        return instance;
-    }
 
-    private AddTriangle(WhiteBoard whiteBoard) {
+    AddTriangle(WhiteBoard whiteBoard) {
         super(whiteBoard);
     }
 
