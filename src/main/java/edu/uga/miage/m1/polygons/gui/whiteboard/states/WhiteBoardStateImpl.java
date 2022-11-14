@@ -40,7 +40,7 @@ public abstract class WhiteBoardStateImpl implements WhiteBoardState {
 
     @Override
     public void moveMode() {
-        whiteBoard.setState(MoveMode.getInstance(whiteBoard));
+        whiteBoard.setState(new MoveMode(whiteBoard));
         whiteBoard.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
     }
 

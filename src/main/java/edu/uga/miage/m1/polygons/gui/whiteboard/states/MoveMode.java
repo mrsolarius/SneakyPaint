@@ -7,15 +7,9 @@ import java.awt.event.MouseEvent;
 public class MoveMode extends WhiteBoardStateImpl{
     private int lastXMoved;
     private int lastYMoved;
-    private static MoveMode instance;
-    public static WhiteBoardState getInstance(WhiteBoard whiteBoard) {
-        if (instance == null) {
-            instance = new MoveMode(whiteBoard);
-        }
-        return instance;
-    }
 
-    private MoveMode(WhiteBoard whiteBoard) {
+    // Move mode need to be reset each time we use it this is why we don't use a singleton
+    protected MoveMode(WhiteBoard whiteBoard) {
         super(whiteBoard);
     }
 
@@ -75,6 +69,11 @@ public class MoveMode extends WhiteBoardStateImpl{
     @Override
     public void load() {
 
+    }
+
+    private void reset() {
+        lastXMoved = 0;
+        lastYMoved = 0;
     }
 
     //---------------------------------------//

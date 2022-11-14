@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.shapes;
 
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
+import edu.uga.miage.m1.polygons.gui.shapes.states.UnselectedState;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -30,12 +31,28 @@ public class Groupe extends AbstractShape{
         }
     }
 
+    private void calculateX(AbstractShape shape) {
+        if (shape.getX() > this.x) {
+            this.x = shape.getX();
+        }
+    }
+
+    private void calculateY(AbstractShape shape) {
+        if (shape.getY() > this.y) {
+            this.y = shape.getY();
+        }
+    }
+
     private void updateSize(AbstractShape shape) {
+        calculateX(shape);
+        calculateY(shape);
         calculateNewHeight(shape);
         calculateNewWidth(shape);
     }
 
     private void updateAllSize() {
+        this.x = 0;
+        this.y = 0;
         this.height = 0;
         this.width = 0;
         for (AbstractShape shape : shapes) {
@@ -69,6 +86,21 @@ public class Groupe extends AbstractShape{
         }
     }
 
+    public void groupeSelectedShapes(){
+        Groupe groupe = new Groupe(g2, x, y);
+        for (AbstractShape shape : shapes) {
+            if (shape.isSelected()) {
+                shapes.remove(shape);
+                shape.changeState(new UnselectedState(shape));
+                groupe.addShape(shape);
+            }
+        }
+        if (groupe.shapes.size() > 0) {
+            this.addShape(groupe);
+            groupe.select();
+        }
+    }
+
     public List<SimpleShape> getShapes() {
         return Collections.singletonList((SimpleShape) shapes);
     }
@@ -87,7 +119,7 @@ public class Groupe extends AbstractShape{
         for (AbstractShape shape : shapes) {
             if (shape.isInside(x, y)) {
                 found = true;
-                shape.clickSelect();
+                shape.getState().select();
             }
         }
         if (!found) {
@@ -97,7 +129,7 @@ public class Groupe extends AbstractShape{
 
     public void unSelectAllChildren() {
         for (AbstractShape shape : shapes) {
-            shape.clickUnselect();
+            shape.getState().unselect();
         }
     }
 
@@ -113,7 +145,7 @@ public class Groupe extends AbstractShape{
     public void dragObject(int x, int y) {
         for (AbstractShape shape : shapes) {
             if (shape.isSelected()) {
-                shape.clickMove(x, y);
+                shape.getState().move(x, y);
             }
         }
     }

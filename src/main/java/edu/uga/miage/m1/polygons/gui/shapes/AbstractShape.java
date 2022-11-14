@@ -59,23 +59,6 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
         this.state = state;
     }
 
-
-    public void clickMove(int x, int y) {
-        this.state.move(x, y);
-    }
-
-    public void clickResize(int height, int width) {
-        this.state.resize(height, width);
-    }
-
-    public void clickSelect() {
-        this.state.select();
-    }
-
-    public void clickUnselect() {
-        this.state.unselect();
-    }
-
     @Override
     public void move(int x, int y) {
         System.out.println("Move x: " + x + " y: " + y);

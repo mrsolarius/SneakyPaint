@@ -103,5 +103,8 @@ public class WhiteBoard extends JPanel {
         repaintAll();
     }
 
-
+    public void groupeSelectedShapes(){
+        mainGroupe.groupeSelectedShapes();
+        repaintAll();
+    }
 }

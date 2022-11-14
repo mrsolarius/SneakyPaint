@@ -78,6 +78,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         JMenuItem saveAsJSON = new JMenuItem("Save as JSON");
         JMenuItem load = new JMenuItem("Load");
         JMenuItem exit = new JMenuItem("Exit");
+        JMenuItem group = new JMenuItem("Group");
         JMenuItem clear = new JMenuItem("Clear");
         JMenuItem undo = new JMenuItem("Undo");
         JMenuItem redo = new JMenuItem("Redo");
@@ -88,6 +89,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         editMenu.add(undo);
         editMenu.add(redo);
         editMenu.add(clear);
+        editMenu.add(group);
         setJMenuBar(menuBar);
         
         // add callbacks to menu items
@@ -96,6 +98,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         //load.addActionListener(e -> loadFile());
         exit.addActionListener(e -> System.exit(0));
         clear.addActionListener(e -> whiteBoard.clearShapes());
+        group.addActionListener(e -> whiteBoard.groupeSelectedShapes());
 
         
         // Fills the panel
