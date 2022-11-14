@@ -5,15 +5,8 @@ import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 import java.awt.event.MouseEvent;
 
 public class AddCircle extends WhiteBoardStateImpl{
-    private static AddCircle instance;
-    public static WhiteBoardState getInstance(WhiteBoard whiteBoard) {
-        if (instance == null) {
-            instance = new AddCircle(whiteBoard);
-        }
-        return instance;
-    }
 
-    private AddCircle(WhiteBoard whiteBoard) {
+    public AddCircle(WhiteBoard whiteBoard) {
         super(whiteBoard);
     }
 

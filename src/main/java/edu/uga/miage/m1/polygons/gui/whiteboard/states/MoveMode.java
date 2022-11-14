@@ -9,7 +9,7 @@ public class MoveMode extends WhiteBoardStateImpl{
     private int lastYMoved;
 
     // Move mode need to be reset each time we use it this is why we don't use a singleton
-    protected MoveMode(WhiteBoard whiteBoard) {
+    public MoveMode(WhiteBoard whiteBoard) {
         super(whiteBoard);
     }
 
@@ -81,13 +81,13 @@ public class MoveMode extends WhiteBoardStateImpl{
     //---------------------------------------//
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.whiteBoard.setState(SelectMode.getInstance(this.whiteBoard));
+        this.whiteBoard.setState(new SelectMode(this.whiteBoard));
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         System.out.println("MoveMode.mousePressed");
-        this.whiteBoard.setState(SelectMode.getInstance(this.whiteBoard));
+        this.whiteBoard.setState(new SelectMode(this.whiteBoard));
         this.whiteBoard.selectShape(e.getX(), e.getY());
         this.lastXMoved = e.getX();
         this.lastYMoved = e.getY();
@@ -95,7 +95,7 @@ public class MoveMode extends WhiteBoardStateImpl{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        this.whiteBoard.setState(SelectMode.getInstance(this.whiteBoard));
+        this.whiteBoard.setState(new SelectMode(this.whiteBoard));
     }
 
     @Override

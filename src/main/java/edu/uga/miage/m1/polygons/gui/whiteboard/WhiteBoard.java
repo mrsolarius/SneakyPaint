@@ -26,7 +26,7 @@ public class WhiteBoard extends JPanel {
         addMouseListener(this.state);
         addMouseMotionListener(this.state);
         mainGroupe = new Groupe(get2DGraphics(), 0, 0);
-        this.state = SelectMode.getInstance(this);
+        this.state = new SelectMode(this);
     }
 
     private Graphics2D get2DGraphics() {

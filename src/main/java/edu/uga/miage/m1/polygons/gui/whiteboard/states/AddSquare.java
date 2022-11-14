@@ -5,15 +5,8 @@ import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 import java.awt.event.MouseEvent;
 
 public class AddSquare extends WhiteBoardStateImpl{
-    private static AddSquare instance;
-    public static WhiteBoardState getInstance(WhiteBoard whiteBoard) {
-        if (instance == null) {
-            instance = new AddSquare(whiteBoard);
-        }
-        return instance;
-    }
 
-    private AddSquare(WhiteBoard whiteBoard) {
+    public AddSquare(WhiteBoard whiteBoard) {
         super(whiteBoard);
     }
 
