@@ -1,12 +1,11 @@
 package edu.uga.miage.m1.polygons.gui.shapes;
 
-import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.shapes.states.SimpleShapeState;
 import edu.uga.miage.m1.polygons.gui.shapes.states.UnselectedState;
 
 import java.awt.*;
 
-public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Visitable, Comparable<AbstractShape> {
+public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
     private static final int SELECTED_BORDER_WIDTH = 3;
     private static final int BORDER_PADDING = 5;
     private static int elevationCounter;
@@ -32,77 +31,85 @@ public abstract class AbstractShape implements SimpleShape, SimpleShapeState, Vi
         this.elevation = AbstractShape.elevationCounter;
     }
 
-    abstract void draw();
-
     void drawSelection() {
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(SELECTED_BORDER_WIDTH));
         g2.drawRect(x - BORDER_PADDING, y - BORDER_PADDING, width + BORDER_PADDING * 2, height + BORDER_PADDING * 2);
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-    public boolean isInside(int x, int y) {
-        return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
-    }
-
-    public void changeState(SimpleShapeState state) {
-        this.state = state;
-    }
-
+    //----------------------------//
+    // SimpleShapeState implement //
+    //----------------------------//
     @Override
     public void move(int x, int y) {
-        System.out.println("Move x: " + x + " y: " + y);
         this.x += x;
         this.y += y;
     }
-
     @Override
     public void resize(int width, int height) {
         this.width = width;
         this.height = height;
     }
-
     @Override
     public void select() {
         this.selected = true;
     }
-
     @Override
     public void unselect() {
         this.selected = false;
     }
+    @Override
+    public void group(){
 
+    }
+    @Override
+    public void ungroup(){
+
+    }
+
+    //-----------------------//
+    // SimpleShape implement //
+    //-----------------------//
+    @Override
+    public int getX() {
+        return x;
+    }
+    @Override
+    public int getY() {
+        return y;
+    }
+    @Override
     public int getWidth() {
         return width;
     }
-
+    @Override
     public int getHeight() {
         return height;
     }
-
+    @Override
     public int getElevation() {
         return elevation;
     }
-
-    public void setElevation(int elevation) {
-        this.elevation = elevation;
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+    @Override
+    public boolean isInside(int x, int y) {
+        return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
     }
 
+    //----------------------//
+    // Comparable implement //
+    //----------------------//
     @Override
-    public int compareTo(AbstractShape o) {
+    public int compareTo(SimpleShape o) {
         return Integer.compare(this.getElevation(), o.getElevation());
     }
 
+    public void changeState(SimpleShapeState state) {
+        this.state = state;
+    }
     public SimpleShapeState getState() {
         return state;
     }

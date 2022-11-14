@@ -91,7 +91,7 @@ public class WhiteBoard extends JPanel {
     }
 
     public AbstractShape collidingChildren(int x, int y) {
-        return mainGroupe.collidingChildren(x, y);
+        return (AbstractShape) mainGroupe.collidingChildren(x, y);
     }
 
     public WhiteBoardState getState() {
