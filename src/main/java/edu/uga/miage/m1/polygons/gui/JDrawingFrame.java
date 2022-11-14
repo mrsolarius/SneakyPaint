@@ -98,7 +98,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         //load.addActionListener(e -> loadFile());
         exit.addActionListener(e -> System.exit(0));
         clear.addActionListener(e -> whiteBoard.clearShapes());
-        group.addActionListener(e -> whiteBoard.groupeSelectedShapes());
+        group.addActionListener(e -> whiteBoard.groupSelectedShapes());
 
         
         // Fills the panel

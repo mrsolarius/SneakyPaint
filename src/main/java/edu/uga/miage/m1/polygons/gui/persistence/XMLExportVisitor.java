@@ -41,11 +41,11 @@ public class XMLExportVisitor implements Visitor {
     }
 
     @Override
-    public void visit(Groupe groupe) {
+    public void visit(Group group) {
         StringBuilder sb = new StringBuilder();
         sb.append("<groupe>");
         sb.append("<shapes>");
-        for (SimpleShape shape : groupe.getShapes()) {
+        for (SimpleShape shape : group.getShapes()) {
             shape.accept(this);
             sb.append(this.getRepresentation());
             this.representation = null;

@@ -60,7 +60,7 @@ public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
     }
     @Override
     public void group(){
-
+        this.selected = false;
     }
     @Override
     public void ungroup(){
@@ -90,6 +90,9 @@ public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
     public int getElevation() {
         return elevation;
     }
+    public SimpleShapeState getState() {
+        return state;
+    }
     @Override
     public boolean isSelected() {
         return selected;
@@ -109,8 +112,5 @@ public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
 
     public void changeState(SimpleShapeState state) {
         this.state = state;
-    }
-    public SimpleShapeState getState() {
-        return state;
     }
 }

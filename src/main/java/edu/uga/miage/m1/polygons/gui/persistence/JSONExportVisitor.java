@@ -43,16 +43,16 @@ public class JSONExportVisitor implements Visitor {
     }
 
     @Override
-    public void visit(Groupe groupe) {
+    public void visit(Group group) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         sb.append("\"type\": \"groupe\",");
         sb.append("\"shapes\":");
         sb.append("[");
-        for (SimpleShape shape : groupe.getShapes()) {
+        for (SimpleShape shape : group.getShapes()) {
             shape.accept(this);
             sb.append(this.getRepresentation());
-            if (shape != groupe.getShapes().get(groupe.getShapes().size() - 1)) {
+            if (shape != group.getShapes().get(group.getShapes().size() - 1)) {
                 sb.append(",");
             }
             this.representation = null;

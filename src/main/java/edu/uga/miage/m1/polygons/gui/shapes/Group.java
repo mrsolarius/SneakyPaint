@@ -1,18 +1,17 @@
 package edu.uga.miage.m1.polygons.gui.shapes;
 
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
-import edu.uga.miage.m1.polygons.gui.shapes.states.GroupState;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Groupe extends AbstractShape{
+public class Group extends AbstractShape{
     private final ArrayList<SimpleShape> shapes;
 
-    public Groupe(Graphics2D g2, int x, int y) {
-        super(g2, x, y);
+    public Group(Graphics2D g2) {
+        super(g2, 0, 0);
         this.shapes = new ArrayList<>();
     }
 
@@ -43,11 +42,27 @@ public class Groupe extends AbstractShape{
         }
     }
 
-    private void updateSize(SimpleShape shape) {
-        calculateX(shape);
-        calculateY(shape);
-        calculateNewHeight(shape);
-        calculateNewWidth(shape);
+    private void updateSize() {
+        //@TODO: this code needs to be refactored
+        int x=Integer.MAX_VALUE,y=Integer.MAX_VALUE,height = 0,width = 0;
+        for (SimpleShape shape: shapes){
+            if (shape.getX() < x) {
+                x = shape.getX();
+            }
+            if (shape.getY() < y) {
+                y = shape.getY();
+            }
+            if (Math.abs((shape.getX() + shape.getWidth()) - (width+x)) > width) {
+                width += Math.abs((shape.getX() + shape.getWidth()) - (width+x));
+            }
+            if (Math.abs((shape.getY() + shape.getHeight()) - (height+y)) > height) {
+                height += Math.abs((shape.getY() + shape.getHeight()) - (height+y));
+            }
+        }
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
 
     private void updateAllSize() {
@@ -55,15 +70,13 @@ public class Groupe extends AbstractShape{
         this.y = 0;
         this.height = 0;
         this.width = 0;
-        for (SimpleShape shape : shapes) {
-            updateSize(shape);
-        }
     }
 
     public void addShape(SimpleShape shape) {
+        shape.getState().group();
         shapes.add(shape);
-        updateSize(shape);
         Collections.sort(shapes);
+        updateSize();
         shape.draw();
     }
 
@@ -84,21 +97,8 @@ public class Groupe extends AbstractShape{
         for (SimpleShape shape : shapes) {
             shape.draw();
         }
-    }
-
-    public void groupeSelectedShapes(){
-        Groupe groupe = new Groupe(g2, x, y);
-        for (SimpleShape shape : shapes) {
-            AbstractShape abstractShape = (AbstractShape) shape;
-            if (shape.isSelected()) {
-                shapes.remove(shape);
-                abstractShape.changeState(new GroupState(abstractShape));
-                groupe.addShape(shape);
-            }
-        }
-        if (groupe.shapes.size() > 0) {
-            this.addShape(groupe);
-            groupe.select();
+        if (isSelected()) {
+            drawSelection();
         }
     }
 
@@ -115,39 +115,12 @@ public class Groupe extends AbstractShape{
         visitor.visit(this);
     }
 
-    public void selectShape(int x, int y) {
-        boolean found = false;
+    @Override
+    public void move(int x, int y) {
         for (SimpleShape shape : shapes) {
-            if (shape.isInside(x, y)) {
-                found = true;
-                ((AbstractShape)shape).getState().select();
-            }
+            shape.getState().move(x, y);
         }
-        if (!found) {
-            unSelectAllChildren();
-        }
-    }
-
-    public void unSelectAllChildren() {
-        for (SimpleShape shape : shapes) {
-            ((AbstractShape)shape).getState().unselect();
-        }
-    }
-
-    public SimpleShape collidingChildren(int x, int y) {
-        for (SimpleShape shape : shapes) {
-            if (shape.isInside(x, y)) {
-                return shape;
-            }
-        }
-        return null;
-    }
-
-    public void dragObject(int x, int y) {
-        for (SimpleShape shape : shapes) {
-            if (shape.isSelected()) {
-                ((AbstractShape)shape).getState().move(x, y);
-            }
-        }
+        this.x += x;
+        this.y += y;
     }
 }

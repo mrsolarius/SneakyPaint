@@ -6,6 +6,10 @@ import edu.uga.miage.m1.polygons.gui.whiteboard.states.WhiteBoardState;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class WhiteBoard extends JPanel {
     private static WhiteBoard instance;
@@ -16,7 +20,7 @@ public class WhiteBoard extends JPanel {
         return instance;
     }
     private WhiteBoardState state;
-    private final Groupe mainGroupe;
+    private final ArrayList<SimpleShape> shapes;
 
     private WhiteBoard() {
         super();
@@ -25,7 +29,7 @@ public class WhiteBoard extends JPanel {
         setMinimumSize(new Dimension(400, 400));
         addMouseListener(this.state);
         addMouseMotionListener(this.state);
-        mainGroupe = new Groupe(get2DGraphics(), 0, 0);
+        shapes = new ArrayList<>();
         this.state = new SelectMode(this);
     }
 
@@ -42,21 +46,21 @@ public class WhiteBoard extends JPanel {
         addMouseMotionListener(this.state);
     }
 
-    public Groupe getMainGroupe() {
-        return mainGroupe;
-    }
-
     private void repaintAll() {
         if (get2DGraphics()!=null) {
             get2DGraphics().clearRect(0, 0, getWidth(), getHeight());
             //get2DGraphics().dispose();
-            mainGroupe.draw();
+            for (SimpleShape shape : shapes) {
+                shape.draw();
+            }
         }
     }
 
     private void addShape(AbstractShape shape) {
         if (canAddPlaceHere(shape.getX(), getY())) {
-            mainGroupe.addShape(shape);
+            shapes.add(shape);
+            Collections.sort(shapes);
+            shape.draw();
         }
     }
 
@@ -65,7 +69,7 @@ public class WhiteBoard extends JPanel {
     }
 
     public void clearShapes() {
-        mainGroupe.clear();
+        shapes.clear();
         repaintAll();
     }
 
@@ -80,18 +84,35 @@ public class WhiteBoard extends JPanel {
     }
 
     public void selectShape(int x, int y) {
-        mainGroupe.selectShape(x, y);
+        boolean found = false;
+        for (SimpleShape shape : shapes) {
+            if (shape.isInside(x, y)) {
+                found = true;
+                shape.getState().select();
+            }
+        }
+        if (!found) {
+            unSelectAll();
+        }
         repaintAll();
     }
 
     public void dragObject(int x, int y) {
-        //System.out.println("dragging {x: " + x + ", y: " + y + "}");
-        mainGroupe.dragObject(x, y);
+        for (SimpleShape shape : shapes) {
+            if (shape.isSelected()) {
+                shape.getState().move(x, y);
+            }
+        }
         repaintAll();
     }
 
-    public AbstractShape collidingChildren(int x, int y) {
-        return (AbstractShape) mainGroupe.collidingChildren(x, y);
+    public SimpleShape collidingChildren(int x, int y) {
+        for (SimpleShape shape : shapes) {
+            if (shape.isInside(x, y)) {
+                return shape;
+            }
+        }
+        return null;
     }
 
     public WhiteBoardState getState() {
@@ -99,12 +120,28 @@ public class WhiteBoard extends JPanel {
     }
 
     public void unSelectAll() {
-        mainGroupe.unSelectAllChildren();
+        for (SimpleShape shape : shapes) {
+            shape.getState().unselect();
+        }
         repaintAll();
     }
 
-    public void groupeSelectedShapes(){
-        mainGroupe.groupeSelectedShapes();
+    private List<SimpleShape> getSelectedShapes() {
+        return shapes.stream().filter(SimpleShape::isSelected).collect(Collectors.toList());
+    }
+
+    public void groupSelectedShapes(){
+        List<SimpleShape> selectedShapes = getSelectedShapes();
+        if (selectedShapes.size() > 1) {
+            Group group = new Group(get2DGraphics());
+            for (SimpleShape shape : selectedShapes) {
+                group.addShape(shape);
+            }
+            shapes.removeAll(selectedShapes);
+            shapes.add(group);
+            group.getState().select();
+            group.draw();
+        }
         repaintAll();
     }
 }

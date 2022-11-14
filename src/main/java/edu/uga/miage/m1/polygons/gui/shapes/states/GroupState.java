@@ -19,7 +19,7 @@ public class GroupState extends SimpleShapeStateImpl{
 
     @Override
     public void group() {
-        shape.changeState(new GroupState(shape));
+        shape.group();
     }
 
     @Override

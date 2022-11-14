@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.shapes;
 
 import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
+import edu.uga.miage.m1.polygons.gui.shapes.states.SimpleShapeState;
 
 /**
  * This interface defines the <tt>SimpleShape</tt> extension. This extension
@@ -17,6 +18,7 @@ public interface SimpleShape extends Visitable, Comparable<SimpleShape>
     int getWidth();
     int getHeight();
     int getElevation();
+    SimpleShapeState getState();
     boolean isSelected();
 
     /**
