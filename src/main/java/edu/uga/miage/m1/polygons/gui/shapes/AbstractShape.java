@@ -19,7 +19,7 @@ public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
 
     protected Graphics2D g2;
 
-    public AbstractShape(Graphics2D g2,int x, int y) {
+    AbstractShape(Graphics2D g2, int x, int y) {
         this.x = x;
         this.y = y;
         this.state = new UnselectedState(this);

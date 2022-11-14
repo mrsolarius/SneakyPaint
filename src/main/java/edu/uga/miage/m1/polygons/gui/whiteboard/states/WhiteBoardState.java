@@ -14,5 +14,5 @@ public interface WhiteBoardState extends MouseListener, MouseMotionListener {
     void groupMode();
     void ungroupMode();
     void save();
-    void load();
+    void loaded();
 }

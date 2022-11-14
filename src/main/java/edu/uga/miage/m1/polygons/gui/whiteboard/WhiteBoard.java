@@ -1,7 +1,9 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard;
 
-import edu.uga.miage.m1.polygons.gui.shapes.*;
-import edu.uga.miage.m1.polygons.gui.whiteboard.states.SelectMode;
+import edu.uga.miage.m1.polygons.gui.shapes.Group;
+import edu.uga.miage.m1.polygons.gui.shapes.ShapeFactory;
+import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
+import edu.uga.miage.m1.polygons.gui.whiteboard.states.Loading;
 import edu.uga.miage.m1.polygons.gui.whiteboard.states.WhiteBoardState;
 
 import javax.swing.*;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class WhiteBoard extends JPanel {
+    private ShapeFactory shapeFactory;
     private static WhiteBoard instance;
     public static WhiteBoard getInstance() {
         if (instance == null) {
@@ -30,7 +33,7 @@ public class WhiteBoard extends JPanel {
         addMouseListener(this.state);
         addMouseMotionListener(this.state);
         shapes = new ArrayList<>();
-        this.state = new SelectMode(this);
+        this.state = new Loading(this);
     }
 
     private Graphics2D get2DGraphics() {
@@ -56,7 +59,7 @@ public class WhiteBoard extends JPanel {
         }
     }
 
-    private void addShape(AbstractShape shape) {
+    private void addShape(SimpleShape shape) {
         if (canAddPlaceHere(shape.getX(), getY())) {
             shapes.add(shape);
             Collections.sort(shapes);
@@ -74,13 +77,13 @@ public class WhiteBoard extends JPanel {
     }
 
     public void placeCircle(int x, int y) {
-        addShape(new Circle(get2DGraphics(), x, y));
+        addShape(shapeFactory.createCircle(x, y));
     }
     public void placeSquare(int x, int y) {
-        addShape(new Square(get2DGraphics(), x, y));
+        addShape(shapeFactory.createSquare(x, y));
     }
     public void placeTriangle(int x, int y) {
-        addShape(new Triangle(get2DGraphics(), x, y));
+        addShape(shapeFactory.createTriangle(x, y));
     }
 
     public void selectShape(int x, int y) {
@@ -133,7 +136,7 @@ public class WhiteBoard extends JPanel {
     public void groupSelectedShapes(){
         List<SimpleShape> selectedShapes = getSelectedShapes();
         if (selectedShapes.size() > 1) {
-            Group group = new Group(get2DGraphics());
+            Group group = ShapeFactory.getInstance(get2DGraphics()).createGroup();
             for (SimpleShape shape : selectedShapes) {
                 group.addShape(shape);
             }
@@ -143,5 +146,9 @@ public class WhiteBoard extends JPanel {
             group.draw();
         }
         repaintAll();
+    }
+
+    public void loaded(){
+        this.shapeFactory = ShapeFactory.getInstance(get2DGraphics());
     }
 }

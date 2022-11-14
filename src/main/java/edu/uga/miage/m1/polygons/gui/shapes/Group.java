@@ -10,7 +10,7 @@ import java.util.List;
 public class Group extends AbstractShape{
     private final ArrayList<SimpleShape> shapes;
 
-    public Group(Graphics2D g2) {
+    protected Group(Graphics2D g2) {
         super(g2, 0, 0);
         this.shapes = new ArrayList<>();
     }

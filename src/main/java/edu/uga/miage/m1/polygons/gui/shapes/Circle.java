@@ -25,7 +25,7 @@ import java.awt.geom.Ellipse2D;
 
 public class Circle extends AbstractShape {
 
-    public Circle(Graphics2D g2, int x, int y) {
+    protected Circle(Graphics2D g2, int x, int y) {
         super(g2, x, y);
     }
 

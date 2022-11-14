@@ -117,6 +117,12 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         setPreferredSize(new Dimension(400, 400));
     }
 
+    @Override
+    public void pack() {
+        super.pack();
+        this.whiteBoard.getState().loaded();
+    }
+
     /*
     private void loadFile() {
         this.importFileShapes(GUIHelper.generateImportMenu(this));

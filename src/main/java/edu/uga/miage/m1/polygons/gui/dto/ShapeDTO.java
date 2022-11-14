@@ -21,10 +21,11 @@ public class ShapeDTO {
     private int y;
 
     public AbstractShape toEntity(Graphics2D g2) {
+        ShapeFactory shapeFactory = ShapeFactory.getInstance(g2);
         return switch (type) {
-            case "circle" -> new Circle(g2,x, y);
-            case "square" -> new Square(g2,x, y);
-            case "triangle" -> new Triangle(g2,x, y);
+            case "circle" -> shapeFactory.createCircle(x, y);
+            case "square" -> shapeFactory.createSquare(x, y);
+            case "triangle" -> shapeFactory.createTriangle(x, y);
             default -> throw new IllegalArgumentException("Unknown type: " + type);
         };
     }

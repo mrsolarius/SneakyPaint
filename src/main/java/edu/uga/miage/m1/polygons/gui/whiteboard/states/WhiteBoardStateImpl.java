@@ -70,7 +70,7 @@ public abstract class WhiteBoardStateImpl implements WhiteBoardState {
     }
 
     @Override
-    public void load() {
+    public void loaded() {
 
     }
 }

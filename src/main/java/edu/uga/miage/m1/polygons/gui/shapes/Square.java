@@ -31,7 +31,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class Square extends AbstractShape {
 
-    public Square(Graphics2D g2, int x, int y) {
+    protected Square(Graphics2D g2, int x, int y) {
         super(g2, x, y);
     }
 

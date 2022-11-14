@@ -67,7 +67,7 @@ public class MoveMode extends WhiteBoardStateImpl{
     }
 
     @Override
-    public void load() {
+    public void loaded() {
 
     }
 

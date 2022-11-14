@@ -30,7 +30,7 @@ import java.awt.geom.GeneralPath;
  * @author <a href="mailto:christophe.saint-marcel@univ-grenoble-alpes.fr">Christophe</a>
  */
 public class Triangle extends AbstractShape {
-    public Triangle(Graphics2D g2, int x, int y) {
+    protected Triangle(Graphics2D g2, int x, int y) {
         super(g2, x, y);
     }
 
