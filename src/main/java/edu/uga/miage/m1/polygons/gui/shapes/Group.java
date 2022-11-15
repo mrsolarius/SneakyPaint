@@ -5,7 +5,6 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Group extends AbstractShape{
     private final ArrayList<SimpleShape> shapes;
@@ -79,8 +78,8 @@ public class Group extends AbstractShape{
         }
     }
 
-    public List<SimpleShape> getShapes() {
-        return Collections.singletonList((SimpleShape) shapes);
+    public ArrayList<SimpleShape> getShapes() {
+        return shapes;
     }
 
     /**

@@ -151,4 +151,22 @@ public class WhiteBoard extends JPanel {
     public void loaded(){
         this.shapeFactory = ShapeFactory.getInstance(get2DGraphics());
     }
+
+    public void ungroupSelectedShapes() {
+        List<SimpleShape> selectedShapes = getSelectedShapes();
+        if (selectedShapes.size() == 1) {
+            for (SimpleShape shape : selectedShapes) {
+                if (shape instanceof Group) {
+                    List<SimpleShape>  children = ((Group) shape).getShapes();
+                    for (SimpleShape simpleShape : children) {
+                        simpleShape.getState().ungroup();
+                    }
+                    shapes.remove(shape);
+                    shapes.addAll(((Group) shape).getShapes());
+                }
+                shape.getState().ungroup();
+            }
+        }
+        repaintAll();
+    }
 }
