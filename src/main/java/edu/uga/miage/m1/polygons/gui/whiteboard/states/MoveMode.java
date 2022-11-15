@@ -42,38 +42,8 @@ public class MoveMode extends WhiteBoardStateImpl{
     }
 
     @Override
-    public void resizeMode() {
-
-    }
-
-    @Override
-    public void deleteMode() {
-
-    }
-
-    @Override
-    public void groupMode() {
-
-    }
-
-    @Override
-    public void ungroupMode() {
-
-    }
-
-    @Override
-    public void save() {
-
-    }
-
-    @Override
     public void loaded() {
 
-    }
-
-    private void reset() {
-        lastXMoved = 0;
-        lastYMoved = 0;
     }
 
     //---------------------------------------//
