@@ -80,6 +80,9 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         JMenuItem exit = new JMenuItem("Exit");
         JMenuItem group = new JMenuItem("Group");
         JMenuItem ungroup = new JMenuItem("Ungroup");
+        JMenuItem elevate = new JMenuItem("Elevate");
+        JMenuItem lower = new JMenuItem("Lower");
+        JMenuItem delete = new JMenuItem("Delete");
         JMenuItem clear = new JMenuItem("Clear");
         JMenuItem undo = new JMenuItem("Undo");
         JMenuItem redo = new JMenuItem("Redo");
@@ -92,6 +95,9 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         editMenu.add(clear);
         editMenu.add(group);
         editMenu.add(ungroup);
+        editMenu.add(elevate);
+        editMenu.add(lower);
+        editMenu.add(delete);
         setJMenuBar(menuBar);
         
         // add callbacks to menu items
@@ -102,6 +108,9 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         clear.addActionListener(e -> whiteBoard.clearShapes());
         group.addActionListener(e -> whiteBoard.groupSelectedShapes());
         ungroup.addActionListener(e -> whiteBoard.ungroupSelectedShapes());
+        elevate.addActionListener(e -> whiteBoard.elevateSelectedShapes());
+        lower.addActionListener(e -> whiteBoard.lowerSelectedShapes());
+        delete.addActionListener(e -> whiteBoard.deleteSelectedShapes());
 
         
         // Fills the panel

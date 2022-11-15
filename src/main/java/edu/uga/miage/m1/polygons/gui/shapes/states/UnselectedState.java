@@ -16,6 +16,9 @@ public class UnselectedState extends SimpleShapeStateImpl {
     }
 
     @Override
+    public void editElevation(int elevation) {
+    }
+    @Override
     public void group() {
     }
 

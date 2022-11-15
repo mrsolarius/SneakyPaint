@@ -50,6 +50,12 @@ public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
         this.width = width;
         this.height = height;
     }
+
+    @Override
+    public void editElevation(int elevation) {
+        this.elevation += elevation;
+    }
+
     @Override
     public void select() {
         this.selected = true;

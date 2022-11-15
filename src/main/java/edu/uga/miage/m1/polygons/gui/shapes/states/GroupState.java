@@ -18,6 +18,11 @@ public class GroupState extends SimpleShapeStateImpl{
     }
 
     @Override
+    public void editElevation(int elevation) {
+        shape.editElevation(elevation);
+    }
+
+    @Override
     public void group() {
         shape.group();
     }

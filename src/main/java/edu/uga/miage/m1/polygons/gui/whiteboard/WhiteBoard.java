@@ -169,4 +169,34 @@ public class WhiteBoard extends JPanel {
         }
         repaintAll();
     }
+
+    public void elevateSelectedShapes() {
+        List<SimpleShape> selectedShapes = getSelectedShapes();
+        if (selectedShapes.size() == 1) {
+            for (SimpleShape shape : selectedShapes) {
+                shape.getState().editElevation(1);
+            }
+            Collections.sort(shapes);
+            repaintAll();
+        }
+    }
+
+    public void lowerSelectedShapes() {
+        List<SimpleShape> selectedShapes = getSelectedShapes();
+        if (selectedShapes.size() == 1) {
+            for (SimpleShape shape : selectedShapes) {
+                shape.getState().editElevation(-1);
+            }
+            Collections.sort(shapes);
+            repaintAll();
+        }
+    }
+
+    public void deleteSelectedShapes() {
+        List<SimpleShape> selectedShapes = getSelectedShapes();
+        if (selectedShapes.size() > 0) {
+            shapes.removeAll(selectedShapes);
+            repaintAll();
+        }
+    }
 }

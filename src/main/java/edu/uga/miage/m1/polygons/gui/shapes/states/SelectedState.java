@@ -19,6 +19,11 @@ public class SelectedState extends SimpleShapeStateImpl{
     }
 
     @Override
+    public void editElevation(int elevation) {
+        shape.editElevation(elevation);
+    }
+
+    @Override
     public void group() {
         shape.changeState(new GroupState(shape));
         shape.group();
