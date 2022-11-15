@@ -15,54 +15,31 @@ public class Group extends AbstractShape{
         this.shapes = new ArrayList<>();
     }
 
-    private void calculateNewHeight(SimpleShape shape) {
-        int newHeight = shape.getY() + shape.getHeight() - this.y;
-        // If the new height is greater than the current height, we update the height
-        if (newHeight > this.height) {
-            this.height = newHeight;
-        }
-    }
-
-    private void calculateNewWidth(SimpleShape shape) {
-        int newWidth = shape.getX() + shape.getWidth() - this.x;
-        if (newWidth > this.width) {
-            this.width = newWidth;
-        }
-    }
-
-    private void calculateX(SimpleShape shape) {
-        if (shape.getX() > this.x) {
-            this.x = shape.getX();
-        }
-    }
-
-    private void calculateY(SimpleShape shape) {
-        if (shape.getY() > this.y) {
-            this.y = shape.getY();
-        }
-    }
-
     private void updateSize() {
-        //@TODO: this code needs to be refactored
-        int x=Integer.MAX_VALUE,y=Integer.MAX_VALUE,height = 0,width = 0;
+        int tempX=shapes.get(0).getX(),
+            tempY=shapes.get(0).getY(),
+            tempHeight = shapes.get(0).getHeight(),
+            tempWidth = shapes.get(0).getWidth();
         for (SimpleShape shape: shapes){
-            if (shape.getX() < x) {
-                x = shape.getX();
+            if(shape.getX()<tempX){
+                tempWidth+=tempX-shape.getX();
+                tempX=shape.getX();
             }
-            if (shape.getY() < y) {
-                y = shape.getY();
+            if(shape.getY()<tempY){
+                tempHeight+=tempY-shape.getY();
+                tempY=shape.getY();
             }
-            if (Math.abs((shape.getX() + shape.getWidth()) - (width+x)) > width) {
-                width += Math.abs((shape.getX() + shape.getWidth()) - (width+x));
+            if(shape.getX()+shape.getWidth()>tempX+tempWidth){
+                tempWidth=shape.getX()+shape.getWidth()-tempX;
             }
-            if (Math.abs((shape.getY() + shape.getHeight()) - (height+y)) > height) {
-                height += Math.abs((shape.getY() + shape.getHeight()) - (height+y));
+            if(shape.getY()+shape.getHeight()>tempY+tempHeight){
+                tempHeight=shape.getY()+shape.getHeight()-tempY;
             }
         }
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        this.x = tempX;
+        this.y = tempY;
+        this.width = tempWidth;
+        this.height = tempHeight;
     }
 
     private void updateAllSize() {
