@@ -101,7 +101,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         // add callbacks to menu items
         saveAsXML.addActionListener(e-> whiteBoard.saveAsXml());
         saveAsJSON.addActionListener(e -> whiteBoard.saveAsJson());
-        //load.addActionListener(e -> loadFile());
+        load.addActionListener(e -> whiteBoard.loadFile());
         exit.addActionListener(e -> System.exit(0));
         clear.addActionListener(e -> whiteBoard.clearShapes());
         group.addActionListener(e -> whiteBoard.groupSelectedShapes());
@@ -133,77 +133,6 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         this.whiteBoard.getState().loaded();
     }
 
-    /*
-    private void loadFile() {
-        this.importFileShapes(GUIHelper.generateImportMenu(this));
-    }
-
-    private void saveAsXML() {
-        String xml = new XMLExportVisitor().export(shapes.toArray(new SimpleShape[0]));
-        this.saveFile(xml,"xml");
-    }
-
-    private void saveAsJSON() {
-        String json = new JSONExportVisitor().export(shapes.toArray(new SimpleShape[0]));
-        this.saveFile(json,"json");
-    }
-
-    //@Todo: refactor this method it's break cause of group of shapes
-    private void importFileShapes(String path){
-        try (FileInputStream fstream = new FileInputStream(path)) {
-            String fileContent = new String(fstream.readAllBytes());
-            ShapesDTO shapesDTO;
-            if (path.endsWith(".json")){
-                shapesDTO = ShapeDeserialization.deserialize(fileContent, Format.JSON);
-                this.drawDTOShapes(shapesDTO);
-            }
-            else if (path.endsWith(".xml")){
-                shapesDTO = ShapeDeserialization.deserialize(fileContent, Format.XML);
-                this.drawDTOShapes(shapesDTO);
-            }
-            else{
-                logger.log(new LogRecord(Level.WARNING,"No import format selected"));
-            }
-        } catch (Exception e) {
-            logger.log(new LogRecord(Level.WARNING,"Error while loading file"));
-        }
-    }
-
-    private void drawDTOShapes(ShapesDTO shapes){
-        Graphics2D g2 = (Graphics2D) whiteBoard.getGraphics();
-        for(ShapeDTO s : shapes.getShapes()){
-            AbstractShape shape = s.toEntity(g2);
-            shape.draw();
-            this.shapes.add(shape);
-        }
-    }
-     */
-
-    /**
-     * save file with content and extention
-     */
-    /*
-    private void saveFile(String content, String extention){
-        File file = new File("shapes."+extention);
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(file);
-            fileWriter.write(content);
-        } catch (Exception e) {
-            logger.log(new LogRecord(Level.SEVERE, "Error while saving file"));
-        }
-        if (fileWriter!= null) {
-            try {
-                fileWriter.close();
-            } catch (Exception e) {
-                logger.log(new LogRecord(Level.SEVERE, "Error while closing file"));
-            }
-        }
-    }*/
-
-
-
-
     /**
      * Injects an available <tt>SimpleShape</tt> into the drawing frame.
      * @param shape The name of the injected <tt>SimpleShape</tt>.
@@ -226,23 +155,6 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         toolbar.validate();
         repaint();
     }
-
-    /*
-    private AbstractShape filterByCoordinate(int x, int y){
-        for(AbstractShape s : shapes){
-            if(s.contains(x,y)){
-                return s;
-            }
-        }
-        return null;
-    }
-
-    private void unselectAllShapes(){
-        for(AbstractShape s : shapes){
-            s.clickUnselect();
-        }
-    }
-
 
     /**
      * Implements an empty method for the <tt>MouseListener</tt> interface.
@@ -268,19 +180,6 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
     @Override
     public void mousePressed(MouseEvent evt)
     {
-        /*
-        if (evt.getClickCount() == 2)
-        {
-            AbstractShape shape = filterByCoordinate(evt.getX(), evt.getY());
-            if (shape != null)
-            {
-                unselectAllShapes();
-                shape.clickSelect();
-                shape.draw();
-            }else {
-                unselectAllShapes();
-            }
-        }*/
     }
 
     @Override

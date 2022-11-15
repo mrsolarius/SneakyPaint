@@ -207,4 +207,8 @@ public class WhiteBoard extends JPanel {
     public void saveAsXml(){
         WhiteBoardExporter.saveAsXml(shapes);
     }
+
+    public void loadFile() {
+        WhiteBoardLoader.load();
+    }
 }
