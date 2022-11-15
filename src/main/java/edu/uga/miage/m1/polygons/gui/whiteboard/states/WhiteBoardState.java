@@ -9,10 +9,5 @@ public interface WhiteBoardState extends MouseListener, MouseMotionListener {
     void addTriangle();
     void selectMode();
     void moveMode();
-    void resizeMode();
-    void deleteMode();
-    void groupMode();
-    void ungroupMode();
-    void save();
     void loaded();
 }
