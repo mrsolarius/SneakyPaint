@@ -36,6 +36,10 @@ public class WhiteBoard extends JPanel {
         this.state = new Loading(this);
     }
 
+    public void loaded(){
+        this.shapeFactory = ShapeFactory.getInstance(get2DGraphics());
+    }
+
     private Graphics2D get2DGraphics() {
         return (Graphics2D) getGraphics();
     }
@@ -148,10 +152,6 @@ public class WhiteBoard extends JPanel {
         repaintAll();
     }
 
-    public void loaded(){
-        this.shapeFactory = ShapeFactory.getInstance(get2DGraphics());
-    }
-
     public void ungroupSelectedShapes() {
         List<SimpleShape> selectedShapes = getSelectedShapes();
         if (selectedShapes.size() == 1) {
@@ -198,5 +198,13 @@ public class WhiteBoard extends JPanel {
             shapes.removeAll(selectedShapes);
             repaintAll();
         }
+    }
+
+    public void saveAsJson(){
+        WhiteBoardExporter.saveAsJson(shapes);
+    }
+
+    public void saveAsXml(){
+        WhiteBoardExporter.saveAsXml(shapes);
     }
 }

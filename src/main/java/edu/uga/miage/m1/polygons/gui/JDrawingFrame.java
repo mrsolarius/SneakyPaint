@@ -28,7 +28,6 @@ import java.io.Serial;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 
 /**
@@ -40,8 +39,7 @@ import java.util.logging.Logger;
  */
 public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseListener
 {
-    private static final Logger logger = Logger.getLogger(JDrawingFrame.class.getName());
-	private enum Shapes {SQUARE, TRIANGLE, CIRCLE,SELECT}
+    private enum Shapes {SQUARE, TRIANGLE, CIRCLE,SELECT}
     @Serial
     private static final long serialVersionUID = 1L;
     private final JToolBar toolbar;
@@ -101,8 +99,8 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         setJMenuBar(menuBar);
         
         // add callbacks to menu items
-        //saveAsXML.addActionListener(e-> saveAsXML());
-        //saveAsJSON.addActionListener(e -> saveAsJSON());
+        saveAsXML.addActionListener(e-> whiteBoard.saveAsXml());
+        saveAsJSON.addActionListener(e -> whiteBoard.saveAsJson());
         //load.addActionListener(e -> loadFile());
         exit.addActionListener(e -> System.exit(0));
         clear.addActionListener(e -> whiteBoard.clearShapes());
