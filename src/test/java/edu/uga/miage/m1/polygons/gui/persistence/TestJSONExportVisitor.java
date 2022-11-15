@@ -1,9 +1,6 @@
 package edu.uga.miage.m1.polygons.gui.persistence;
 
-import edu.uga.miage.m1.polygons.gui.shapes.Circle;
-import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
-import edu.uga.miage.m1.polygons.gui.shapes.Square;
-import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
+import edu.uga.miage.m1.polygons.gui.shapes.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,14 +15,15 @@ class TestJSONExportVisitor {
     @Test
     void testExport() {
         String json = jsonExportVisitor.export(generateShapes().toArray(new SimpleShape[0]));
+        System.out.println(json);
         assertNotNull(json);
         assertEquals("{\"shapes\":[{\"type\":\"circle\",\"x\":10,\"y\":10},{\"type\":\"square\",\"x\":20,\"y\":20},{\"type\":\"triangle\",\"x\":30,\"y\":30}]}",json);
     }
 
     private ArrayList<SimpleShape> generateShapes(){
-        Circle c = new Circle(10, 10);
-        Square s = new Square(20, 20);
-        Triangle t = new Triangle(30, 30);
+        Circle c = ShapeFactory.getInstance(null).createCircle(10, 10);
+        Square s = ShapeFactory.getInstance(null).createSquare(20, 20);
+        Triangle t = ShapeFactory.getInstance(null).createTriangle(30, 30);
         ArrayList<SimpleShape> shapes = new ArrayList<>();
         shapes.add(c);
         shapes.add(s);
