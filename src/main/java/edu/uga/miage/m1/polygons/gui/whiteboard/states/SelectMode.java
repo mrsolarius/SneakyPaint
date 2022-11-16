@@ -21,22 +21,22 @@ public class SelectMode extends WhiteBoardStateImpl{
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        // no need to do anything here
     }
 
 
@@ -45,8 +45,7 @@ public class SelectMode extends WhiteBoardStateImpl{
     //---------------------------------------------//
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (this.whiteBoard.collidingChildren(e.getX(), e.getY())!=null) {
-            if (this.whiteBoard.collidingChildren(e.getX(),e.getY()).isSelected())
+        if (this.whiteBoard.collidingChildren(e.getX(), e.getY())!=null && (this.whiteBoard.collidingChildren(e.getX(),e.getY()).isSelected())){
                 this.moveMode();
         }
     }

@@ -7,7 +7,6 @@ import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -16,6 +15,8 @@ import java.util.logging.Logger;
 public class WhiteBoardExporter {
     private static final Logger logger = Logger.getLogger(WhiteBoardExporter.class.getName());
 
+    private WhiteBoardExporter() {
+    }
     private static String exportToXML(List<SimpleShape> shapes){
         return new XMLExportVisitor().export(shapes.toArray(new SimpleShape[0]));
     }
@@ -52,7 +53,7 @@ public class WhiteBoardExporter {
         }
         return null;
     }
-    public static void saveAsJson(ArrayList<SimpleShape> shapes) {
+    public static void saveAsJson(List<SimpleShape> shapes) {
         String content = exportToJSON(shapes);
         String fileName = openFileExplorer();
         if (fileName != null) {
@@ -60,7 +61,7 @@ public class WhiteBoardExporter {
         }
     }
 
-    public static void saveAsXml(ArrayList<SimpleShape> shapes) {
+    public static void saveAsXml(List<SimpleShape> shapes) {
         String content = exportToXML(shapes);
         String fileName = openFileExplorer();
         if (fileName != null) {

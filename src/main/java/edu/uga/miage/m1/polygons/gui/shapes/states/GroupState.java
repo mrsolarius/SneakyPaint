@@ -35,9 +35,11 @@ public class GroupState extends SimpleShapeStateImpl{
 
     @Override
     public void select() {
+        // we don't want to be selected when we are in a group
     }
 
     @Override
     public void unselect() {
+        // we don't want to be unselected when we are in a group
     }
 }

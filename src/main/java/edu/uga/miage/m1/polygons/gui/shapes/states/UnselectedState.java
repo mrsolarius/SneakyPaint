@@ -9,21 +9,26 @@ public class UnselectedState extends SimpleShapeStateImpl {
 
     @Override
     public void move(int x, int y) {
+        // we don't want to move when we are unselected
     }
 
     @Override
     public void resize(int x, int y) {
+        // we don't want to resize when we are unselected
     }
 
     @Override
     public void editElevation(int elevation) {
+        // we don't want to edit elevation when we are unselected
     }
     @Override
     public void group() {
+        // we don't want to group when we are unselected
     }
 
     @Override
     public void ungroup() {
+        // we don't want to ungroup when we are unselected
     }
 
     @Override

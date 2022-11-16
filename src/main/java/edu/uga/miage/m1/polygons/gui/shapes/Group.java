@@ -5,6 +5,7 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Group extends AbstractShape{
     private final ArrayList<SimpleShape> shapes;
@@ -15,10 +16,10 @@ public class Group extends AbstractShape{
     }
 
     private void updateSize() {
-        int tempX=shapes.get(0).getX(),
-            tempY=shapes.get(0).getY(),
-            tempHeight = shapes.get(0).getHeight(),
-            tempWidth = shapes.get(0).getWidth();
+        int tempX=shapes.get(0).getX();
+        int tempY=shapes.get(0).getY();
+        int tempHeight = shapes.get(0).getHeight();
+        int tempWidth = shapes.get(0).getWidth();
         for (SimpleShape shape: shapes){
             if(shape.getX()<tempX){
                 tempWidth+=tempX-shape.getX();
@@ -78,7 +79,7 @@ public class Group extends AbstractShape{
         }
     }
 
-    public ArrayList<SimpleShape> getShapes() {
+    public List<SimpleShape> getShapes() {
         return shapes;
     }
 

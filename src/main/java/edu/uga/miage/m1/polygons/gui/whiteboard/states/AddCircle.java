@@ -21,21 +21,22 @@ public class AddCircle extends WhiteBoardStateImpl{
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // no need to do anything here
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        // no need to do anything here
     }
 
 
@@ -44,12 +45,12 @@ public class AddCircle extends WhiteBoardStateImpl{
     //---------------------------------------------//
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        // no need to do anything here
     }
 
 }

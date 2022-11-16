@@ -19,31 +19,32 @@ public class MoveMode extends WhiteBoardStateImpl{
     //-----------------------------------------//
     @Override
     public void addCircle() {
+        // no need to do anything here
     }
 
     @Override
     public void addSquare() {
-
+        // no need to do anything here
     }
 
     @Override
     public void addTriangle() {
-
+        // no need to do anything here
     }
 
     @Override
     public void selectMode() {
-
+        // no need to do anything here
     }
 
     @Override
     public void moveMode() {
-
+        // no need to do anything here
     }
 
     @Override
     public void loaded() {
-
+          // no need to do anything here
     }
 
     //---------------------------------------//
@@ -56,7 +57,6 @@ public class MoveMode extends WhiteBoardStateImpl{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("MoveMode.mousePressed");
         this.whiteBoard.setState(new SelectMode(this.whiteBoard));
         this.whiteBoard.selectShape(e.getX(), e.getY());
         this.lastXMoved = e.getX();
@@ -70,10 +70,12 @@ public class MoveMode extends WhiteBoardStateImpl{
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        // no need to do anything here
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        // no need to do anything here
     }
 
 
@@ -82,7 +84,6 @@ public class MoveMode extends WhiteBoardStateImpl{
     //---------------------------------------------//
     @Override
     public void mouseDragged(MouseEvent e) {
-        System.out.println("MoveMode.mouseDragged");
         if (lastXMoved == 0 && lastYMoved == 0) {
             lastXMoved = e.getX();
             lastYMoved = e.getY();

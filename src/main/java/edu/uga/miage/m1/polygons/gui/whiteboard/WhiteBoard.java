@@ -11,9 +11,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public class WhiteBoard extends JPanel {
+    private final Logger logger = Logger.getLogger(WhiteBoard.class.getName());
     private ShapeFactory shapeFactory;
     private static WhiteBoard instance;
     public static WhiteBoard getInstance() {
@@ -27,7 +30,6 @@ public class WhiteBoard extends JPanel {
 
     private WhiteBoard() {
         super();
-        //setBackground(Color.WHITE);
         setLayout(null);
         setMinimumSize(new Dimension(400, 400));
         addMouseListener(this.state);
@@ -48,7 +50,7 @@ public class WhiteBoard extends JPanel {
         removeMouseListener(this.state);
         removeMouseMotionListener(this.state);
         this.state = state;
-        System.out.println("State changed to " + state.getClass().getSimpleName());
+        logger.log(new LogRecord(Level.INFO,"State changed to "+state.getClass().getSimpleName()));
         addMouseListener(this.state);
         addMouseMotionListener(this.state);
     }
@@ -56,7 +58,6 @@ public class WhiteBoard extends JPanel {
     private void repaintAll() {
         if (get2DGraphics()!=null) {
             get2DGraphics().clearRect(0, 0, getWidth(), getHeight());
-            //get2DGraphics().dispose();
             for (SimpleShape shape : shapes) {
                 shape.draw();
             }
@@ -134,7 +135,7 @@ public class WhiteBoard extends JPanel {
     }
 
     private List<SimpleShape> getSelectedShapes() {
-        return shapes.stream().filter(SimpleShape::isSelected).collect(Collectors.toList());
+        return shapes.stream().filter(SimpleShape::isSelected).toList();
     }
 
     public void groupSelectedShapes(){

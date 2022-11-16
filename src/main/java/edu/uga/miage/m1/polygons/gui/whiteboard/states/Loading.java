@@ -11,23 +11,27 @@ public class Loading extends WhiteBoardStateImpl{
 
     @Override
     public void addCircle() {
-
+        // no need to do anything here
     }
 
     @Override
     public void addSquare() {
+        // no need to do anything here
     }
 
     @Override
     public void addTriangle() {
+        // no need to do anything here
     }
 
     @Override
     public void selectMode() {
+        // no need to do anything here
     }
 
     @Override
     public void moveMode() {
+        // no need to do anything here
     }
 
     @Override
@@ -38,36 +42,36 @@ public class Loading extends WhiteBoardStateImpl{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        // no need to do anything here
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        // no need to do anything here
     }
 }

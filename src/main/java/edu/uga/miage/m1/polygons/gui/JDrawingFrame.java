@@ -29,6 +29,9 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static javax.swing.SwingConstants.LEFT;
+import static javax.swing.SwingConstants.VERTICAL;
+
 
 /**
  * This class represents the main application class, which is a JFrame subclass
@@ -61,10 +64,10 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         super(frameName);
         // Instantiates components
         toolbar = new JToolBar("Toolbar");
-        toolbar.setOrientation(JToolBar.VERTICAL);
+        toolbar.setOrientation(VERTICAL);
         whiteBoard = WhiteBoard.getInstance();
         whiteBoard.addMouseMotionListener(this);
-        label = new JLabel(" ", SwingConstants.LEFT);
+        label = new JLabel(" ", LEFT);
 
         // add top bar menu items file and edit
         JMenuBar menuBar = new JMenuBar();
@@ -169,32 +172,27 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        // no need to use this click event
     }
 
-    /**
-     * Implements method for the <tt>MouseListener</tt> interface to initiate
-     * shape dragging.
-     * @param evt The associated mouse event.
-    **/
     @Override
-    public void mousePressed(MouseEvent evt)
-    {
+    public void mousePressed(MouseEvent evt) {
+        // no need to use mouse pressed event
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        // no need to use mouse release event
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        // no need to use mouse enter event
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        // no need to use mouse drag event
     }
 
     /**
