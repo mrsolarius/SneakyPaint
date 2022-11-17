@@ -1,7 +1,6 @@
 package edu.uga.miage.m1.polygons.gui.dto;
 
-import edu.uga.miage.m1.polygons.gui.shapes.AbstractShape;
-import edu.uga.miage.m1.polygons.gui.shapes.ShapeFactory;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.util.List;
@@ -15,22 +14,18 @@ public class ShapeDTO {
         this.y = y;
     }
 
+    @JsonProperty(value = "type", required = true)
     private String type;
-
+    @JsonProperty(value = "x")
     private int x;
-
+    @JsonProperty(value = "y")
     private int y;
+    @JsonProperty(value = "height")
     private int height;
+    @JsonProperty(value = "width")
     private int width;
+    @JsonProperty(value = "elevation")
     private int elevation;
-    private List<ShapesDTO> children;
-
-    public AbstractShape toEntity() {
-        return switch (type) {
-            case "circle" -> ShapeFactory.createCircle(x, y);
-            case "square" -> ShapeFactory.createSquare(x, y);
-            case "triangle" -> ShapeFactory.createTriangle(x, y);
-            default -> throw new IllegalArgumentException("Unknown type: " + type);
-        };
-    }
+    @JsonProperty(value = "children")
+    private List<ShapeDTO> children;
 }

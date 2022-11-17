@@ -203,6 +203,8 @@ public class WhiteBoard extends JPanel {
     }
 
     public void loadFile() {
-        WhiteBoardLoader.load();
+        this.clearShapes();
+        this.shapes.addAll(WhiteBoardLoader.load());
+        repaintAll();
     }
 }

@@ -3,10 +3,10 @@ package edu.uga.miage.m1.polygons.gui.whiteboard;
 import edu.uga.miage.m1.polygons.gui.deserialization.Format;
 import edu.uga.miage.m1.polygons.gui.deserialization.ShapeDeserialization;
 import edu.uga.miage.m1.polygons.gui.dto.ShapesDTO;
+import edu.uga.miage.m1.polygons.gui.shapes.ShapeFactory;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -46,7 +46,7 @@ public class WhiteBoardLoader {
 
     /**
      * Load a file and return its content as a String
-     * @param fileName
+     * @param fileName absolute path of the file to load
      * @return content of the file
      */
     private static String readFile(String fileName) {
@@ -63,16 +63,11 @@ public class WhiteBoardLoader {
         String fileName = openDialog();
         Format format = getFormat(fileName);
         if (format!=null){
-            //@TODO: imlement deserialization
-            ShapeDeserialization.deserialize(readFile(fileName), format);
+            ShapesDTO shapesDTO = ShapeDeserialization.deserialize(readFile(fileName), format);
+            return ShapeFactory.createShapesFromDTOs(shapesDTO.getShapes());
         }else {
             JOptionPane.showMessageDialog(null, "Invalid file");
         }
-        return null;
-    }
-
-    private static List<SimpleShape> castDtoToShape(ShapesDTO shapes, Graphics2D g2d) {
-        //@TODO : cast ShapeDTO to SimpleShape
         return null;
     }
 

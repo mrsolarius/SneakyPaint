@@ -28,6 +28,13 @@ public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
         this.elevation = AbstractShape.elevationCounter;
     }
 
+    AbstractShape(int x, int y, int width, int height, int elevation) {
+        this(x, y);
+        this.height = height;
+        this.width = width;
+        this.elevation = elevation;
+    }
+
     void drawSelection(Graphics2D g2) {
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(SELECTED_BORDER_WIDTH));

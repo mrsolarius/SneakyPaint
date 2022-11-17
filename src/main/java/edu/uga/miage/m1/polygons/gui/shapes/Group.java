@@ -49,11 +49,14 @@ public class Group extends AbstractShape{
         this.width = 0;
     }
 
-    public void addShape(SimpleShape shape, Graphics2D g2) {
+    protected void addShape(SimpleShape shape) {
         shape.getState().group();
         shapes.add(shape);
         Collections.sort(shapes);
         updateSize();
+    }
+    public void addShape(SimpleShape shape, Graphics2D g2) {
+        addShape(shape);
         shape.draw(g2);
     }
 

@@ -46,7 +46,7 @@ public class JSONExportVisitor implements Visitor {
     public void visit(Group group) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        sb.append("\"type\": \"groupe\",");
+        sb.append("\"type\": \"group\",");
         sb.append("\"children\":");
         sb.append("[");
         for (SimpleShape shape : group.getShapes()) {
@@ -70,7 +70,7 @@ public class JSONExportVisitor implements Visitor {
         sb.append("\"y\":").append(shape.getY()).append(",");
         sb.append("\"width\":").append(shape.getWidth()).append(",");
         sb.append("\"height\":").append(shape.getHeight()).append(",");
-        sb.append("\"elevation\":").append(shape.getElevation()).append(",");
+        sb.append("\"elevation\":").append(shape.getElevation());
         sb.append("}");
         return sb.toString();
     }

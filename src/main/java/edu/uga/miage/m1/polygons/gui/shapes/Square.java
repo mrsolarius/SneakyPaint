@@ -35,6 +35,10 @@ public class Square extends AbstractShape {
         super(x, y);
     }
 
+    protected Square(int x, int y, int width, int height, int elevation) {
+        super(x, y, width, height, elevation);
+    }
+
     /**
      * Implements the <tt>SimpleShape.draw()</tt> method for painting
      * the shape.

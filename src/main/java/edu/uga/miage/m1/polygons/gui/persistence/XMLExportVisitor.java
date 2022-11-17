@@ -43,7 +43,7 @@ public class XMLExportVisitor implements Visitor {
     @Override
     public void visit(Group group) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<groupe>");
+        sb.append("<group>");
         sb.append("<shapes>");
         for (SimpleShape shape : group.getShapes()) {
             shape.accept(this);
@@ -51,7 +51,7 @@ public class XMLExportVisitor implements Visitor {
             this.representation = null;
         }
         sb.append("</shapes>");
-        sb.append("</groupe>");
+        sb.append("</group>");
         this.representation = sb.toString();
     }
 
