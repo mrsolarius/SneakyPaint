@@ -136,7 +136,7 @@ public class WhiteBoard extends JPanel {
         if (selectedShapes.size() > 1) {
             Group group = ShapeFactory.createGroup();
             for (SimpleShape shape : selectedShapes) {
-                group.addShape(shape,get2DGraphics());
+                group.addShapeAndDraw(shape,get2DGraphics());
             }
             shapes.removeAll(selectedShapes);
             shapes.add(group);

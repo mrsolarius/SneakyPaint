@@ -29,6 +29,7 @@ public class GroupState extends SimpleShapeStateImpl{
 
     @Override
     public void ungroup() {
+        shape.ungroup();
         shape.changeState(new SelectedState(shape));
         shape.select();
     }

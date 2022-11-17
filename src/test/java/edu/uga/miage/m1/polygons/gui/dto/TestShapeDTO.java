@@ -1,9 +1,6 @@
 package edu.uga.miage.m1.polygons.gui.dto;
 
-import edu.uga.miage.m1.polygons.gui.shapes.Circle;
-import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
-import edu.uga.miage.m1.polygons.gui.shapes.Square;
-import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
+import edu.uga.miage.m1.polygons.gui.shapes.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +10,7 @@ class TestShapeDTO {
     @Test
     void testToEntityCircle() {
         ShapeDTO shapeDTO = new ShapeDTO("circle", 10, 10);
-        SimpleShape shape = shapeDTO.toEntity();
+        SimpleShape shape = ShapeFactory.createShapeFromDTO(shapeDTO);
         assertNotNull (shape);
         assertInstanceOf(Circle.class, shape);
         assertEquals (10,shape.getX());
@@ -23,7 +20,7 @@ class TestShapeDTO {
     @Test
     void testToEntitySquare() {
         ShapeDTO shapeDTO = new ShapeDTO("square", 20, 20);
-        SimpleShape shape = shapeDTO.toEntity();
+        SimpleShape shape = ShapeFactory.createShapeFromDTO(shapeDTO);
         assertNotNull (shape);
         assertInstanceOf(Square.class, shape);
         assertEquals (20,shape.getX());
@@ -33,7 +30,7 @@ class TestShapeDTO {
     @Test
     void testToEntityTriangle() {
         ShapeDTO shapeDTO = new ShapeDTO("triangle", 30, 30);
-        SimpleShape shape = shapeDTO.toEntity();
+        SimpleShape shape = ShapeFactory.createShapeFromDTO(shapeDTO);
         assertNotNull (shape );
         assertInstanceOf(Triangle.class, shape);
         assertEquals (30,shape.getX());
@@ -43,6 +40,6 @@ class TestShapeDTO {
     @Test
     void testToUnknownEntity() {
         ShapeDTO shapeDTO = new ShapeDTO("unknown", 30, 30);
-        assertThrows(IllegalArgumentException.class, shapeDTO::toEntity);
+        assertThrows(IllegalArgumentException.class, () -> ShapeFactory.createShapeFromDTO(shapeDTO));
     }
 }

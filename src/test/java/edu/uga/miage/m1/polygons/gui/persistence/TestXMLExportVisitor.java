@@ -15,16 +15,18 @@ class TestXMLExportVisitor {
         String xml = xmlExportVisitor.export(generateShapes().toArray(new SimpleShape[0]));
         System.out.println(xml);
         assertNotNull (xml );
-        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><root><shapes><shape><type>circle</type><x>10</x><y>10</y></shape><shape><type>square</type><x>20</x><y>20</y></shape><shape><type>triangle</type><x>30</x><y>30</y></shape></shapes></root>",xml);
+        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><root><shapes><group><shapes><shape><type>circle</type><x>10</x><y>10</y></shape><shape><type>square</type><x>20</x><y>20</y></shape></shapes></group><shape><type>triangle</type><x>30</x><y>30</y></shape></shapes></root>",xml);
     }
 
     private ArrayList<SimpleShape> generateShapes(){
         Circle c = ShapeFactory.createCircle(10, 10);
         Square s = ShapeFactory.createSquare(20, 20);
         Triangle t = ShapeFactory.createTriangle(30, 30);
+        Group g = ShapeFactory.createGroup();
+        g.addShape(c);
+        g.addShape(s);
         ArrayList<SimpleShape> shapes = new ArrayList<>();
-        shapes.add(c);
-        shapes.add(s);
+        shapes.add(g);
         shapes.add(t);
         return shapes;
     }

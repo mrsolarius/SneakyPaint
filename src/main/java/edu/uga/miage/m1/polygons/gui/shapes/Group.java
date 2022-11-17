@@ -42,34 +42,15 @@ public class Group extends AbstractShape{
         this.height = tempHeight;
     }
 
-    private void updateAllSize() {
-        this.x = 0;
-        this.y = 0;
-        this.height = 0;
-        this.width = 0;
-    }
-
-    protected void addShape(SimpleShape shape) {
+    public void addShape(SimpleShape shape) {
         shape.getState().group();
         shapes.add(shape);
         Collections.sort(shapes);
         updateSize();
     }
-    public void addShape(SimpleShape shape, Graphics2D g2) {
+    public void addShapeAndDraw(SimpleShape shape, Graphics2D g2) {
         addShape(shape);
         shape.draw(g2);
-    }
-
-    public void removeShape(AbstractShape shape) {
-        shapes.remove(shape);
-        updateAllSize();
-        Collections.sort(shapes);
-    }
-
-    public void clear() {
-        shapes.clear();
-        this.height = 0;
-        this.width = 0;
     }
 
     @Override

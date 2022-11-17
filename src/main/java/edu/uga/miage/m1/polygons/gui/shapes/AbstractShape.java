@@ -6,8 +6,8 @@ import edu.uga.miage.m1.polygons.gui.shapes.states.UnselectedState;
 import java.awt.*;
 
 public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
-    private static final int SELECTED_BORDER_WIDTH = 3;
-    private static final int BORDER_PADDING = 5;
+    public static final int SELECTED_BORDER_WIDTH = 3;
+    public static final int BORDER_PADDING = 5;
     private static int elevationCounter;
     protected int x;
     protected int y;
@@ -74,7 +74,7 @@ public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
     }
     @Override
     public void ungroup(){
-
+        //nothing to do here
     }
 
     //-----------------------//
