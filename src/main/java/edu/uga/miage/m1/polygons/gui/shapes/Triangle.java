@@ -30,15 +30,15 @@ import java.awt.geom.GeneralPath;
  * @author <a href="mailto:christophe.saint-marcel@univ-grenoble-alpes.fr">Christophe</a>
  */
 public class Triangle extends AbstractShape {
-    protected Triangle(Graphics2D g2, int x, int y) {
-        super(g2, x, y);
+    protected Triangle(int x, int y) {
+        super(x, y);
     }
 
     /**
      * Implements the <tt>SimpleShape.draw()</tt> method for painting
      * the shape.
      */
-    public void draw() {
+    public void draw(Graphics2D g2) {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         GradientPaint gradient = new GradientPaint(x, y, Color.GREEN, x + 50, y, Color.WHITE);
         g2.setPaint(gradient);
@@ -56,7 +56,7 @@ public class Triangle extends AbstractShape {
         g2.setStroke(wideStroke);
         g2.draw(polygon);
         if (selected) {
-            drawSelection();
+            drawSelection(g2);
         }
     }
 

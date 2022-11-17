@@ -16,8 +16,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class WhiteBoard extends JPanel {
-    private JFrame parentFrame;
-    private final Logger logger = Logger.getLogger(WhiteBoard.class.getName());;
+    private final Logger logger = Logger.getLogger(WhiteBoard.class.getName());
     private static WhiteBoard instance;
     public static WhiteBoard getInstance() {
         if (instance == null) {
@@ -49,11 +48,11 @@ public class WhiteBoard extends JPanel {
         addMouseMotionListener(this.state);
     }
 
-    private void repaintAll() {
+    public void repaintAll() {
         if (get2DGraphics()!=null) {
             get2DGraphics().clearRect(0, 0, getWidth(), getHeight());
             for (SimpleShape shape : shapes) {
-                shape.draw();
+                shape.draw(get2DGraphics());
             }
         }
     }
@@ -62,7 +61,7 @@ public class WhiteBoard extends JPanel {
         if (canAddPlaceHere(shape.getX(), getY())) {
             shapes.add(shape);
             Collections.sort(shapes);
-            shape.draw();
+            shape.draw(get2DGraphics());
         }
     }
 
@@ -76,13 +75,13 @@ public class WhiteBoard extends JPanel {
     }
 
     public void placeCircle(int x, int y) {
-        addShape(ShapeFactory.createCircle(get2DGraphics(),x, y));
+        addShape(ShapeFactory.createCircle(x, y));
     }
     public void placeSquare(int x, int y) {
-        addShape(ShapeFactory.createSquare(get2DGraphics(),x, y));
+        addShape(ShapeFactory.createSquare(x, y));
     }
     public void placeTriangle(int x, int y) {
-        addShape(ShapeFactory.createTriangle(get2DGraphics(),x, y));
+        addShape(ShapeFactory.createTriangle(x, y));
     }
 
     public void selectShape(int x, int y) {
@@ -135,14 +134,14 @@ public class WhiteBoard extends JPanel {
     public void groupSelectedShapes(){
         List<SimpleShape> selectedShapes = getSelectedShapes();
         if (selectedShapes.size() > 1) {
-            Group group = ShapeFactory.createGroup(get2DGraphics());
+            Group group = ShapeFactory.createGroup();
             for (SimpleShape shape : selectedShapes) {
-                group.addShape(shape);
+                group.addShape(shape,get2DGraphics());
             }
             shapes.removeAll(selectedShapes);
             shapes.add(group);
             group.getState().select();
-            group.draw();
+            group.draw(get2DGraphics());
         }
         repaintAll();
     }

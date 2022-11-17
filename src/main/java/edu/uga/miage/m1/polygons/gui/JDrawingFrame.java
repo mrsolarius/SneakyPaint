@@ -40,7 +40,7 @@ import static javax.swing.SwingConstants.VERTICAL;
  * @author <a href="mailto:christophe.saint-marcel@univ-grenoble-alpes.fr">Christophe</a>
  *
  */
-public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseListener
+public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseListener, ComponentListener
 {
     private enum Shapes {SQUARE, TRIANGLE, CIRCLE,SELECT}
     @Serial
@@ -128,6 +128,8 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
 
 
         setPreferredSize(new Dimension(400, 400));
+
+        addComponentListener(this);
     }
 
     /**
@@ -231,5 +233,25 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
                 btn.repaint();
             }
         }
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e) {
+        this.whiteBoard.repaintAll();
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+        // no need to use this event
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+        this.whiteBoard.repaintAll();
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+        // no need to do anything here
     }
 }

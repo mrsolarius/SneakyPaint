@@ -31,15 +31,15 @@ import java.awt.geom.Rectangle2D;
  */
 public class Square extends AbstractShape {
 
-    protected Square(Graphics2D g2, int x, int y) {
-        super(g2, x, y);
+    protected Square(int x, int y) {
+        super(x, y);
     }
 
     /**
      * Implements the <tt>SimpleShape.draw()</tt> method for painting
      * the shape.
      */
-    public void draw() {
+    public void draw(Graphics2D g2) {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         GradientPaint gradient = new GradientPaint(x, y, Color.BLUE, x + 50, y, Color.WHITE);
         g2.setPaint(gradient);
@@ -49,7 +49,7 @@ public class Square extends AbstractShape {
         g2.setStroke(wideStroke);
         g2.draw(new Rectangle2D.Double(x, y, width, height));
         if (selected) {
-            drawSelection();
+            drawSelection(g2);
         }
     }
     /**

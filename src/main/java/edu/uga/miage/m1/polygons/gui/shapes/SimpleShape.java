@@ -3,6 +3,8 @@ package edu.uga.miage.m1.polygons.gui.shapes;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.shapes.states.SimpleShapeState;
 
+import java.awt.*;
+
 /**
  * This interface defines the <tt>SimpleShape</tt> extension. This extension
  * is used to draw shapes. 
@@ -32,7 +34,7 @@ public interface SimpleShape extends Visitable, Comparable<SimpleShape>
     /**
      * This method is used to paint the shape where ever you want.
      */
-    void draw();
+    void draw(Graphics2D g);
 
     /**
      * This method is used to compare elevation of two shapes.

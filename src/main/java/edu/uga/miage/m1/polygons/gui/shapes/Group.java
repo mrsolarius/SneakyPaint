@@ -10,8 +10,8 @@ import java.util.List;
 public class Group extends AbstractShape{
     private final ArrayList<SimpleShape> shapes;
 
-    protected Group(Graphics2D g2) {
-        super(g2, 0, 0);
+    protected Group() {
+        super(0, 0);
         this.shapes = new ArrayList<>();
     }
 
@@ -49,12 +49,12 @@ public class Group extends AbstractShape{
         this.width = 0;
     }
 
-    public void addShape(SimpleShape shape) {
+    public void addShape(SimpleShape shape, Graphics2D g2) {
         shape.getState().group();
         shapes.add(shape);
         Collections.sort(shapes);
         updateSize();
-        shape.draw();
+        shape.draw(g2);
     }
 
     public void removeShape(AbstractShape shape) {
@@ -70,12 +70,12 @@ public class Group extends AbstractShape{
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics2D g2) {
         for (SimpleShape shape : shapes) {
-            shape.draw();
+            shape.draw(g2);
         }
         if (isSelected()) {
-            drawSelection();
+            drawSelection(g2);
         }
     }
 
