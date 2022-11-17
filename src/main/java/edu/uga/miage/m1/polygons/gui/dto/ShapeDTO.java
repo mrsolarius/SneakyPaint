@@ -4,6 +4,7 @@ import edu.uga.miage.m1.polygons.gui.shapes.*;
 import lombok.Getter;
 
 import java.awt.*;
+import java.util.List;
 
 @Getter
 public class ShapeDTO {
@@ -19,13 +20,16 @@ public class ShapeDTO {
     private int x;
 
     private int y;
+    private int height;
+    private int width;
+    private int elevation;
+    private List<ShapesDTO> children;
 
     public AbstractShape toEntity(Graphics2D g2) {
-        ShapeFactory shapeFactory = ShapeFactory.getInstance(g2);
         return switch (type) {
-            case "circle" -> shapeFactory.createCircle(x, y);
-            case "square" -> shapeFactory.createSquare(x, y);
-            case "triangle" -> shapeFactory.createTriangle(x, y);
+            case "circle" -> ShapeFactory.createCircle(g2,x, y);
+            case "square" -> ShapeFactory.createSquare(g2,x, y);
+            case "triangle" -> ShapeFactory.createTriangle(g2,x, y);
             default -> throw new IllegalArgumentException("Unknown type: " + type);
         };
     }

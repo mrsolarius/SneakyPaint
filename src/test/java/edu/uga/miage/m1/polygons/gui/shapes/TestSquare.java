@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TestSquare {
     @Test
     void testSquare() {
-        Square s = ShapeFactory.getInstance(null).createSquare(10, 10);
+        Square s = ShapeFactory.createSquare(null,10, 10);
         assertEquals(10,s.getX());
         assertEquals(10,s.getY());
     }

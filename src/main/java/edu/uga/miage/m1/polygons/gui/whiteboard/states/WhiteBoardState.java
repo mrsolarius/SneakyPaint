@@ -9,5 +9,4 @@ public interface WhiteBoardState extends MouseListener, MouseMotionListener {
     void addTriangle();
     void selectMode();
     void moveMode();
-    void loaded();
 }

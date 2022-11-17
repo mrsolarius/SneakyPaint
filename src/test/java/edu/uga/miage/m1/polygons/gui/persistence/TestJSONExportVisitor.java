@@ -21,9 +21,9 @@ class TestJSONExportVisitor {
     }
 
     private ArrayList<SimpleShape> generateShapes(){
-        Circle c = ShapeFactory.getInstance(null).createCircle(10, 10);
-        Square s = ShapeFactory.getInstance(null).createSquare(20, 20);
-        Triangle t = ShapeFactory.getInstance(null).createTriangle(30, 30);
+        Circle c = ShapeFactory.createCircle(null,10, 10);
+        Square s = ShapeFactory.createSquare(null,20, 20);
+        Triangle t = ShapeFactory.createTriangle(null,30, 30);
         ArrayList<SimpleShape> shapes = new ArrayList<>();
         shapes.add(c);
         shapes.add(s);

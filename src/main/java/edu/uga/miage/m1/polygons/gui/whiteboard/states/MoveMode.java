@@ -42,11 +42,6 @@ public class MoveMode extends WhiteBoardStateImpl{
         // no need to do anything here
     }
 
-    @Override
-    public void loaded() {
-          // no need to do anything here
-    }
-
     //---------------------------------------//
     // Method of the interface MouseListener //
     //---------------------------------------//

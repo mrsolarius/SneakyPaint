@@ -130,12 +130,6 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         setPreferredSize(new Dimension(400, 400));
     }
 
-    @Override
-    public void pack() {
-        super.pack();
-        this.whiteBoard.getState().loaded();
-    }
-
     /**
      * Injects an available <tt>SimpleShape</tt> into the drawing frame.
      * @param shape The name of the injected <tt>SimpleShape</tt>.
