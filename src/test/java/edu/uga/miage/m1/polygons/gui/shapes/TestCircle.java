@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TestCircle {
     @Test
     void testCircle() {
-        Circle c = ShapeFactory.createCircle(null,10, 10);
+        Circle c = ShapeFactory.createCircle(10, 10);
         assertEquals(10,c.getX());
         assertEquals( 10,c.getY());
     }
