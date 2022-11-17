@@ -75,13 +75,13 @@ public class WhiteBoard extends JPanel {
     }
 
     public void placeCircle(int x, int y) {
-        addShape(ShapeFactory.createCircle(x, y));
+        addShape(ShapeFactory.createCircle(x-25, y-25));
     }
     public void placeSquare(int x, int y) {
-        addShape(ShapeFactory.createSquare(x, y));
+        addShape(ShapeFactory.createSquare(x-25, y-25));
     }
     public void placeTriangle(int x, int y) {
-        addShape(ShapeFactory.createTriangle(x, y));
+        addShape(ShapeFactory.createTriangle(x-25, y-25));
     }
 
     public void selectShape(int x, int y) {
