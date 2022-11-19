@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.command.AddCircleCommand;
 
 import java.awt.event.MouseEvent;
 
@@ -16,7 +17,7 @@ public class AddCircle extends WhiteBoardStateImpl{
     //---------------------------------------//
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.whiteBoard.placeCircle(e.getX(), e.getY());
+        new AddCircleCommand(this.whiteBoard, e.getX(), e.getY()).execute();
     }
 
     @Override

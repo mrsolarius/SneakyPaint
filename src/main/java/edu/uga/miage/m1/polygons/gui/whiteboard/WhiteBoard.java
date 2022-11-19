@@ -3,6 +3,7 @@ package edu.uga.miage.m1.polygons.gui.whiteboard;
 import edu.uga.miage.m1.polygons.gui.shapes.Group;
 import edu.uga.miage.m1.polygons.gui.shapes.ShapeFactory;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
+import edu.uga.miage.m1.polygons.gui.whiteboard.command.History;
 import edu.uga.miage.m1.polygons.gui.whiteboard.states.SelectMode;
 import edu.uga.miage.m1.polygons.gui.whiteboard.states.WhiteBoardState;
 
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 public class WhiteBoard extends JPanel {
     private final Logger logger = Logger.getLogger(WhiteBoard.class.getName());
     private static WhiteBoard instance;
+    private History history;
     public static WhiteBoard getInstance() {
         if (instance == null) {
             instance = new WhiteBoard();
@@ -33,6 +35,11 @@ public class WhiteBoard extends JPanel {
         addMouseMotionListener(this.state);
         shapes = new ArrayList<>();
         this.state = new SelectMode(this);
+        history = new History();
+    }
+
+    public History getHistory() {
+        return history;
     }
 
     private Graphics2D get2DGraphics() {
@@ -206,6 +213,12 @@ public class WhiteBoard extends JPanel {
         this.clearShapes();
         List<SimpleShape> loadedShapes = WhiteBoardLoader.load();
         this.shapes.addAll(loadedShapes);
+        repaintAll();
+    }
+
+    public void undo() {
+        this.clearShapes();
+        history.undo();
         repaintAll();
     }
 }

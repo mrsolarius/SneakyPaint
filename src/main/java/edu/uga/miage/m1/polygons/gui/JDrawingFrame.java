@@ -20,6 +20,7 @@ package edu.uga.miage.m1.polygons.gui;
 
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.command.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,14 +80,14 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         JMenuItem saveAsJSON = new JMenuItem("Save as JSON");
         JMenuItem load = new JMenuItem("Load");
         JMenuItem exit = new JMenuItem("Exit");
-        JMenuItem group = new JMenuItem("Group");
-        JMenuItem ungroup = new JMenuItem("Ungroup");
-        JMenuItem elevate = new JMenuItem("Elevate");
-        JMenuItem lower = new JMenuItem("Lower");
-        JMenuItem delete = new JMenuItem("Delete");
-        JMenuItem clear = new JMenuItem("Clear");
-        JMenuItem undo = new JMenuItem("Undo");
-        JMenuItem redo = new JMenuItem("Redo");
+        JMenuItem group = new JMenuItem("Group (Ctrl+G)");
+        JMenuItem ungroup = new JMenuItem("Ungroup (Ctrl+U)");
+        JMenuItem elevate = new JMenuItem("Elevate (Ctrl+Up)");
+        JMenuItem lower = new JMenuItem("Lower (Ctrl+Down)");
+        JMenuItem delete = new JMenuItem("Delete (Suppr)");
+        JMenuItem clear = new JMenuItem("Clear all");
+        JMenuItem undo = new JMenuItem("Undo (Ctrl+Z)");
+        JMenuItem redo = new JMenuItem("Redo (Ctrl+Y)");
         fileMenu.add(saveAsXML);
         fileMenu.add(saveAsJSON);
         fileMenu.add(load);
@@ -106,12 +107,72 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         saveAsJSON.addActionListener(e -> whiteBoard.saveAsJson());
         load.addActionListener(e -> whiteBoard.loadFile());
         exit.addActionListener(e -> System.exit(0));
+        undo.addActionListener(e -> new UndoCommand(whiteBoard).execute());
         clear.addActionListener(e -> whiteBoard.clearShapes());
-        group.addActionListener(e -> whiteBoard.groupSelectedShapes());
-        ungroup.addActionListener(e -> whiteBoard.ungroupSelectedShapes());
-        elevate.addActionListener(e -> whiteBoard.elevateSelectedShapes());
-        lower.addActionListener(e -> whiteBoard.lowerSelectedShapes());
-        delete.addActionListener(e -> whiteBoard.deleteSelectedShapes());
+        group.addActionListener(e -> new GroupeCommand(whiteBoard).execute());
+        ungroup.addActionListener(e -> new UngroupeCommand(whiteBoard).execute());
+        elevate.addActionListener(e -> new ElevateCommand(whiteBoard).execute());
+        lower.addActionListener(e -> new LowerCommand(whiteBoard).execute());
+        delete.addActionListener(e -> new DeleteCommand(whiteBoard).execute());
+
+        //register ctrl+z as undo envent
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK), "undo");
+        //register ctrl+y as redo envent
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK), "redo");
+        //register ctrl+g as group envent
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.CTRL_DOWN_MASK), "group");
+        //register ctrl+u as ungroup envent
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_DOWN_MASK), "ungroup");
+        //register ctrl+up as elevate envent
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, InputEvent.CTRL_DOWN_MASK), "elevate");
+        //register ctrl+down as lower envent
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, InputEvent.CTRL_DOWN_MASK), "lower");
+        //register delete as delete envent
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "delete");
+
+        getRootPane().getActionMap().put("undo", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new UndoCommand(whiteBoard).execute();
+            }
+        });
+        getRootPane().getActionMap().put("redo", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //new RedoCommand(whiteBoard).execute();
+            }
+        });
+        getRootPane().getActionMap().put("group", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GroupeCommand(whiteBoard).execute();
+            }
+        });
+        getRootPane().getActionMap().put("ungroup", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new UngroupeCommand(whiteBoard).execute();
+            }
+        });
+        getRootPane().getActionMap().put("elevate", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ElevateCommand(whiteBoard).execute();
+            }
+        });
+        getRootPane().getActionMap().put("lower", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LowerCommand(whiteBoard).execute();
+            }
+        });
+        getRootPane().getActionMap().put("delete", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new DeleteCommand(whiteBoard).execute();
+            }
+        });
+
 
         
         // Fills the panel

@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.command.MoveCommand;
 
 import java.awt.event.MouseEvent;
 
@@ -60,6 +61,7 @@ public class MoveMode extends WhiteBoardStateImpl{
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        new MoveCommand(this.whiteBoard, this.lastXMoved, this.lastYMoved, e.getX(), e.getY()).execute();
         this.whiteBoard.setState(new SelectMode(this.whiteBoard));
     }
 

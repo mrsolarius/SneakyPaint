@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.command.AddSquareCommand;
 
 import java.awt.event.MouseEvent;
 
@@ -16,7 +17,7 @@ public class AddSquare extends WhiteBoardStateImpl{
     //---------------------------------------//
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.whiteBoard.placeSquare(e.getX(), e.getY());
+        new AddSquareCommand(this.whiteBoard, e.getX(), e.getY()).execute();
     }
 
     @Override

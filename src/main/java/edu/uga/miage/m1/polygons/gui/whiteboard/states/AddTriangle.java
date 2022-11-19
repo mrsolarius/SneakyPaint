@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.command.AddTriangleCommand;
 
 import java.awt.event.MouseEvent;
 
@@ -15,7 +16,7 @@ public class AddTriangle extends WhiteBoardStateImpl{
     //---------------------------------------//
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.whiteBoard.placeTriangle(e.getX(), e.getY());
+        new AddTriangleCommand(this.whiteBoard, e.getX(), e.getY()).execute();
     }
 
     @Override
