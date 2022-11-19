@@ -1,9 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard;
 
-import edu.uga.miage.m1.polygons.gui.shapes.Group;
-import edu.uga.miage.m1.polygons.gui.shapes.ShapeFactory;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
-import edu.uga.miage.m1.polygons.gui.whiteboard.command.History;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.History;
 import edu.uga.miage.m1.polygons.gui.whiteboard.states.SelectMode;
 import edu.uga.miage.m1.polygons.gui.whiteboard.states.WhiteBoardState;
 
@@ -19,7 +17,7 @@ import java.util.logging.Logger;
 public class WhiteBoard extends JPanel {
     private final Logger logger = Logger.getLogger(WhiteBoard.class.getName());
     private static WhiteBoard instance;
-    private History history;
+    private final History history;
     public static WhiteBoard getInstance() {
         if (instance == null) {
             instance = new WhiteBoard();
@@ -42,7 +40,7 @@ public class WhiteBoard extends JPanel {
         return history;
     }
 
-    private Graphics2D get2DGraphics() {
+    public Graphics2D get2DGraphics() {
         return (Graphics2D) getGraphics();
     }
 
@@ -64,11 +62,17 @@ public class WhiteBoard extends JPanel {
         }
     }
 
-    private void addShape(SimpleShape shape) {
+    public void addShape(SimpleShape shape) {
         if (canAddPlaceHere(shape.getX(), getY())) {
             shapes.add(shape);
             Collections.sort(shapes);
             shape.draw(get2DGraphics());
+        }
+    }
+
+    public void addShapes(List<SimpleShape> shapes) {
+        for (SimpleShape shape : shapes) {
+            addShape(shape);
         }
     }
 
@@ -78,39 +82,6 @@ public class WhiteBoard extends JPanel {
 
     public void clearShapes() {
         shapes.clear();
-        repaintAll();
-    }
-
-    public void placeCircle(int x, int y) {
-        addShape(ShapeFactory.createCircle(x-25, y-25));
-    }
-    public void placeSquare(int x, int y) {
-        addShape(ShapeFactory.createSquare(x-25, y-25));
-    }
-    public void placeTriangle(int x, int y) {
-        addShape(ShapeFactory.createTriangle(x-25, y-25));
-    }
-
-    public void selectShape(int x, int y) {
-        boolean found = false;
-        for (SimpleShape shape : shapes) {
-            if (shape.isInside(x, y)) {
-                found = true;
-                shape.getState().select();
-            }
-        }
-        if (!found) {
-            unSelectAll();
-        }
-        repaintAll();
-    }
-
-    public void dragObject(int x, int y) {
-        for (SimpleShape shape : shapes) {
-            if (shape.isSelected()) {
-                shape.getState().move(x, y);
-            }
-        }
         repaintAll();
     }
 
@@ -127,78 +98,8 @@ public class WhiteBoard extends JPanel {
         return this.state;
     }
 
-    public void unSelectAll() {
-        for (SimpleShape shape : shapes) {
-            shape.getState().unselect();
-        }
-        repaintAll();
-    }
-
-    private List<SimpleShape> getSelectedShapes() {
+    public List<SimpleShape> getSelectedShapes() {
         return shapes.stream().filter(SimpleShape::isSelected).toList();
-    }
-
-    public void groupSelectedShapes(){
-        List<SimpleShape> selectedShapes = getSelectedShapes();
-        if (selectedShapes.size() > 1) {
-            Group group = ShapeFactory.createGroup();
-            for (SimpleShape shape : selectedShapes) {
-                group.addShapeAndDraw(shape,get2DGraphics());
-            }
-            shapes.removeAll(selectedShapes);
-            shapes.add(group);
-            group.getState().select();
-            group.draw(get2DGraphics());
-        }
-        repaintAll();
-    }
-
-    public void ungroupSelectedShapes() {
-        List<SimpleShape> selectedShapes = getSelectedShapes();
-        if (selectedShapes.size() == 1) {
-            for (SimpleShape shape : selectedShapes) {
-                if (shape instanceof Group) {
-                    List<SimpleShape>  children = ((Group) shape).getShapes();
-                    for (SimpleShape simpleShape : children) {
-                        simpleShape.getState().ungroup();
-                    }
-                    shapes.remove(shape);
-                    shapes.addAll(((Group) shape).getShapes());
-                }
-                shape.getState().ungroup();
-            }
-        }
-        repaintAll();
-    }
-
-    public void elevateSelectedShapes() {
-        List<SimpleShape> selectedShapes = getSelectedShapes();
-        if (selectedShapes.size() == 1) {
-            for (SimpleShape shape : selectedShapes) {
-                shape.getState().editElevation(1);
-            }
-            Collections.sort(shapes);
-            repaintAll();
-        }
-    }
-
-    public void lowerSelectedShapes() {
-        List<SimpleShape> selectedShapes = getSelectedShapes();
-        if (selectedShapes.size() == 1) {
-            for (SimpleShape shape : selectedShapes) {
-                shape.getState().editElevation(-1);
-            }
-            Collections.sort(shapes);
-            repaintAll();
-        }
-    }
-
-    public void deleteSelectedShapes() {
-        List<SimpleShape> selectedShapes = getSelectedShapes();
-        if (selectedShapes.size() > 0) {
-            shapes.removeAll(selectedShapes);
-            repaintAll();
-        }
     }
 
     public void saveAsJson(){
@@ -217,8 +118,30 @@ public class WhiteBoard extends JPanel {
     }
 
     public void undo() {
-        this.clearShapes();
         history.undo();
         repaintAll();
+    }
+
+    public void removeShape(SimpleShape shape) {
+        shapes.remove(shape);
+        repaintAll();
+    }
+
+    public void removeShapes(List<SimpleShape> shapes) {
+        this.shapes.removeAll(shapes);
+        repaintAll();
+    }
+
+    public void sortShapes() {
+        Collections.sort(shapes);
+    }
+
+    public void redo() {
+        history.redo();
+        repaintAll();
+    }
+
+    public List<SimpleShape> getShapes() {
+        return shapes;
     }
 }

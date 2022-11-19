@@ -1,10 +1,10 @@
-package edu.uga.miage.m1.polygons.gui.whiteboard.command;
+package edu.uga.miage.m1.polygons.gui.whiteboard.commands;
 
-import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 public class History {
-    private Deque<Command> commands;
+    private List<Command> commands;
     private int currentCommandIndex;
 
     public History(){
@@ -14,10 +14,7 @@ public class History {
 
     public void addCommand(Command command){
         if(this.currentCommandIndex < this.commands.size() - 1){
-            for (int i = this.commands.size() - 1; i >= this.currentCommandIndex; i--){
-                this.commands.removeLast();
-            }
-            this.commands.removeLast();
+            this.commands = this.commands.subList(0, this.currentCommandIndex + 1);
         }
         this.commands.add(command);
         this.currentCommandIndex++;
@@ -25,16 +22,15 @@ public class History {
 
     public void undo(){
         if(this.currentCommandIndex >= 0){
-            this.commands.removeLast();
+            this.commands.get(this.currentCommandIndex).undo();
             this.currentCommandIndex--;
-            this.executeAll();
         }
     }
 
-    public void executeAll(){
-        for(Command command : this.commands.stream().toList()){
-            command.execute();
+    public void redo() {
+        if(this.currentCommandIndex < this.commands.size() - 1){
+            this.currentCommandIndex++;
+            this.commands.get(this.currentCommandIndex).redo();
         }
     }
-
 }

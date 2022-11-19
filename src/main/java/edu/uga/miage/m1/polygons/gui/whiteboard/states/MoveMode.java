@@ -1,13 +1,18 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
-import edu.uga.miage.m1.polygons.gui.whiteboard.command.MoveCommand;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.selected.MoveCommand;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse.SelectCommand;
 
 import java.awt.event.MouseEvent;
 
 public class MoveMode extends WhiteBoardStateImpl{
     private int lastXMoved;
     private int lastYMoved;
+
+    private boolean isDragging;
+    private int mouseClickLocationX;
+    private int mouseClickLocationY;
 
     // Move mode need to be reset each time we use it this is why we don't use a singleton
     public MoveMode(WhiteBoard whiteBoard) {
@@ -54,14 +59,15 @@ public class MoveMode extends WhiteBoardStateImpl{
     @Override
     public void mousePressed(MouseEvent e) {
         this.whiteBoard.setState(new SelectMode(this.whiteBoard));
-        this.whiteBoard.selectShape(e.getX(), e.getY());
+        new SelectCommand(this.whiteBoard, e.getX(), e.getY()).execute();
         this.lastXMoved = e.getX();
         this.lastYMoved = e.getY();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        new MoveCommand(this.whiteBoard, this.lastXMoved, this.lastYMoved, e.getX(), e.getY()).execute();
+        this.isDragging = false;
+        new MoveCommand(this.whiteBoard, this.mouseClickLocationX, this.mouseClickLocationY, e.getX(), e.getY(),true).execute();
         this.whiteBoard.setState(new SelectMode(this.whiteBoard));
     }
 
@@ -81,13 +87,18 @@ public class MoveMode extends WhiteBoardStateImpl{
     //---------------------------------------------//
     @Override
     public void mouseDragged(MouseEvent e) {
+        if (!this.isDragging) {
+            this.isDragging = true;
+            this.mouseClickLocationX = e.getX();
+            this.mouseClickLocationY = e.getY();
+        }
         if (lastXMoved == 0 && lastYMoved == 0) {
             lastXMoved = e.getX();
             lastYMoved = e.getY();
         }
         int x = e.getX();
         int y = e.getY();
-        this.whiteBoard.dragObject(x - this.lastXMoved, y - this.lastYMoved);
+        new MoveCommand(this.whiteBoard, this.lastXMoved, this.lastYMoved, e.getX(), e.getY(),false).execute();
         this.lastXMoved = x;
         this.lastYMoved = y;
     }

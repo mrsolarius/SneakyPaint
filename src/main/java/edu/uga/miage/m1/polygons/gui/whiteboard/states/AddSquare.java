@@ -1,7 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
-import edu.uga.miage.m1.polygons.gui.whiteboard.command.AddSquareCommand;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.creation.AddSquareCommand;
 
 import java.awt.event.MouseEvent;
 

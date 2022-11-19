@@ -20,7 +20,9 @@ package edu.uga.miage.m1.polygons.gui;
 
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
-import edu.uga.miage.m1.polygons.gui.whiteboard.command.*;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.selected.*;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.simple.RedoCommand;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.simple.UndoCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -108,6 +110,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         load.addActionListener(e -> whiteBoard.loadFile());
         exit.addActionListener(e -> System.exit(0));
         undo.addActionListener(e -> new UndoCommand(whiteBoard).execute());
+        redo.addActionListener(e -> new RedoCommand(whiteBoard).execute());
         clear.addActionListener(e -> whiteBoard.clearShapes());
         group.addActionListener(e -> new GroupeCommand(whiteBoard).execute());
         ungroup.addActionListener(e -> new UngroupeCommand(whiteBoard).execute());
@@ -139,7 +142,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         getRootPane().getActionMap().put("redo", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new RedoCommand(whiteBoard).execute();
+                new RedoCommand(whiteBoard).execute();
             }
         });
         getRootPane().getActionMap().put("group", new AbstractAction() {

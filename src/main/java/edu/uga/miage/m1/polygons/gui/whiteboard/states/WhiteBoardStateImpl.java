@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse.UnselectAllCommand;
 
 import java.awt.*;
 
@@ -17,19 +18,19 @@ public abstract class WhiteBoardStateImpl implements WhiteBoardState {
     @Override
     public void addCircle() {
         whiteBoard.setState(new AddCircle(whiteBoard));
-        whiteBoard.unSelectAll();
+        new UnselectAllCommand(whiteBoard).execute();
     }
 
     @Override
     public void addSquare() {
         whiteBoard.setState(new AddSquare(whiteBoard));
-        whiteBoard.unSelectAll();
+        new UnselectAllCommand(whiteBoard).execute();
     }
 
     @Override
     public void addTriangle() {
         whiteBoard.setState(new AddTriangle(whiteBoard));
-        whiteBoard.unSelectAll();
+        new UnselectAllCommand(whiteBoard).execute();
     }
 
     @Override

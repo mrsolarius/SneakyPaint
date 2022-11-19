@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse.SelectCommand;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -16,7 +17,7 @@ public class SelectMode extends WhiteBoardStateImpl{
     //---------------------------------------//
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.whiteBoard.selectShape(e.getX(), e.getY());
+        new SelectCommand(this.whiteBoard, e.getX(), e.getY()).execute();
     }
 
     @Override

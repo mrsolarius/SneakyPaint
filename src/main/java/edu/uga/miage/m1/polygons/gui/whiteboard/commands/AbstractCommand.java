@@ -1,4 +1,4 @@
-package edu.uga.miage.m1.polygons.gui.whiteboard.command;
+package edu.uga.miage.m1.polygons.gui.whiteboard.commands;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 

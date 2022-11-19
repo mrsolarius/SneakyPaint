@@ -1,9 +1,9 @@
-package edu.uga.miage.m1.polygons.gui.whiteboard.command;
+package edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse;
 
-import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.AbstractCommand;
 
-public abstract class MouseEventCommand extends AbstractCommand{
+public abstract class MouseEventCommand extends AbstractCommand {
     protected int x;
     protected int y;
 
