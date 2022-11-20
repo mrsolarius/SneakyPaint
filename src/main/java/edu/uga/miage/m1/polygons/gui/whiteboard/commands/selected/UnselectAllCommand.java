@@ -1,8 +1,7 @@
-package edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse;
+package edu.uga.miage.m1.polygons.gui.whiteboard.commands.selected;
 
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
-import edu.uga.miage.m1.polygons.gui.whiteboard.commands.selected.AbstractSelectedCommand;
 
 public class UnselectAllCommand extends AbstractSelectedCommand {
     public UnselectAllCommand(WhiteBoard receiver) {

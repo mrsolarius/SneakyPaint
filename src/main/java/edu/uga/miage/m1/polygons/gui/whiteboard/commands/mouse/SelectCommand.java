@@ -2,11 +2,12 @@ package edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse;
 
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.selected.UnselectAllCommand;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectCommand extends MouseEventCommand {
+public class SelectCommand extends AbstractMouseCommand {
 
     List<SimpleShape> selectedShapes;
     public SelectCommand(WhiteBoard receiver, int x, int y) {

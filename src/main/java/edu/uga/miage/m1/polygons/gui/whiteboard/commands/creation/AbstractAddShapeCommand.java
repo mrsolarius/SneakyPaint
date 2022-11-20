@@ -2,16 +2,16 @@ package edu.uga.miage.m1.polygons.gui.whiteboard.commands.creation;
 
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
-import edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse.MouseEventCommand;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse.AbstractMouseCommand;
 
-public abstract class AbstractAddShapeCommand extends MouseEventCommand {
+public abstract class AbstractAddShapeCommand extends AbstractMouseCommand {
     protected SimpleShape shape;
 
     protected AbstractAddShapeCommand(WhiteBoard receiver, int x, int y) {
         super(receiver, x, y);
     }
 
-    abstract SimpleShape createShape(int x, int y);
+    protected abstract SimpleShape createShape(int x, int y);
 
     @Override
     public void execute() {

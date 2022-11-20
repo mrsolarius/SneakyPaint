@@ -5,10 +5,10 @@ import edu.uga.miage.m1.polygons.gui.shapes.ShapeFactory;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 
-public class GroupeCommand extends AbstractSelectedCommand {
+public class GroupCommand extends AbstractSelectedCommand {
     private final Group group;
 
-    public GroupeCommand(WhiteBoard receiver) {
+    public GroupCommand(WhiteBoard receiver) {
         super(receiver);
         this.group = ShapeFactory.createGroup();
     }

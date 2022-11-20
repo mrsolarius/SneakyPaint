@@ -4,10 +4,10 @@ import edu.uga.miage.m1.polygons.gui.shapes.Group;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 
-public class UngroupeCommand extends AbstractSelectedCommand {
+public class UngroupCommand extends AbstractSelectedCommand {
 
     private Group group;
-    public UngroupeCommand(WhiteBoard receiver) {
+    public UngroupCommand(WhiteBoard receiver) {
         super(receiver);
     }
 

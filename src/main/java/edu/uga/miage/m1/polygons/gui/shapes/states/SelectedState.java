@@ -2,7 +2,7 @@ package edu.uga.miage.m1.polygons.gui.shapes.states;
 
 import edu.uga.miage.m1.polygons.gui.shapes.AbstractShape;
 
-public class SelectedState extends AbstractSelection{
+public class SelectedState extends AbstractSelectedState {
     public SelectedState(AbstractShape shape) {
         super(shape);
     }

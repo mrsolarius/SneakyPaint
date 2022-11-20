@@ -120,8 +120,8 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         undo.addActionListener(e -> new UndoCommand(whiteBoard).execute());
         redo.addActionListener(e -> new RedoCommand(whiteBoard).execute());
         clear.addActionListener(e -> whiteBoard.clearShapes());
-        group.addActionListener(e -> new GroupeCommand(whiteBoard).execute());
-        ungroup.addActionListener(e -> new UngroupeCommand(whiteBoard).execute());
+        group.addActionListener(e -> new GroupCommand(whiteBoard).execute());
+        ungroup.addActionListener(e -> new UngroupCommand(whiteBoard).execute());
         elevate.addActionListener(e -> new ElevateCommand(whiteBoard).execute());
         lower.addActionListener(e -> new LowerCommand(whiteBoard).execute());
         delete.addActionListener(e -> new DeleteCommand(whiteBoard).execute());
@@ -156,13 +156,13 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         getRootPane().getActionMap().put("group", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new GroupeCommand(whiteBoard).execute();
+                new GroupCommand(whiteBoard).execute();
             }
         });
         getRootPane().getActionMap().put("ungroup", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new UngroupeCommand(whiteBoard).execute();
+                new UngroupCommand(whiteBoard).execute();
             }
         });
         getRootPane().getActionMap().put("elevate", new AbstractAction() {

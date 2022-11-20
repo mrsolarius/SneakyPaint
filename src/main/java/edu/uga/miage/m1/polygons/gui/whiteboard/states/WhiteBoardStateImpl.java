@@ -1,7 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard.states;
 
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
-import edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse.UnselectAllCommand;
+import edu.uga.miage.m1.polygons.gui.whiteboard.commands.selected.UnselectAllCommand;
 
 import java.awt.*;
 
