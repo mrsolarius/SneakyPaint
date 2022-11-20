@@ -5,6 +5,7 @@ import edu.uga.miage.m1.polygons.gui.persistence.XMLExportVisitor;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
@@ -43,11 +44,14 @@ public class WhiteBoardExporter {
         }
     }
 
-    private static String openFileExplorer(){
+    private static String openFileExplorer(String defaultFileName, FileNameExtensionFilter filter){
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.setDialogTitle("Specify where to save the file");
+        fileChooser.setSelectedFile(new File(defaultFileName));
+        fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+        fileChooser.setFileFilter(filter);
         fileChooser.setAcceptAllFileFilterUsed(false);
-        int returnValue = fileChooser.showOpenDialog(null);
+        int returnValue = fileChooser.showDialog(null,"Save");
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             return fileChooser.getSelectedFile().getAbsolutePath();
         }
@@ -55,17 +59,21 @@ public class WhiteBoardExporter {
     }
     public static void saveAsJson(List<SimpleShape> shapes) {
         String content = exportToJSON(shapes);
-        String fileName = openFileExplorer();
+        String fileName = openFileExplorer("shapes.json", new FileNameExtensionFilter("JSON file", "json"));
         if (fileName != null) {
-            saveToFile(content, fileName+File.separator+"save.json");
+            if (!fileName.endsWith(".json"))
+                fileName += ".json";
+            saveToFile(content, fileName);
         }
     }
 
     public static void saveAsXml(List<SimpleShape> shapes) {
         String content = exportToXML(shapes);
-        String fileName = openFileExplorer();
+        String fileName = openFileExplorer("shapes.xml", new FileNameExtensionFilter("XML file", "xml"));
         if (fileName != null) {
-            saveToFile(content, fileName+File.separator+"save.xml");
+            if (!fileName.endsWith(".xml"))
+                fileName += ".xml";
+            saveToFile(content, fileName);
         }
     }
 }
