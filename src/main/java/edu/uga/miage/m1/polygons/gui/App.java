@@ -10,6 +10,6 @@ public class App
 {
     public static void main( String[] args )
     {
-		GUIHelper.showOnFrame("Paint Program");
+		GUIHelper.showOnFrame("Sneaky Paint");
 	}
 }

@@ -7,6 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+		<exec.mainClass>edu.uga.miage.m1.polygons.gui.App</exec.mainClass>
 		<maven.compiler.source>17</maven.compiler.source>
     	<maven.compiler.target>17</maven.compiler.target>
     	<sonar.host.url>http://im2ag-sonar.u-ga.fr:9000</sonar.host.url>
