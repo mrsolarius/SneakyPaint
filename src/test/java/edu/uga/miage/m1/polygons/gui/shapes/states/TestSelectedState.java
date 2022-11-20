@@ -27,14 +27,6 @@ class TestSelectedState {
     }
 
     @Test
-    void shouldResizeObject() {
-        shape.getState().resize(10, 10);
-        assertInstanceOf(SelectedState.class, shape.getState());
-        assertEquals(10, shape.getWidth());
-        assertEquals(10, shape.getHeight());
-    }
-
-    @Test
     void shouldEditElevation() {
         int currentElevation = shape.getElevation();
         shape.getState().editElevation(10);

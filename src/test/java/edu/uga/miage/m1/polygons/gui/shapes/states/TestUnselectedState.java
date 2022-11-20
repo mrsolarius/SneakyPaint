@@ -27,16 +27,6 @@ class TestUnselectedState {
     }
 
     @Test
-    void shouldNotResizeObject() {
-        int currentWidth = shape.getWidth();
-        int currentHeight = shape.getHeight();
-        shape.getState().resize(10, 10);
-        assertInstanceOf(UnselectedState.class, shape.getState());
-        assertEquals(currentWidth, shape.getWidth());
-        assertEquals(currentHeight, shape.getHeight());
-    }
-
-    @Test
     void shouldNotEditElevation() {
         int currentElevation = shape.getElevation();
         shape.getState().editElevation(10);
