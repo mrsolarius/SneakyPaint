@@ -112,10 +112,11 @@ public class WhiteBoard extends JPanel {
     }
 
     public void loadFile() {
-        this.clearShapes();
         List<SimpleShape> loadedShapes = WhiteBoardLoader.load();
-        this.shapes.addAll(loadedShapes);
-        repaintAll();
+        if (loadedShapes.size()> 0) {
+            clearShapes();
+            addShapes(loadedShapes);
+        }
     }
 
     public void undo() {

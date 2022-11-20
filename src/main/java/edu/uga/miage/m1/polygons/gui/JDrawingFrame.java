@@ -80,7 +80,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         menuBar.add(editMenu);
         JMenuItem saveAsXML = new JMenuItem("Save as XML");
         JMenuItem saveAsJSON = new JMenuItem("Save as JSON");
-        JMenuItem load = new JMenuItem("Load");
+        JMenuItem load = new JMenuItem("Open");
         JMenuItem exit = new JMenuItem("Exit");
         JMenuItem group = new JMenuItem("Group (Ctrl+G)");
         JMenuItem ungroup = new JMenuItem("Ungroup (Ctrl+U)");
@@ -90,18 +90,26 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         JMenuItem clear = new JMenuItem("Clear all");
         JMenuItem undo = new JMenuItem("Undo (Ctrl+Z)");
         JMenuItem redo = new JMenuItem("Redo (Ctrl+Y)");
+        //Separator for menu items
+
+        fileMenu.add(load);
+        fileMenu.add(new JSeparator());
         fileMenu.add(saveAsXML);
         fileMenu.add(saveAsJSON);
-        fileMenu.add(load);
+        fileMenu.add(new JSeparator());
         fileMenu.add(exit);
         editMenu.add(undo);
         editMenu.add(redo);
-        editMenu.add(clear);
+        editMenu.add(new JSeparator());
         editMenu.add(group);
         editMenu.add(ungroup);
+        editMenu.add(new JSeparator());
         editMenu.add(elevate);
         editMenu.add(lower);
+        editMenu.add(new JSeparator());
         editMenu.add(delete);
+        editMenu.add(new JSeparator());
+        editMenu.add(clear);
         setJMenuBar(menuBar);
         
         // add callbacks to menu items
