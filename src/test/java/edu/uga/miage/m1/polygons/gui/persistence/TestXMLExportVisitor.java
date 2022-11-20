@@ -15,13 +15,19 @@ class TestXMLExportVisitor {
         String xml = xmlExportVisitor.export(generateShapes().toArray(new SimpleShape[0]));
         System.out.println(xml);
         assertNotNull (xml );
-        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ShapesDTO><shapes><shape><type>group</type><x>10</x><y>10</y><height>60</height><width>60</width><elevation>41</elevation><children><children><type>circle</type><x>10</x><y>10</y><height>50</height><width>50</width><elevation>38</elevation><children></children></children><children><type>square</type><x>20</x><y>20</y><height>50</height><width>50</width><elevation>39</elevation><children></children></children></children></shape><shape><type>triangle</type><x>30</x><y>30</y><height>50</height><width>50</width><elevation>40</elevation><children></children></shape></shapes></ShapesDTO>",xml);
+        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ShapesDTO><shapes><shape><type>group</type><x>10</x><y>10</y><height>60</height><width>60</width><elevation>39</elevation><children><children><type>circle</type><x>10</x><y>10</y><height>50</height><width>50</width><elevation>2</elevation><children></children></children><children><type>square</type><x>20</x><y>20</y><height>50</height><width>50</width><elevation>3</elevation><children></children></children></children></shape><shape><type>triangle</type><x>30</x><y>30</y><height>50</height><width>50</width><elevation>4</elevation><children></children></shape></shapes></ShapesDTO>",xml);
     }
 
     private ArrayList<SimpleShape> generateShapes(){
         Circle c = ShapeFactory.createCircle(10, 10);
+        c.getState().select();
+        c.getState().editElevation(-c.getElevation()+2);
         Square s = ShapeFactory.createSquare(20, 20);
+        s.getState().select();
+        s.getState().editElevation(-s.getElevation()+3);
         Triangle t = ShapeFactory.createTriangle(30, 30);
+        t.getState().select();
+        t.getState().editElevation(-t.getElevation()+4);
         Group g = ShapeFactory.createGroup();
         g.addShape(c);
         g.addShape(s);
