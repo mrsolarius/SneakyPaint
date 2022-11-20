@@ -33,4 +33,9 @@ public class History {
             this.commands.get(this.currentCommandIndex).redo();
         }
     }
+
+    public void clear() {
+        this.commands.clear();
+        this.currentCommandIndex = -1;
+    }
 }

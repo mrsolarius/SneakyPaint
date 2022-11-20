@@ -20,7 +20,6 @@ public class ShapeDeserialization {
 
     private static ShapesDTO deserialize(String shapes, ObjectMapper objectMapper) {
         try {
-            //objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             return objectMapper.readValue(shapes, ShapesDTO.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

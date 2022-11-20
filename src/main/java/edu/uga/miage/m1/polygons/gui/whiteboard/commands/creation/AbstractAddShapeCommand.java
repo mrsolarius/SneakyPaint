@@ -7,11 +7,11 @@ import edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse.MouseEventCommand
 public abstract class AbstractAddShapeCommand extends MouseEventCommand {
     protected SimpleShape shape;
 
-    public AbstractAddShapeCommand(WhiteBoard receiver, int x, int y) {
+    protected AbstractAddShapeCommand(WhiteBoard receiver, int x, int y) {
         super(receiver, x, y);
     }
 
-    abstract protected SimpleShape createShape(int x, int y);
+    abstract SimpleShape createShape(int x, int y);
 
     @Override
     public void execute() {

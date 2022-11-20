@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestUnselectedState {
+class TestUnselectedState {
     private SimpleShape shape;
 
     @BeforeEach

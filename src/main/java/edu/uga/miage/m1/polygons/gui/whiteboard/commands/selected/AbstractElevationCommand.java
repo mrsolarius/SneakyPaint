@@ -4,7 +4,7 @@ import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 
 public abstract class AbstractElevationCommand extends AbstractSelectedCommand{
-    public AbstractElevationCommand(WhiteBoard receiver) {
+    protected AbstractElevationCommand(WhiteBoard receiver) {
         super(receiver);
     }
 

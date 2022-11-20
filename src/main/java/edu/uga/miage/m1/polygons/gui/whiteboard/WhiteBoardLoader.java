@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 
 public class WhiteBoardLoader {
@@ -68,7 +69,7 @@ public class WhiteBoardLoader {
         }else {
             JOptionPane.showMessageDialog(null, "Invalid file");
         }
-        return null;
+        return Collections.emptyList();
     }
 
 }

@@ -8,7 +8,7 @@ import java.awt.*;
 public abstract class WhiteBoardStateImpl implements WhiteBoardState {
     protected WhiteBoard whiteBoard;
 
-    public WhiteBoardStateImpl(WhiteBoard whiteBoard) {
+    protected WhiteBoardStateImpl(WhiteBoard whiteBoard) {
         this.whiteBoard = whiteBoard;
     }
 

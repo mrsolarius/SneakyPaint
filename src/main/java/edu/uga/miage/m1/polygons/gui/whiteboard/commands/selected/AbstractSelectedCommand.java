@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class AbstractSelectedCommand extends AbstractCommand {
     protected List<SimpleShape> selectedShapes;
 
-    public AbstractSelectedCommand(WhiteBoard receiver) {
+    protected AbstractSelectedCommand(WhiteBoard receiver) {
         super(receiver);
         this.selectedShapes = new ArrayList<>();
     }

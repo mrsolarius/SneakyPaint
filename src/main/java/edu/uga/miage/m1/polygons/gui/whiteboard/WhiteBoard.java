@@ -27,13 +27,17 @@ public class WhiteBoard extends JPanel {
     private WhiteBoardState state;
     private final ArrayList<SimpleShape> shapes;
 
-    private WhiteBoard() {
+    WhiteBoard(History history) {
         super();
         addMouseListener(this.state);
         addMouseMotionListener(this.state);
         shapes = new ArrayList<>();
         this.state = new SelectMode(this);
-        history = new History();
+        this.history = history;
+    }
+
+    WhiteBoard() {
+        this(new History());
     }
 
     public History getHistory() {
@@ -63,9 +67,9 @@ public class WhiteBoard extends JPanel {
     }
 
     public void addShape(SimpleShape shape) {
-        if (canAddPlaceHere(shape.getX(), getY())) {
+        if (contains(shape.getX(), getY())) {
             shapes.add(shape);
-            Collections.sort(shapes);
+            sortShapes();
             shape.draw(get2DGraphics());
         }
     }
@@ -76,12 +80,9 @@ public class WhiteBoard extends JPanel {
         }
     }
 
-    private boolean canAddPlaceHere(int x, int y) {
-        return contains(x, y);
-    }
-
     public void clearShapes() {
         shapes.clear();
+        history.clear();
         repaintAll();
     }
 
