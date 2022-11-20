@@ -2,24 +2,9 @@ package edu.uga.miage.m1.polygons.gui.shapes.states;
 
 import edu.uga.miage.m1.polygons.gui.shapes.AbstractShape;
 
-public class SelectedState extends SimpleShapeStateImpl{
+public class SelectedState extends AbstractSelection{
     public SelectedState(AbstractShape shape) {
         super(shape);
-    }
-
-    @Override
-    public void move(int x, int y) {
-        shape.move(x, y);
-    }
-
-    @Override
-    public void resize(int x, int y) {
-        shape.resize(x, y);
-    }
-
-    @Override
-    public void editElevation(int elevation) {
-        shape.editElevation(elevation);
     }
 
     @Override
