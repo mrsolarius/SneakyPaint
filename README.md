@@ -52,6 +52,8 @@ Il est aussi possible de grouper les formes en cliquant sur le menu "Edit" puis 
 
 Lorsqu'un seul goupe est sélectionné, il est possible de le dégrouper en cliquant sur le menu "Edit" puis "Ungroup".
 
+Pour désélectionner les formes, il suffit de cliquer à un endroit vide de la zone de dessin.
+
 ### Sauvegarder le dessin
 Pour sauvegarder le dessin, il suffit de cliquer sur le menu "File" puis "Save as XML" ou "Save as JSON" et de suivre les instructions.
 
