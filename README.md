@@ -99,7 +99,7 @@ Ces deux librairies, on l'avantage de mapper directement les données du fichier
 Les DTO sont ensuite convertis en forme par la `ShapeFactory`.
 
 ### Patron visiteur et composite
-![](doc\svg\Model!composite_visiteur_shapes.svg)
+![](./doc/svg/Model!composite_visiteur_shapes.svg)
 
 ### Patron Factory
 Il est utilisé pour la création des formes.
@@ -109,7 +109,7 @@ qui permettent de créer les différentes formes.
 Elle nous sert aussi pour la sérialisation des formes afin de convertir nos DTO en forme.
 
 ### Patron Command
-![](doc\svg\Model!patron_command_whiteboard.svg)
+![](./doc/svg/Model!patron_command_whiteboard.svg)
 Comme on peut l'observer ici le whiteboard est le centre du patron command.
 Ici 13 commandes sont implémentées :
 - AddCircleCommand
@@ -140,7 +140,7 @@ Et évidament, l'execution des methodes `undo` et `redo` de l'historique sont g�
 
 ### Patron State
 #### Implémentation sur les formes
-![](doc\svg\Model!patron_state_shape.svg)
+![](./doc/svg/Model!patron_state_shape.svg)
 Les formes dispose de plusieurs états :
 - Selected
 - Unselected
@@ -150,10 +150,10 @@ Chaque état ne dispose pas des même autorisations.
 Par exemple, on ne peut pas déplacer une forme qui n'est pas sélectionnée.
 
 Voici le diagram d'état transition qui décrit les différents états et les transitions entre eux.
-![](doc\svg\Model!FSM!patron_state_shape_etat_transition.svg)
+![](./doc/svg/Model!FSM!patron_state_shape_etat_transition.svg)
 
 Pour préciser les transitions et comportements des états, voici le diagrame de séquence qui décrit les différents comportements.
-![](doc\svg\Model!Sequance!patron_state_shape.svg)
+![](./doc/svg/Model!Sequance!patron_state_shape.svg)
 
 #### Implémentation sur le whiteboard
 Sur le whiteboard, l'implementation et plus complexe.
@@ -161,7 +161,7 @@ En effet, chaque état implémente les callbacks de la souris.
 Ce ne sont donc cette fois-ci plus les méthodes de transition qui sont utiliser pour modifier l'objet mais bien les callbacks.
 Cela simplifie les transitions, mais augmente le nombre de callback à implémenter.
 
-![](doc\svg\Model!patron_state_whiteboard.svg)
+![](./doc/svg/Model!patron_state_whiteboard.svg)
 Le whiteboard dispose de plusieurs états :
 - SelectMode
 - AddCircle
@@ -175,7 +175,7 @@ Le seul état qui doit gérer presque tous les callbacks est MoveMode.
 En effet, il doit gérer le déplacement des formes et doit donc implementer le drag de la souris et doit stocker les coordonnées de la souris avant et après le drag.
 
 Voici le diagram d'état transition qui décrit les différents états et les transitions entre eux :
-![](doc\svg\Model!FSM!patron_state_whiteboard_etat_transition.svg)
+![](./doc/svg/Model!FSM!patron_state_whiteboard_etat_transition.svg)
 Comme on l'observe le graphe entre les états et presque complet. Sauf pour le MouveMode qui ne doit être accessible que depuis le SelectMode.
 
 
