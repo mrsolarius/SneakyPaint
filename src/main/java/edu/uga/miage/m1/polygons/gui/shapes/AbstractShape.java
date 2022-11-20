@@ -49,11 +49,6 @@ public abstract class AbstractShape implements SimpleShape,SimpleShapeState {
         this.x += x;
         this.y += y;
     }
-    @Override
-    public void resize(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
 
     @Override
     public void editElevation(int elevation) {

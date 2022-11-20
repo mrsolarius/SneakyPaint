@@ -13,11 +13,6 @@ public class UnselectedState extends SimpleShapeStateImpl {
     }
 
     @Override
-    public void resize(int x, int y) {
-        // we don't want to resize when we are unselected
-    }
-
-    @Override
     public void editElevation(int elevation) {
         // we don't want to edit elevation when we are unselected
     }

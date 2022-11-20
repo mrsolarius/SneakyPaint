@@ -13,11 +13,6 @@ public abstract class AbstractSelection extends SimpleShapeStateImpl{
     }
 
     @Override
-    public void resize(int x, int y) {
-        shape.resize(x, y);
-    }
-
-    @Override
     public void editElevation(int elevation) {
         shape.editElevation(elevation);
     }

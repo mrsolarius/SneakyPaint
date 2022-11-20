@@ -48,7 +48,7 @@ public class XMLExportVisitor implements Visitor {
         this.representation=generateBaseShapeXml(group, "group", group.getShapes());
     }
 
-    public String generateBaseShapeXml(SimpleShape shape, String type, List<SimpleShape> children) {
+    private String generateBaseShapeXml(SimpleShape shape, String type, List<SimpleShape> children) {
         StringBuilder sb = new StringBuilder();
         sb.append("<shape>");
         sb.append("<type>").append(type).append("</type>");
