@@ -28,14 +28,6 @@ class TestGroupState {
     }
 
     @Test
-    void shouldResizeObject() {
-        shape.getState().resize(10, 10);
-        assertInstanceOf(GroupState.class, shape.getState());
-        assertEquals(10, shape.getWidth());
-        assertEquals(10, shape.getHeight());
-    }
-
-    @Test
     void shouldEditElevation() {
         int currentElevation = shape.getElevation();
         shape.getState().editElevation(10);
