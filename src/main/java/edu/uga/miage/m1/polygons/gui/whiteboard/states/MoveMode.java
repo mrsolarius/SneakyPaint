@@ -5,6 +5,7 @@ import edu.uga.miage.m1.polygons.gui.whiteboard.commands.selected.MoveCommand;
 import edu.uga.miage.m1.polygons.gui.whiteboard.commands.mouse.SelectCommand;
 
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 public class MoveMode extends WhiteBoardStateImpl{
     private int lastXMoved;
@@ -35,6 +36,11 @@ public class MoveMode extends WhiteBoardStateImpl{
 
     @Override
     public void addTriangle() {
+        // no need to do anything here
+    }
+
+    @Override
+    public void addImage(BufferedImage image) {
         // no need to do anything here
     }
 

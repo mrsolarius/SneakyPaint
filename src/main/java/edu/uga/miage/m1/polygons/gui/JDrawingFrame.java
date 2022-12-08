@@ -24,9 +24,14 @@ import edu.uga.miage.m1.polygons.gui.whiteboard.commands.selected.*;
 import edu.uga.miage.m1.polygons.gui.whiteboard.commands.simple.RedoCommand;
 import edu.uga.miage.m1.polygons.gui.whiteboard.commands.simple.UndoCommand;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serial;
 import java.util.EnumMap;
 import java.util.Map;
@@ -45,18 +50,18 @@ import static javax.swing.SwingConstants.VERTICAL;
  */
 public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseListener, ComponentListener
 {
-    private enum Shapes {SQUARE, TRIANGLE, CIRCLE,SELECT}
+    private enum MenuButtons {SQUARE, TRIANGLE, CIRCLE, IMAGE, SELECT}
     @Serial
     private static final long serialVersionUID = 1L;
     private final JToolBar toolbar;
-    private Shapes selected;
+    private MenuButtons selected;
     private final transient WhiteBoard whiteBoard;
     private final JLabel label;
     private final transient ActionListener reusableActionListener = new ShapeActionListener();
     /**
      * Tracks buttons to manage the background.
      */
-    private final Map<Shapes, JButton> buttons = new EnumMap<>(Shapes.class);
+    private final Map<MenuButtons, JButton> buttons = new EnumMap<>(MenuButtons.class);
 
     /**
      * Default constructor that populates the main window.
@@ -193,10 +198,12 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         add(label, BorderLayout.SOUTH);
         
         // Add shapes in the menu
-        addShape(JDrawingFrame.Shapes.SQUARE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/square.png"))));
-        addShape(JDrawingFrame.Shapes.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
-        addShape(JDrawingFrame.Shapes.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
-        addShape(JDrawingFrame.Shapes.SELECT, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/mouse.png"))));
+        addShape(MenuButtons.SQUARE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/square.png"))));
+        addShape(MenuButtons.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
+        addShape(MenuButtons.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
+        addShape(MenuButtons.SELECT, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/mouse.png"))));
+        addShape(MenuButtons.IMAGE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/mouse.png"))));
+
 
 
         setPreferredSize(new Dimension(400, 400));
@@ -209,7 +216,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
      * @param shape The name of the injected <tt>SimpleShape</tt>.
      * @param icon The icon associated with the injected <tt>SimpleShape</tt>.
     **/
-    private void addShape(Shapes shape, ImageIcon icon)
+    private void addShape(MenuButtons shape, ImageIcon icon)
     {
         JButton button = new JButton(icon);
 		button.setBorderPainted(false);
@@ -288,7 +295,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         public void actionPerformed(ActionEvent evt)
         {
         	// Itère sur tous les boutons
-            for (Map.Entry<JDrawingFrame.Shapes, JButton> shape : buttons.entrySet()) {
+            for (Map.Entry<MenuButtons, JButton> shape : buttons.entrySet()) {
                 JButton btn = buttons.get(shape.getKey());
                 if (evt.getActionCommand().equals(shape.getKey().toString())) {
                     btn.setBorderPainted(true);
@@ -298,6 +305,7 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
                         case TRIANGLE -> whiteBoard.getState().addTriangle();
                         case CIRCLE -> whiteBoard.getState().addCircle();
                         case SELECT -> whiteBoard.getState().selectMode();
+                        case IMAGE -> JDrawingFrame.this.addImage();
                     }
                 } else {
                     btn.setBorderPainted(false);
@@ -305,6 +313,34 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
                 btn.repaint();
             }
         }
+    }
+
+    private void addImage() {
+        // ask the user for the image file
+        String filePath = openDialog();
+        if (filePath==null) return;
+        // load image bytes from file
+        try {
+            BufferedImage image = ImageIO.read(new File(filePath));
+            // add image to the whiteboard
+            whiteBoard.getState().addImage(image);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String openDialog(){
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose an image");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            return selectedFile.getAbsolutePath();
+        }
+        return null;
     }
 
     @Override

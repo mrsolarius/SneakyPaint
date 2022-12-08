@@ -26,6 +26,8 @@ public class ShapeDTO {
     private int width;
     @JsonProperty(value = "elevation")
     private int elevation;
+    @JsonProperty(value ="image")
+    private String image;
     @JsonProperty(value = "children")
     private List<ShapeDTO> children;
 }

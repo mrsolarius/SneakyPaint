@@ -62,17 +62,22 @@ public class JSONExportVisitor implements Visitor {
         this.representation = sb.toString();
     }
 
+    @Override
+    public void visit(ImageShape imageShape) {
+        this.representation = generateBaseShapeJson(imageShape, "image");
+        this.representation = this.representation.substring(0, this.representation.length() - 1);
+        this.representation += ",\"image\":\"" + imageShape.getImageBase64() + "\"}";
+    }
+
     public String generateBaseShapeJson(SimpleShape shape, String type) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"type\":\"").append(type).append("\",");
-        sb.append("\"x\":").append(shape.getX()).append(",");
-        sb.append("\"y\":").append(shape.getY()).append(",");
-        sb.append("\"width\":").append(shape.getWidth()).append(",");
-        sb.append("\"height\":").append(shape.getHeight()).append(",");
-        sb.append("\"elevation\":").append(shape.getElevation());
-        sb.append("}");
-        return sb.toString();
+        return "{" +
+                "\"type\":\"" + type + "\"," +
+                "\"x\":" + shape.getX() + "," +
+                "\"y\":" + shape.getY() + "," +
+                "\"width\":" + shape.getWidth() + "," +
+                "\"height\":" + shape.getHeight() + "," +
+                "\"elevation\":" + shape.getElevation() +
+                "}";
     }
 
     /**

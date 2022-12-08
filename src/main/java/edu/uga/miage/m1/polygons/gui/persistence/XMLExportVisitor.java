@@ -48,6 +48,15 @@ public class XMLExportVisitor implements Visitor {
         this.representation=generateBaseShapeXml(group, "group", group.getShapes());
     }
 
+    @Override
+    public void visit(ImageShape imageShape) {
+        this.representation=generateBaseShapeXml(imageShape, "image", Collections.emptyList());
+        //remove the last </shape> tag
+        this.representation=this.representation.substring(0, this.representation.length()-8);
+        this.representation+="<image>"+imageShape.getImageBase64()+"</image>";
+        this.representation+="</shape>";
+    }
+
     private String generateBaseShapeXml(SimpleShape shape, String type, List<SimpleShape> children) {
         StringBuilder sb = new StringBuilder();
         sb.append("<shape>");

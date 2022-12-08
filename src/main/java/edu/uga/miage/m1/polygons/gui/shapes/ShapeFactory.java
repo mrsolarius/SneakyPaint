@@ -2,7 +2,10 @@ package edu.uga.miage.m1.polygons.gui.shapes;
 
 import edu.uga.miage.m1.polygons.gui.dto.ShapeDTO;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class ShapeFactory {
@@ -19,6 +22,10 @@ public class ShapeFactory {
 
     public static Triangle createTriangle(int x, int y){
         return new Triangle(x, y);
+    }
+
+    public static ImageShape createImage(int x, int y, BufferedImage image) {
+        return new ImageShape(x, y, image);
     }
 
     public static Group createGroup(){
@@ -38,6 +45,7 @@ public class ShapeFactory {
             case "square" -> new Square(dto.getX(), dto.getY(), dto.getWidth(), dto.getHeight(),dto.getElevation());
             case "triangle" -> new Triangle(dto.getX(), dto.getY(), dto.getWidth(), dto.getHeight(),dto.getElevation());
             case "group" -> generateGroupFromDTO(dto);
+            case "image" -> new ImageShape(dto.getX(), dto.getY(), dto.getWidth(), dto.getHeight(),dto.getElevation(), convertBase64ToBufferedImage(dto.getImage()));
             default -> throw new IllegalArgumentException("Unknown type: " + dto.getType());
         };
     }
@@ -51,5 +59,15 @@ public class ShapeFactory {
             g.addShape(shape);
         }
         return g;
+    }
+
+    private static BufferedImage convertBase64ToBufferedImage(String base64Image) {
+        byte[] bytes =  Base64.getDecoder().decode(base64Image);
+        try {
+            return ImageIO.read(new java.io.ByteArrayInputStream(bytes));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -4,6 +4,7 @@ import edu.uga.miage.m1.polygons.gui.whiteboard.WhiteBoard;
 import edu.uga.miage.m1.polygons.gui.whiteboard.commands.selected.UnselectAllCommand;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class WhiteBoardStateImpl implements WhiteBoardState {
     protected WhiteBoard whiteBoard;
@@ -30,6 +31,12 @@ public abstract class WhiteBoardStateImpl implements WhiteBoardState {
     @Override
     public void addTriangle() {
         whiteBoard.setState(new AddTriangle(whiteBoard));
+        new UnselectAllCommand(whiteBoard).execute();
+    }
+
+    @Override
+    public void addImage(BufferedImage image) {
+        whiteBoard.setState(new AddImage(whiteBoard, image));
         new UnselectAllCommand(whiteBoard).execute();
     }
 
