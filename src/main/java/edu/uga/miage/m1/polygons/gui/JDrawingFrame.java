@@ -202,11 +202,11 @@ public class JDrawingFrame extends JFrame implements MouseMotionListener, MouseL
         addShape(MenuButtons.TRIANGLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/triangle.png"))));
         addShape(MenuButtons.CIRCLE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/circle.png"))));
         addShape(MenuButtons.SELECT, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/mouse.png"))));
-        addShape(MenuButtons.IMAGE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/mouse.png"))));
+        addShape(MenuButtons.IMAGE, new ImageIcon(Objects.requireNonNull(getClass().getResource("images/image.png"))));
 
 
 
-        setPreferredSize(new Dimension(400, 400));
+        setPreferredSize(new Dimension(600, 600));
 
         addComponentListener(this);
     }
