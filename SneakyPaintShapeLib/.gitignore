@@ -17,5 +17,3 @@ buildNumber.properties
 .classpath
 # Intellij 
 *.iml
-
-.idea
