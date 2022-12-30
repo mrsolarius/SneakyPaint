@@ -6,7 +6,7 @@ import org.mockito.Mockito;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-import static edu.uga.miage.m1.polygons.gui.shapes.AbstractShape.SELECTED_BORDER_WIDTH;
+import static edu.uga.miage.m1.libs.shapes.AbstractShape.SELECTED_BORDER_WIDTH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.ArgumentMatchers.any;

@@ -1,11 +1,11 @@
 package edu.uga.miage.m1.libs.shapes.states;
 
-import edu.uga.miage.m1.polygons.gui.shapes.ShapeFactory;
-import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
+import edu.uga.miage.m1.libs.shapes.SimpleShape;
+import edu.uga.miage.m1.libs.shapes.ShapeFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestUnselectedState {
     private SimpleShape shape;

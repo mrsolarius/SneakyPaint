@@ -1,6 +1,6 @@
 package edu.uga.miage.m1.polygons.gui.deserialization;
 
-import edu.uga.miage.m1.polygons.gui.dto.ShapesDTO;
+import edu.uga.miage.m1.libs.shapes.dto.ShapesDTO;
 import org.junit.jupiter.api.Test;
 
 import java.io.UncheckedIOException;

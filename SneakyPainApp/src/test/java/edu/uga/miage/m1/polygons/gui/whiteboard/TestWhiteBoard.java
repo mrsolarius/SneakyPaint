@@ -1,7 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.whiteboard;
 
-import edu.uga.miage.m1.polygons.gui.shapes.ShapeFactory;
-import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
+import edu.uga.miage.m1.libs.shapes.ShapeFactory;
+import edu.uga.miage.m1.libs.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.whiteboard.commands.History;
 import edu.uga.miage.m1.polygons.gui.whiteboard.commands.creation.AddCircleCommand;
 import edu.uga.miage.m1.polygons.gui.whiteboard.commands.creation.AddSquareCommand;
